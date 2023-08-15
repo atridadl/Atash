@@ -30,15 +30,15 @@ const HomePageBody = () => {
       <h2 className="my-4 text-xl sm:text-3xl font-bold">
         A{" "}
         <span className="bg-gradient-to-br from-pink-600 to-pink-400 bg-clip-text text-transparent box-decoration-clone">
-          scrum poker{" "}
+          simple{" "}
         </span>{" "}
-        tool that helps{" "}
+        template that helps{" "}
         <span className="bg-gradient-to-br from-purple-600 to-purple-400 bg-clip-text text-transparent box-decoration-clone">
-          agile teams{" "}
+          full-stack developers{" "}
         </span>{" "}
-        plan their sprints in{" "}
+        build cool things in{" "}
         <span className="bg-gradient-to-br from-cyan-600 to-cyan-400 bg-clip-text text-transparent box-decoration-clone">
-          real-time
+          record time
         </span>
         .
       </h2>
@@ -47,9 +47,9 @@ const HomePageBody = () => {
         <div className="card-body">
           <h2 className="card-title">Features:</h2>
           <ul>
-            <li>🚀 Real-time votes!</li>
-            <li>🚀 Customizable room name and vote scale!</li>
-            <li>🚀 CSV Reports for every room!</li>
+            <li>🚀 Easy to use!</li>
+            <li>🚀 Auth and Orgs!</li>
+            <li>🚀 Fast queries with Drizzle!</li>
             <li>🚀 100% free and open-source... forever!</li>
           </ul>
         </div>
