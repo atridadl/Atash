@@ -1,0 +1,60 @@
+{
+  "name": "t3clerkdrizzlestarter",
+  "version": "0.1.0",
+  "description": "T3 Clerk Drizzle Starter",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "serv": "next dev",
+    "dev": "pnpm serv",
+    "lint": "next lint",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@ably-labs/react-hooks": "^2.1.1",
+    "@clerk/nextjs": "^4.23.2",
+    "@paralleldrive/cuid2": "^2.2.2",
+    "@planetscale/database": "^1.10.0",
+    "@react-email/components": "^0.0.7",
+    "@tanstack/react-query": "^4.32.6",
+    "@trpc/client": "10.37.1",
+    "@trpc/next": "10.37.1",
+    "@trpc/react-query": "10.37.1",
+    "@trpc/server": "10.37.1",
+    "@unkey/api": "^0.6.9",
+    "@upstash/ratelimit": "^0.4.3",
+    "@upstash/redis": "^1.22.0",
+    "ably": "^1.2.43",
+    "autoprefixer": "^10.4.15",
+    "dotenv": "^16.3.1",
+    "drizzle-orm": "^0.28.2",
+    "json2csv": "6.0.0-alpha.2",
+    "next": "^13.4.13",
+    "nextjs-cors": "^2.1.2",
+    "postcss": "^8.4.27",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-email": "^1.9.4",
+    "react-icons": "^4.10.1",
+    "sharp": "^0.32.4",
+    "superjson": "1.13.1",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/eslint": "^8.44.2",
+    "@types/json2csv": "^5.0.3",
+    "@types/node": "^20.5.0",
+    "@types/react": "^18.2.20",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.4.0",
+    "daisyui": "^3.5.1",
+    "drizzle-kit": "^0.19.12",
+    "eslint": "^8.47.0",
+    "eslint-config-next": "^13.4.15",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.1.6"
+  },
+  "ct3aMetadata": {
+    "initVersion": "7.5.9"
+  }
+}
