@@ -23,7 +23,7 @@ A T3 Clerk Drizzle Starter template based on Sprint Padawan.
 
 ## Instructions
 
-- First set up accounts on Vercel, Clerk, Unkey, Upstash, and Ably
+- First set up accounts on Vercel, Planetscale, Clerk, Unkey, Upstash, and Ably
 - Create projects on all of those services
 - Copy the .env.example and name it .env: fill out all of the environment variables
 - Ensure that the webhook url https://DOMAIN.TLD/api/webhooks is added with the approproate events, Unkey auth tokens, and content type of JSON
