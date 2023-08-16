@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { db } from "./db";
-import { logs, rooms, votes } from "./schema";
+import { rooms } from "./schema";
 import { env } from "~/env.mjs";
 import type { NextApiResponse } from "next";
 
@@ -10,8 +10,6 @@ export const onUserDeletedHandler = async (
 ) => {
   try {
     await db.delete(rooms).where(eq(rooms.userId, userId));
-    await db.delete(logs).where(eq(logs.userId, userId));
-    await db.delete(votes).where(eq(votes.userId, userId));
 
     res.status(200).json({ result: "USER DELETED" });
   } catch (error) {

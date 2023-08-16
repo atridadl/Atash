@@ -4,9 +4,9 @@ import "dotenv/config";
 export default {
   schema: "./src/server/schema.ts",
   out: "./drizzle/generated",
-  driver: "mysql2",
+  driver: "pg",
   breakpoints: true,
   dbCredentials: {
-    connectionString: process.env.DATABASE_URL!,
+    connectionString: `${process.env.DATABASE_URL}?sslmode=verify-full`,
   },
 } satisfies Config;
