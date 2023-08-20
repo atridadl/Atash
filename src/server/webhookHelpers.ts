@@ -2,25 +2,18 @@ import { eq } from "drizzle-orm";
 import { db } from "./db";
 import { rooms } from "./schema";
 import { env } from "~/env.mjs";
-import type { NextApiResponse } from "next";
 
-export const onUserDeletedHandler = async (
-  userId: string,
-  res: NextApiResponse
-) => {
+export const onUserDeletedHandler = async (userId: string) => {
   try {
     await db.delete(rooms).where(eq(rooms.userId, userId));
 
-    res.status(200).json({ result: "USER DELETED" });
+    return true;
   } catch (error) {
-    res.status(500).json({ error: error });
+    return false;
   }
 };
 
-export const onUserCreatedHandler = async (
-  userId: string,
-  res: NextApiResponse
-) => {
+export const onUserCreatedHandler = async (userId: string) => {
   const userUpdateResponse = await fetch(
     `https://api.clerk.com/v1/users/${userId}/metadata`,
     {
@@ -40,9 +33,5 @@ export const onUserCreatedHandler = async (
     }
   );
 
-  if (userUpdateResponse.ok) {
-    res.status(200).json({ result: "USER CREATED" });
-  } else {
-    res.status(404).json({ error: "USER WITH THIS ID NOT FOUND" });
-  }
+  return userUpdateResponse.ok;
 };
