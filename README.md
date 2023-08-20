@@ -27,12 +27,14 @@ A T3 Clerk Drizzle Starter template based on Sprint Padawan.
 - Create projects on all of those services
 - Copy the .env.example and name it .env: fill out all of the environment variables
 - Ensure that the webhook url https://DOMAIN.TLD/api/webhooks is added with the approproate events, Unkey auth tokens, and content type of JSON
-- ???
-- Profit
+- Set the proper regions for your edge public/private/webhook functions:
 
-## Testing
-
-lol no
+```Javascript
+export const config = {
+  runtime: "edge",
+  regions: ["pdx1"], // This can handle more than one region, or be removed for usage on any region!
+};
+```
 
 ## Versioning
 
