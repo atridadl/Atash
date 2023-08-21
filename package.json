@@ -10,7 +10,8 @@
     "lint": "next lint",
     "start": "next start",
     "db:push": "pnpm drizzle-kit push:pg",
-    "db:studio": "pnpm drizzle-kit studio"
+    "db:studio": "pnpm drizzle-kit studio",
+    "init:env": "cp .env.example .env"
   },
   "dependencies": {
     "@ably-labs/react-hooks": "^2.1.1",
@@ -18,12 +19,12 @@
     "@neondatabase/serverless": "^0.6.0",
     "@paralleldrive/cuid2": "^2.2.2",
     "@react-email/components": "^0.0.7",
-    "@tanstack/react-query": "^4.32.6",
+    "@tanstack/react-query": "^4.33.0",
     "@trpc/client": "10.37.1",
     "@trpc/next": "10.37.1",
     "@trpc/react-query": "10.37.1",
     "@trpc/server": "10.37.1",
-    "@unkey/api": "^0.6.9",
+    "@unkey/api": "^0.6.11",
     "@upstash/ratelimit": "^0.4.3",
     "@upstash/redis": "^1.22.0",
     "ably": "^1.2.43",
@@ -31,7 +32,7 @@
     "dotenv": "^16.3.1",
     "drizzle-orm": "^0.28.2",
     "json2csv": "6.0.0-alpha.2",
-    "next": "^13.4.16",
+    "next": "^13.4.19",
     "nextjs-cors": "^2.1.2",
     "postcss": "^8.4.28",
     "react": "18.2.0",
@@ -40,19 +41,19 @@
     "react-icons": "^4.10.1",
     "sharp": "^0.32.5",
     "superjson": "1.13.1",
-    "zod": "^3.22.1"
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@types/eslint": "^8.44.2",
     "@types/json2csv": "^5.0.3",
-    "@types/node": "^20.5.0",
+    "@types/node": "^20.5.1",
     "@types/react": "^18.2.20",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.4.0",
     "daisyui": "^3.5.1",
-    "drizzle-kit": "^0.19.12",
+    "drizzle-kit": "^0.19.13",
     "eslint": "^8.47.0",
-    "eslint-config-next": "^13.4.16",
+    "eslint-config-next": "^13.4.19",
     "pg": "^8.11.3",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.1.6"

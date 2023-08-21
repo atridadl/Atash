@@ -77,7 +77,7 @@ const Navbar = ({ title }: NavbarProps) => {
       ) : (
         navigationMenu()
       )}
-      <UserButton afterSignOutUrl="/" />
+      <UserButton afterSignOutUrl="/" userProfileMode="modal" />
     </nav>
   );
 };
