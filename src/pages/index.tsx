@@ -54,6 +54,25 @@ const HomePageBody = () => {
           </ul>
         </div>
       </div>
+
+      <div className="flex flex-row gap-4">
+        <a
+          className="btn btn-primary"
+          href="https://github.com/new?template_name=t3-clerk-drizzle-starter&template_owner=atridadl"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Use Template
+        </a>
+        <a
+          className="btn btn-primary"
+          href="https://sprintpadawan.dev"
+          target="_blank"
+          rel="noreferrer"
+        >
+          See what I'm based on...
+        </a>
+      </div>
     </>
   );
 };
