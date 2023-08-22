@@ -62,7 +62,7 @@ const HomePageBody = () => {
           target="_blank"
           rel="noreferrer"
         >
-          Use Template
+          Use Template!
         </a>
         <a
           className="btn btn-primary"
@@ -70,7 +70,7 @@ const HomePageBody = () => {
           target="_blank"
           rel="noreferrer"
         >
-          See what I'm based on...
+          Based on Sprint Padawan!
         </a>
       </div>
     </>
