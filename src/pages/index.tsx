@@ -64,14 +64,6 @@ const HomePageBody = () => {
         >
           Use Template!
         </a>
-        <a
-          className="btn btn-primary"
-          href="https://sprintpadawan.dev"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Based on Sprint Padawan!
-        </a>
       </div>
     </>
   );
