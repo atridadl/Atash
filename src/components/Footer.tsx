@@ -1,5 +1,4 @@
 import { GiTechnoHeart } from "react-icons/gi";
-import packagejson from "../../package.json";
 
 const Footer = () => {
   return (
@@ -17,15 +16,6 @@ const Footer = () => {
           >
             Atridad Lahiji
           </a>{" "}
-          -{" "}
-          <a
-            className="link link-primary link-hover"
-            href={`https://github.com/atridadl/sprintpadawan/releases/tag/${packagejson.version}`}
-            rel="noreferrer"
-            target="_blank"
-          >
-            v{packagejson.version}
-          </a>
         </p>
       </div>
     </footer>

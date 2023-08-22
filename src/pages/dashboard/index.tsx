@@ -43,7 +43,7 @@ const HomePageBody = () => {
     <>
       <h1 className="flex flex-row flex-wrap text-center justify-center items-center gap-1 text-4xl font-bold mx-auto">
         Hi, {user?.fullName}! <br />
-        You are viewing the {organization?.name} org!{" "}
+        {organization && `You are viewing the ${organization?.name} org!`}
         {isAdmin(user?.publicMetadata) && (
           <FaShieldAlt className="inline-block text-primary" />
         )}

@@ -4,10 +4,11 @@ import { useState } from "react";
 import { IoEnterOutline, IoTrashBinOutline } from "react-icons/io5";
 import { env } from "~/env.mjs";
 import { api } from "~/utils/api";
-import { useUser } from "@clerk/nextjs";
+import { useOrganization, useUser } from "@clerk/nextjs";
 
 const RoomList = () => {
   const { isSignedIn, user } = useUser();
+  const { organization } = useOrganization();
 
   configureAbly({
     key: env.NEXT_PUBLIC_ABLY_PUBLIC_KEY,
@@ -17,8 +18,8 @@ const RoomList = () => {
     },
   });
 
-  const [] = useChannel(
-    `${env.NEXT_PUBLIC_APP_ENV}-${user?.id}`,
+  useChannel(
+    `${env.NEXT_PUBLIC_APP_ENV}-${organization ? organization.id : user?.id}`,
     () => void refetchRoomsFromDb()
   );
 

@@ -6,7 +6,7 @@ import { fetchCache, invalidateCache, setCache } from "~/server/redis";
 import { logs, rooms, votes } from "~/server/schema";
 import { EventTypes } from "~/utils/types";
 import { createId } from "@paralleldrive/cuid2";
-import { eq } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 
 export const roomRouter = createTRPCRouter({
   // Create
@@ -17,31 +17,38 @@ export const roomRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const room = await ctx.db.insert(rooms).values({
-        id: createId(),
-        userId: ctx.auth.userId,
-        roomName: input.name,
-        storyName: "First Story!",
-        scale: "0.5,1,2,3,5,8",
-        visible: false,
-      });
+      const room = await ctx.db
+        .insert(rooms)
+        .values({
+          id: `room_${createId()}`,
+          userId: ctx.auth.userId,
+          roomName: input.name,
+          storyName: "First Story!",
+          scale: "0.5,1,2,3,5,8",
+          visible: false,
+          orgId: ctx.auth.orgId,
+        })
+        .returning();
 
-      const success = room.rowsAffected > 0;
+      const success = room.length > 0;
       if (room) {
-        await invalidateCache(`kv_roomcount`);
-        await invalidateCache(`kv_roomlist_${ctx.auth.userId}`);
+        if (ctx.auth.orgId) {
+          await invalidateCache(`kv_roomlist_${ctx.auth.orgId}`);
 
-        await publishToChannel(
-          `${ctx.auth.userId}`,
-          EventTypes.ROOM_LIST_UPDATE,
-          JSON.stringify(room)
-        );
+          await publishToChannel(
+            `${ctx.auth.orgId}`,
+            EventTypes.ROOM_LIST_UPDATE,
+            JSON.stringify(room)
+          );
+        } else {
+          await invalidateCache(`kv_roomlist_${ctx.auth.userId}`);
 
-        await publishToChannel(
-          `stats`,
-          EventTypes.STATS_UPDATE,
-          JSON.stringify(room)
-        );
+          await publishToChannel(
+            `${ctx.auth.userId}`,
+            EventTypes.ROOM_LIST_UPDATE,
+            JSON.stringify(room)
+          );
+        }
       }
       return success;
     }),
@@ -53,16 +60,7 @@ export const roomRouter = createTRPCRouter({
       const roomFromDb = await ctx.db.query.rooms.findFirst({
         where: eq(rooms.id, input.id),
         with: {
-          logs: {
-            with: {
-              room: true,
-            },
-          },
-          votes: {
-            with: {
-              room: true,
-            },
-          },
+          logs: true,
         },
       });
       return roomFromDb || null;
@@ -70,24 +68,46 @@ export const roomRouter = createTRPCRouter({
 
   // Get All
   getAll: protectedProcedure.query(async ({ ctx }) => {
-    const cachedResult = await fetchCache<
-      {
-        id: string;
-        createdAt: Date;
-        roomName: string;
-      }[]
-    >(`kv_roomlist_${ctx.auth.userId}`);
+    if (ctx.auth.orgId) {
+      const cachedResult = await fetchCache<
+        {
+          id: string;
+          createdAt: Date;
+          roomName: string;
+        }[]
+      >(`kv_roomlist_${ctx.auth.orgId}`);
 
-    if (cachedResult) {
-      return cachedResult;
+      if (cachedResult) {
+        return cachedResult;
+      } else {
+        const roomList = await ctx.db.query.rooms.findMany({
+          where: eq(rooms.orgId, ctx.auth.orgId),
+        });
+
+        await setCache(`kv_roomlist_${ctx.auth.orgId}`, roomList);
+
+        return roomList;
+      }
     } else {
-      const roomList = await ctx.db.query.rooms.findMany({
-        where: eq(rooms.userId, ctx.auth.userId),
-      });
+      const cachedResult = await fetchCache<
+        {
+          id: string;
+          createdAt: Date;
+          roomName: string;
+        }[]
+      >(`kv_roomlist_${ctx.auth.userId}`);
 
-      await setCache(`kv_roomlist_${ctx.auth.userId}`, roomList);
+      if (cachedResult) {
+        return cachedResult;
+      } else {
+        const roomList = await ctx.db.query.rooms.findMany({
+          where: and(eq(rooms.userId, ctx.auth.userId), isNull(rooms.orgId)),
+        });
 
-      return roomList;
+        await setCache(`kv_roomlist_${ctx.auth.userId}`, roomList);
+
+        return roomList;
+      }
     }
   }),
 
@@ -116,7 +136,7 @@ export const roomRouter = createTRPCRouter({
 
           oldRoom &&
             (await ctx.db.insert(logs).values({
-              id: createId(),
+              id: `log_${createId()}`,
               userId: ctx.auth.userId,
               roomId: input.roomId,
               scale: oldRoom.scale,
@@ -145,9 +165,10 @@ export const roomRouter = createTRPCRouter({
             .filter((item) => item !== "")
             .toString(),
         })
-        .where(eq(rooms.id, input.roomId));
+        .where(eq(rooms.id, input.roomId))
+        .returning();
 
-      const success = newRoom.rowsAffected > 0;
+      const success = newRoom.length > 0;
 
       if (success) {
         await publishToChannel(
@@ -166,34 +187,33 @@ export const roomRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const deletedRoom = await ctx.db
         .delete(rooms)
-        .where(eq(rooms.id, input.id));
+        .where(eq(rooms.id, input.id))
+        .returning();
 
-      const success = deletedRoom.rowsAffected > 0;
+      const success = deletedRoom.length > 0;
 
       if (success) {
-        await ctx.db.delete(votes).where(eq(votes.roomId, input.id));
+        if (ctx.auth.orgId) {
+          await invalidateCache(`kv_roomlist_${ctx.auth.orgId}`);
 
-        await ctx.db.delete(logs).where(eq(logs.roomId, input.id));
+          await publishToChannel(
+            `${ctx.auth.orgId}`,
+            EventTypes.ROOM_LIST_UPDATE,
+            JSON.stringify(deletedRoom)
+          );
+        } else {
+          await invalidateCache(`kv_roomlist_${ctx.auth.userId}`);
 
-        await invalidateCache(`kv_roomcount`);
-        await invalidateCache(`kv_votecount`);
-        await invalidateCache(`kv_roomlist_${ctx.auth.userId}`);
-
-        await publishToChannel(
-          `${ctx.auth.userId}`,
-          EventTypes.ROOM_LIST_UPDATE,
-          JSON.stringify(deletedRoom)
-        );
+          await publishToChannel(
+            `${ctx.auth.userId}`,
+            EventTypes.ROOM_LIST_UPDATE,
+            JSON.stringify(deletedRoom)
+          );
+        }
 
         await publishToChannel(
           `${input.id}`,
           EventTypes.ROOM_UPDATE,
-          JSON.stringify(deletedRoom)
-        );
-
-        await publishToChannel(
-          `stats`,
-          EventTypes.STATS_UPDATE,
           JSON.stringify(deletedRoom)
         );
       }
