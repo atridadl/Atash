@@ -51,7 +51,7 @@ export default authMiddleware({
       }
     }
     if (!auth.userId && !auth.isPublicRoute) {
-      redirectToSignIn({ returnBackUrl: req.url });
+      return redirectToSignIn({ returnBackUrl: req.url });
     }
   },
 });
