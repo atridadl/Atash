@@ -6,6 +6,7 @@ export const EventTypes = {
   ROOM_LIST_UPDATE: "room.list.update",
   ROOM_UPDATE: "room.update",
   VOTE_UPDATE: "vote.update",
+  STATS_UPDATE: "stats.update",
 } as const;
 export type EventType = BetterEnum<typeof EventTypes>;
 
@@ -22,14 +23,18 @@ export const WebhookEventBodySchema = z.object({
       .array(
         z.object({
           email_address: z.string().email(),
-          id: z.string(),
-          verification: z.object({
-            status: z.string(),
-            strategy: z.string(),
-          }),
+          id: z.string().optional(),
+          verification: z
+            .object({
+              status: z.string().optional(),
+              strategy: z.string().optional(),
+            })
+            .optional(),
         })
       )
       .optional(),
+    first_name: z.string().optional(),
+    last_name: z.string().optional(),
   }),
   type: z.string(),
 });
