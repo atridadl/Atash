@@ -33,8 +33,8 @@ export const WebhookEventBodySchema = z.object({
         })
       )
       .optional(),
-    first_name: z.string().optional(),
-    last_name: z.string().optional(),
+    first_name: z.string().nullable().optional(),
+    last_name: z.string().nullable().optional(),
   }),
   type: z.string(),
 });
