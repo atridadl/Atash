@@ -14,6 +14,9 @@ dependencies:
   '@neondatabase/serverless':
     specifier: ^0.6.0
     version: 0.6.0
+  '@opentelemetry/api':
+    specifier: ^1.4.1
+    version: 1.4.1
   '@paralleldrive/cuid2':
     specifier: ^2.2.2
     version: 2.2.2
@@ -55,13 +58,13 @@ dependencies:
     version: 16.3.1
   drizzle-orm:
     specifier: ^0.28.4
-    version: 0.28.4(@neondatabase/serverless@0.6.0)(pg@8.11.3)
+    version: 0.28.4(@neondatabase/serverless@0.6.0)(@opentelemetry/api@1.4.1)(pg@8.11.3)
   json2csv:
     specifier: 6.0.0-alpha.2
     version: 6.0.0-alpha.2
   next:
     specifier: ^13.4.19
-    version: 13.4.19(react-dom@18.2.0)(react@18.2.0)
+    version: 13.4.19(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
   nextjs-cors:
     specifier: ^2.1.2
     version: 2.1.2(next@13.4.19)
@@ -243,7 +246,7 @@ packages:
       '@clerk/clerk-react': 4.23.2(react@18.2.0)
       '@clerk/clerk-sdk-node': 4.12.2
       '@clerk/types': 3.49.0
-      next: 13.4.19(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.19(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       path-to-regexp: 6.2.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -1243,6 +1246,11 @@ packages:
     resolution: {integrity: sha512-XuySG1E38YScSJoMlqovLru4KTUNSjgVTIjyh7qMX6aNN5HY5Ct5LhRJdxO79JtTzKfzV/bnWpz+zquYrISsvw==}
     dev: false
 
+  /@opentelemetry/api@1.4.1:
+    resolution: {integrity: sha512-O2yRJce1GOc6PAy3QxFM4NzFiWzvScDC1/5ihYBL6BUEVdq0XMWN01sppE+H6bBXbaFYipjwFLEWLg5PaSOThA==}
+    engines: {node: '>=8.0.0'}
+    dev: false
+
   /@paralleldrive/cuid2@2.2.2:
     resolution: {integrity: sha512-ZOBkgDwEdoYVlSeRbYYXs0S9MejQofiVYoTbKzy/6GQa39/q5tQU2IX46+shYnUkpEl3wc+J6wRlar7r2EK2xA==}
     dependencies:
@@ -1530,7 +1538,7 @@ packages:
       '@trpc/client': 10.37.1(@trpc/server@10.37.1)
       '@trpc/react-query': 10.37.1(@tanstack/react-query@4.33.0)(@trpc/client@10.37.1)(@trpc/server@10.37.1)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server': 10.37.1
-      next: 13.4.19(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.19(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-ssr-prepass: 1.5.0(react@18.2.0)
@@ -2765,7 +2773,7 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.28.4(@neondatabase/serverless@0.6.0)(pg@8.11.3):
+  /drizzle-orm@0.28.4(@neondatabase/serverless@0.6.0)(@opentelemetry/api@1.4.1)(pg@8.11.3):
     resolution: {integrity: sha512-BEATAB0g0Y8PKbJHkHLLENlX2DXktO5XyeNyrXB6ktcNkg3dlMfePwB3LodBJkPY6d7GixFF+jvtdZsWjakJBQ==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -2828,6 +2836,7 @@ packages:
         optional: true
     dependencies:
       '@neondatabase/serverless': 0.6.0
+      '@opentelemetry/api': 1.4.1
       pg: 8.11.3
     dev: false
 
@@ -4529,7 +4538,7 @@ packages:
     resolution: {integrity: sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==}
     dev: true
 
-  /next@13.4.19(react-dom@18.2.0)(react@18.2.0):
+  /next@13.4.19(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-HuPSzzAbJ1T4BD8e0bs6B9C1kWQ6gv8ykZoRWs5AQoiIuqbGHHdQO7Ljuvg05Q0Z24E2ABozHe6FxDvI6HfyAw==}
     engines: {node: '>=16.8.0'}
     hasBin: true
@@ -4545,6 +4554,7 @@ packages:
         optional: true
     dependencies:
       '@next/env': 13.4.19
+      '@opentelemetry/api': 1.4.1
       '@swc/helpers': 0.5.1
       busboy: 1.6.0
       caniuse-lite: 1.0.30001522
@@ -4575,7 +4585,7 @@ packages:
       next: ^8.1.1-canary.54 || ^9.0.0 || ^10.0.0-0 || ^11.0.0 || ^12.0.0 || ^13.0.0
     dependencies:
       cors: 2.8.5
-      next: 13.4.19(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.19(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /no-case@3.0.4:
