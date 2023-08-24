@@ -20,7 +20,6 @@ export default authMiddleware({
     if (!auth.userId && auth.isPublicRoute) {
       const { success } = await rateLimit.limit(req.ip || "");
       if (success) {
-        console.log(success);
         return NextResponse.next();
       }
       return new NextResponse("TOO MANY REQUESTS", {

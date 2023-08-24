@@ -1,6 +1,6 @@
 {
   "name": "t3clerkdrizzlestarter",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "T3 Clerk Drizzle Starter",
   "private": true,
   "scripts": {
@@ -28,7 +28,6 @@
     "@unkey/api": "^0.6.16",
     "@upstash/ratelimit": "^0.4.3",
     "@upstash/redis": "^1.22.0",
-    "ably": "^1.2.43",
     "autoprefixer": "^10.4.15",
     "dotenv": "^16.3.1",
     "drizzle-orm": "^0.28.4",

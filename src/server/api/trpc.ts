@@ -16,7 +16,7 @@
  * processing a request
  *
  */
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+import { type FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import { getAuth } from "@clerk/nextjs/server";
 import type {
   SignedInAuthObject,
@@ -37,6 +37,7 @@ interface AuthContext {
  * - trpc's `createSSGHelpers` where we don't have req/res
  * @see https://create.t3.gg/en/usage/trpc#-servertrpccontextts
  */
+
 const createInnerTRPCContext = ({ auth }: AuthContext) => {
   return {
     auth,
@@ -44,14 +45,11 @@ const createInnerTRPCContext = ({ auth }: AuthContext) => {
   };
 };
 
-/**
- * This is the actual context you'll use in your router. It will be used to
- * process every request that goes through your tRPC endpoint
- * @link https://trpc.io/docs/context
- */
-export const createTRPCContext = (opts: CreateNextContextOptions) => {
-  return createInnerTRPCContext({ auth: getAuth(opts.req) });
+export const createTRPCContext = ({ req }: FetchCreateContextFnOptions) => {
+  return createInnerTRPCContext({ auth: getAuth(req as NextRequest) });
 };
+
+export type Context = inferAsyncReturnType<typeof createTRPCContext>;
 
 /**
  * 2. INITIALIZATION
@@ -59,8 +57,9 @@ export const createTRPCContext = (opts: CreateNextContextOptions) => {
  * This is where the trpc api is initialized, connecting the context and
  * transformer
  */
-import { initTRPC, TRPCError } from "@trpc/server";
+import { type inferAsyncReturnType, initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
+import type { NextRequest } from "next/server";
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
