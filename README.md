@@ -10,6 +10,7 @@ A T3 Clerk Drizzle Starter template based on Sprint Padawan.
 - Rate Limiting
 - Caching
 - Public, Private, Internal (tRPC), and Webhook functions
+- 🔪 Edge 🔪 runtime
 - Real-time pub/sub
 - Real-time presence
 
@@ -21,6 +22,8 @@ A T3 Clerk Drizzle Starter template based on Sprint Padawan.
 - Hosting: Vercel
 - Real-time pub/sub: Ably
 - ORM: Drizzle
+- Auth: Clerk
+- API Key Management: Unkey
 - Database: Neon (PostgreSQL)
 - Cache: Upstash (Redis)
 
