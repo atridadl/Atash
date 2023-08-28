@@ -49,6 +49,7 @@ export default authMiddleware({
         });
       }
     }
+
     if (!auth.userId && !auth.isPublicRoute) {
       // This is annoying...
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-explicit-any
