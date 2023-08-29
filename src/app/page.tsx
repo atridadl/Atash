@@ -22,7 +22,7 @@ const HomePageBody = () => {
         <span className="bg-gradient-to-br from-red-600 to-orange-600 bg-clip-text text-transparent box-decoration-clone">
           hottest{" "}
         </span>{" "}
-        🔥 full-stack Next.js template! .
+        🔥 full-stack Next.js template!
       </h2>
 
       <div className="card card-compact bg-secondary text-black font-bold text-left">
