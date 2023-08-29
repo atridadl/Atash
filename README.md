@@ -2,6 +2,8 @@
 
 The 🔥hottest🔥 full-stack Next.js template!
 
+Atash is Persian or Farsi for Fire! Pronounced "Ahh-tash".
+
 ## Features
 
 - Authentication
