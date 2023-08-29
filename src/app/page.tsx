@@ -1,5 +1,7 @@
 import { type NextPage } from "next";
 
+export const dynamic = "force-static";
+
 const Home: NextPage = () => {
   return (
     <div className="flex flex-col text-center items-center justify-center px-4 py-16 gap-4">
