@@ -1,6 +1,6 @@
-# T3 Clerk Drizzle Starter
+# Atash
 
-A T3 Clerk Drizzle Starter template based on Sprint Padawan.
+The 🔥hottest🔥 full-stack Next.js template!
 
 ## Features
 

@@ -5,8 +5,8 @@ import "~/styles/globals.css";
 import Provider from "./_trpc/Provider";
 
 export const metadata = {
-  title: "T3 Clerk + Drizzle Starter",
-  description: "T3 Clerk + Drizzle Starter",
+  title: "🔥 Atash 🔥",
+  description: "The 🔥hottest🔥 full-stack Next.js template!",
 };
 
 export default function RootLayout({
@@ -18,7 +18,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" className="h-[100%] w-[100%] fixed overflow-y-auto">
         <body className="block h-[100%]">
-          <Header title="T3 Clerk + Drizzle Starter" />
+          <Header title="🔥 Atash 🔥" />
           <div className="flex flex-row items-center justify-center min-h-[calc(100%-114px)]">
             <Provider>{children}</Provider>
           </div>

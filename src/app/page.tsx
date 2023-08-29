@@ -13,38 +13,25 @@ export default Home;
 const HomePageBody = () => {
   return (
     <>
-      <h1 className="text-3xl sm:text-6xl font-bold">
-        T3 Clerk Drizzle{" "}
-        <span className="bg-gradient-to-br from-pink-600 to-cyan-400 bg-clip-text text-transparent box-decoration-clone">
-          Starter
-        </span>
-      </h1>
+      <h1 className="text-3xl sm:text-6xl font-bold">🔥 Atash 🔥 </h1>
 
       <h2 className="my-4 text-xl sm:text-3xl font-bold">
-        A{" "}
-        <span className="bg-gradient-to-br from-pink-600 to-pink-400 bg-clip-text text-transparent box-decoration-clone">
-          simple{" "}
+        The 🔥{" "}
+        <span className="bg-gradient-to-br from-red-600 to-orange-600 bg-clip-text text-transparent box-decoration-clone">
+          hottest{" "}
         </span>{" "}
-        template that helps{" "}
-        <span className="bg-gradient-to-br from-purple-600 to-purple-400 bg-clip-text text-transparent box-decoration-clone">
-          full-stack developers{" "}
-        </span>{" "}
-        build cool things in{" "}
-        <span className="bg-gradient-to-br from-cyan-600 to-cyan-400 bg-clip-text text-transparent box-decoration-clone">
-          record time
-        </span>
-        .
+        🔥 full-stack Next.js template! .
       </h2>
 
       <div className="card card-compact bg-secondary text-black font-bold text-left">
         <div className="card-body">
           <h2 className="card-title">Features:</h2>
           <ul>
-            <li>🚀 Easy to use!</li>
-            <li>🚀 Auth and Orgs!</li>
-            <li>🚀 Fast queries with Drizzle!</li>
-            <li>🚀 App Router!</li>
-            <li>🚀 100% free and open-source... forever!</li>
+            <li>🔥 Easy to use!</li>
+            <li>🔥 Auth and Orgs!</li>
+            <li>🔥 Fast queries with Drizzle!</li>
+            <li>🔥 App Router!</li>
+            <li>🔥 100% free and open-source... forever!</li>
           </ul>
         </div>
       </div>

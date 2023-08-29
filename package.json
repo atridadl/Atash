@@ -1,7 +1,7 @@
 {
-  "name": "t3clerkdrizzlestarter",
+  "name": "atash",
   "version": "1.2.0",
-  "description": "T3 Clerk Drizzle Starter",
+  "description": "The 🔥hottest🔥 full-stack Next.js template!",
   "private": true,
   "scripts": {
     "build": "next build",
@@ -33,7 +33,7 @@
     "json2csv": "6.0.0-alpha.2",
     "next": "^13.4.19",
     "nextjs-cors": "^2.1.2",
-    "postcss": "^8.4.28",
+    "postcss": "^8.4.29",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-email": "^1.9.4",
@@ -57,7 +57,7 @@
     "pg": "^8.11.3",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2",
-    "utf-8-validate": "6.0.3",
+    "utf-8-validate": "5.0.2",
     "ws": "^8.13.0"
   }
 }
