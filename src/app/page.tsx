@@ -15,11 +15,13 @@ export default Home;
 const HomePageBody = () => {
   return (
     <>
-      <h1 className="text-3xl sm:text-6xl font-bold">🔥 Atash 🔥 </h1>
-
-      <h2 className="text-3xl bg-gradient-to-br from-red-600 to-orange-400 bg-clip-text text-transparent box-decoration-clone">
-        (آتش)
-      </h2>
+      <h1 className="text-3xl sm:text-6xl font-bold">
+        🔥
+        <span className="bg-gradient-to-br from-red-600 to-orange-400 bg-clip-text text-transparent box-decoration-clone">
+          Atash{" "}
+        </span>{" "}
+        (آتش) 🔥{" "}
+      </h1>
 
       <h2 className="my-4 text-xl sm:text-3xl font-bold">
         The 🔥{" "}
@@ -44,7 +46,7 @@ const HomePageBody = () => {
       </div>
       <div className="flex flex-row gap-4">
         <a
-          className="btn btn-primary"
+          className="btn btn-sm sm:btn-md md:btn-lg btn-primary"
           href="https://github.com/new?template_name=Atash&template_owner=atridadl"
           target="_blank"
           rel="noreferrer"
@@ -53,7 +55,7 @@ const HomePageBody = () => {
         </a>
 
         <a
-          className="btn btn-primary"
+          className="btn btn-sm sm:btn-md md:btn-lg btn-primary"
           href="https://github.com/atridadl/Atash"
           target="_blank"
           rel="noreferrer"
