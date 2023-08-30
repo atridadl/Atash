@@ -35,9 +35,8 @@ const HomePageBody = () => {
           <h2 className="card-title">Features:</h2>
           <ul>
             <li>🔥 User Auth and Orgs!</li>
-            <li>🔥 API Key auth</li>
+            <li>🔥 API Key Auth</li>
             <li>🔥 Caching and Rate Limiting!</li>
-            <li>🔥 Auth and Orgs!</li>
             <li>🔥 Fast queries with Drizzle!</li>
             <li>🔥 App Router!</li>
             <li>🔥 100% free and open-source... forever!</li>
