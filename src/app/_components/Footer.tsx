@@ -22,7 +22,7 @@ const Footer = () => {
           -{" "}
           <a
             className="link link-primary link-hover"
-            href={`https://github.com/atridadl/sprintpadawan/releases/tag/${packagejson.version}`}
+            href={`https://github.com/atridadl/Atash/releases/tag/${packagejson.version}`}
             rel="noreferrer"
             target="_blank"
           >
