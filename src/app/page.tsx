@@ -29,7 +29,6 @@ const HomePageBody = () => {
         <div className="card-body">
           <h2 className="card-title">Features:</h2>
           <ul>
-            <li>🔥 Easy to use!</li>
             <li>🔥 Auth and Orgs!</li>
             <li>🔥 Fast queries with Drizzle!</li>
             <li>🔥 App Router!</li>
@@ -41,11 +40,20 @@ const HomePageBody = () => {
       <div className="flex flex-row gap-4">
         <a
           className="btn btn-primary"
-          href="https://github.com/new?template_name=t3-clerk-drizzle-starter&template_owner=atridadl"
+          href="https://github.com/new?template_name=Atash&template_owner=atridadl"
           target="_blank"
           rel="noreferrer"
         >
           Use Template!
+        </a>
+
+        <a
+          className="btn btn-primary"
+          href="https://github.com/atridadl/Atash"
+          target="_blank"
+          rel="noreferrer"
+        >
+          View Repo!
         </a>
       </div>
     </>
