@@ -17,14 +17,17 @@ const HomePageBody = () => {
     <>
       <h1 className="text-3xl sm:text-6xl font-bold">🔥 Atash 🔥 </h1>
 
+      <h2 className="text-3xl bg-gradient-to-br from-red-600 to-orange-400 bg-clip-text text-transparent box-decoration-clone">
+        (آتش)
+      </h2>
+
       <h2 className="my-4 text-xl sm:text-3xl font-bold">
         The 🔥{" "}
-        <span className="bg-gradient-to-br from-red-600 to-orange-600 bg-clip-text text-transparent box-decoration-clone">
+        <span className="bg-gradient-to-br from-red-600 to-orange-400 bg-clip-text text-transparent box-decoration-clone">
           hottest{" "}
         </span>{" "}
         🔥 full-stack Next.js template!
       </h2>
-
       <div className="card card-compact bg-secondary text-black font-bold text-left">
         <div className="card-body">
           <h2 className="card-title">Features:</h2>
@@ -39,7 +42,6 @@ const HomePageBody = () => {
           </ul>
         </div>
       </div>
-
       <div className="flex flex-row gap-4">
         <a
           className="btn btn-primary"

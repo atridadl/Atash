@@ -1,10 +1,10 @@
 ![Atash Logo](https://github.com/atridadl/Atash/assets/88056492/620d2d1a-1862-42ce-bbe3-75fb640abbf2)
 
-# Atash
+# Atash (آتش)
 
 The 🔥hottest🔥 full-stack Next.js template!
 
-Atash is Persian or Farsi for Fire! Pronounced "Ahh-tash".
+Atash (آتش) is Persian or Farsi for Fire! Pronounced "Ahh-tash".
 
 ## Features
 
