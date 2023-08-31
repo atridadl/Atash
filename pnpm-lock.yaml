@@ -20,6 +20,9 @@ dependencies:
   '@react-email/components':
     specifier: ^0.0.7
     version: 0.0.7
+  '@t3-oss/env-nextjs':
+    specifier: ^0.6.1
+    version: 0.6.1(typescript@5.2.2)(zod@3.22.2)
   '@tanstack/react-query':
     specifier: ^4.33.0
     version: 4.33.0(react-dom@18.2.0)(react@18.2.0)
@@ -1293,6 +1296,27 @@ packages:
       defer-to-connect: 2.0.1
     dev: false
 
+  /@t3-oss/env-core@0.6.1(typescript@5.2.2)(zod@3.22.2):
+    resolution: {integrity: sha512-KQD7qEDJtkWIWWmTVjNvk0wnHpkvAQ6CRbUxbWMFNG/fiosBQDQvtRpBNu6USxBscJCoC4z6y7P9MN52/mLOzw==}
+    peerDependencies:
+      typescript: '>=4.7.2'
+      zod: ^3.0.0
+    dependencies:
+      typescript: 5.2.2
+      zod: 3.22.2
+    dev: false
+
+  /@t3-oss/env-nextjs@0.6.1(typescript@5.2.2)(zod@3.22.2):
+    resolution: {integrity: sha512-z1dIC++Vxj9kmzX5nSPfcrCSkszy3dTEPC4Ssx7Ap5AqR3c2Qa7S0xf8axn6coy7D/vCXDAAnHYnCMDhtcY3SQ==}
+    peerDependencies:
+      typescript: '>=4.7.2'
+      zod: ^3.0.0
+    dependencies:
+      '@t3-oss/env-core': 0.6.1(typescript@5.2.2)(zod@3.22.2)
+      typescript: 5.2.2
+      zod: 3.22.2
+    dev: false
+
   /@tanstack/query-core@4.33.0:
     resolution: {integrity: sha512-qYu73ptvnzRh6se2nyBIDHGBQvPY1XXl3yR769B7B6mIDD7s+EZhdlWHQ67JI6UOTFRaI7wupnTnwJ3gE0Mr/g==}
     dev: false
@@ -1919,7 +1943,7 @@ packages:
     dependencies:
       browserslist: 4.21.10
       caniuse-lite: 1.0.30001525
-      fraction.js: 4.3.2
+      fraction.js: 4.3.4
       normalize-range: 0.1.2
       picocolors: 1.0.0
       postcss: 8.4.29
@@ -3328,8 +3352,8 @@ packages:
       mime-types: 2.1.35
     dev: false
 
-  /fraction.js@4.3.2:
-    resolution: {integrity: sha512-9VLF466MqX1OUP7/d9r7/Vsvu6Hpp+taXBLmiR5x6mEYfT0BDkGVBt5TyA1aDu1WzIE1sF8F66evOFaz7iAEGQ==}
+  /fraction.js@4.3.4:
+    resolution: {integrity: sha512-pwiTgt0Q7t+GHZA4yaLjObx4vXmmdcS0iSJ19o8d/goUGgItX9UZWKWNnLHehxviD8wU2IWRsnR8cD5+yOJP2Q==}
     dev: false
 
   /fs-constants@1.0.0:
@@ -5863,7 +5887,6 @@ packages:
     resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
     engines: {node: '>=14.17'}
     hasBin: true
-    dev: true
 
   /unbox-primitive@1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
