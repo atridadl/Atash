@@ -9,7 +9,6 @@ export const env = createEnv({
     UPSTASH_REDIS_EXPIRY_SECONDS: z.string(),
     UPSTASH_RATELIMIT_REQUESTS: z.string(),
     UPSTASH_RATELIMIT_SECONDS: z.string(),
-    NODE_ENV: z.enum(["development", "test", "production"]),
     ABLY_PRIVATE_KEY: z.string(),
     APP_ENV: z.string(),
     UNKEY_ROOT_KEY: z.string(),
