@@ -8,15 +8,14 @@ Atash (آتش) is Persian or Farsi for Fire! Pronounced "Ahh-tash".
 
 ## Features
 
-- Authentication
-- Orgs
-- API Keys
-- Rate Limiting
-- Caching
-- Public, Private, Internal (tRPC), and Webhook functions
-- 🔪 Edge 🔪 runtime
-- Real-time pub/sub
-- Real-time presence
+- 🔥 User Auth and Orgs!
+- 🔥 API Key Auth
+- 🔥 Caching and Rate Limiting!
+- 🔥 Fast queries with Drizzle!
+- 🔥 App Router!
+- 🔥 Edge Runtime!
+- 🔥 Customizable Themes
+- 🔥 100% free and open-source... forever!
 
 ## Stack
 
@@ -30,6 +29,7 @@ Atash (آتش) is Persian or Farsi for Fire! Pronounced "Ahh-tash".
 - API Key Management: Unkey
 - Database: Neon (PostgreSQL)
 - Cache: Upstash (Redis)
+- CSS: TailndCSS + DaisyUI
 
 ## Instructions
 
@@ -43,9 +43,13 @@ Atash (آتش) is Persian or Farsi for Fire! Pronounced "Ahh-tash".
 ```Javascript
 export const config = {
   runtime: "edge",
-  regions: ["pdx1"], // This can handle more than one region, or be removed for usage on any region!
+  regions: ["pdx1"], // This can handle more than one region, or be removed for usage on all region!
 };
 ```
+
+## Styling
+
+The tailwind.config.js file will contain a list of themes that are added by default. To change the theme, change the value of "data-theme" on the html tag in src/app/layout.tsx. For more information on DaisyUI themes, please see their [documentation](https://daisyui.com/docs/themes/).
 
 ## Why so many services?
 

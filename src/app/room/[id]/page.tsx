@@ -209,15 +209,15 @@ const RoomBody = ({}) => {
       if (!!matchedVote) {
         return <p>{matchedVote.value}</p>;
       } else {
-        return <IoHourglassOutline className="text-xl mx-auto text-red-400" />;
+        return <IoHourglassOutline className="text-xl mx-auto text-error" />;
       }
     } else if (!!matchedVote) {
       return (
-        <IoCheckmarkCircleOutline className="text-xl mx-auto text-green-400" />
+        <IoCheckmarkCircleOutline className="text-xl mx-auto text-success" />
       );
     } else {
       return (
-        <IoHourglassOutline className="text-xl animate-spin mx-auto text-yellow-400" />
+        <IoHourglassOutline className="text-xl animate-spin mx-auto text-warning" />
       );
     }
   };
@@ -240,7 +240,7 @@ const RoomBody = ({}) => {
 
           <button>
             {copied ? (
-              <IoCheckmarkCircleOutline className="mx-1 text-green-400 animate-bounce" />
+              <IoCheckmarkCircleOutline className="mx-1 text-success animate-bounce" />
             ) : (
               <IoCopyOutline
                 className="mx-1 hover:text-primary"
@@ -251,7 +251,7 @@ const RoomBody = ({}) => {
         </div>
 
         {roomFromDb && (
-          <div className="card card-compact bg-neutral shadow-xl mx-auto m-4">
+          <div className="card card-compact bg-base-100 shadow-xl mx-auto m-4">
             <div className="card-body">
               <h2 className="card-title mx-auto">
                 Story: {roomFromDb.storyName}
@@ -349,7 +349,7 @@ const RoomBody = ({}) => {
           !!roomFromDb &&
           (roomFromDb.userId === user.id || isAdmin(user?.publicMetadata)) && (
             <>
-              <div className="card card-compact bg-neutral shadow-xl mx-auto m-4">
+              <div className="card card-compact bg-base-100 shadow-xl mx-auto m-4">
                 <div className="card-body flex flex-col flex-wrap">
                   <h2 className="card-title mx-auto">Room Settings</h2>
 

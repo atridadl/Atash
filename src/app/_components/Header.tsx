@@ -20,14 +20,14 @@ const Navbar = ({ title }: NavbarProps) => {
   const navigationMenu = () => {
     if (pathname !== "/dashboard" && isSignedIn) {
       return (
-        <Link className="btn btn-secondary btn-outline mx-2" href="/dashboard">
+        <Link className="btn btn-primary btn-outline mx-2" href="/dashboard">
           Dashboard
         </Link>
       );
     } else if (!isSignedIn) {
       return (
         <button
-          className="btn btn-secondary"
+          className="btn btn-primary"
           onClick={() => void router.push("/sign-in")}
         >
           Sign In

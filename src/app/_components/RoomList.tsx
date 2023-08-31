@@ -124,7 +124,7 @@ const RoomList = () => {
                         className="m-2 no-underline"
                         href={`/room/${room.id}`}
                       >
-                        <IoEnterOutline className="text-xl inline-block hover:text-secondary" />
+                        <IoEnterOutline className="text-xl inline-block hover:text-primary" />
                       </Link>
 
                       <button
@@ -141,7 +141,7 @@ const RoomList = () => {
           </table>
         </div>
       )}
-      <label htmlFor="new-room-modal" className="btn btn-secondary">
+      <label htmlFor="new-room-modal" className="btn btn-primary">
         New Room
       </label>
 
