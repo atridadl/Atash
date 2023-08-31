@@ -18,16 +18,16 @@ const HomePageBody = () => {
       <h1 className="text-3xl sm:text-6xl font-bold">
         🔥
         <span className="bg-gradient-to-br from-red-600 to-orange-400 bg-clip-text text-transparent box-decoration-clone">
-          Atash{" "}
-        </span>{" "}
-        (آتش) 🔥{" "}
+          Atash
+        </span>
+        (آتش)🔥
       </h1>
 
       <h2 className="my-4 text-xl sm:text-3xl font-bold">
-        The 🔥{" "}
+        The 🔥
         <span className="bg-gradient-to-br from-red-600 to-orange-400 bg-clip-text text-transparent box-decoration-clone">
-          hottest{" "}
-        </span>{" "}
+          hottest
+        </span>
         🔥 full-stack Next.js template!
       </h2>
       <div className="card card-compact bg-secondary text-black font-bold text-left">

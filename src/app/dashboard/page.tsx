@@ -8,6 +8,7 @@ import { FaShieldAlt } from "react-icons/fa";
 import { GiStarFormation } from "react-icons/gi";
 import { useUser, useOrganization } from "@clerk/nextjs";
 import { isAdmin, isVIP } from "@/utils/helpers";
+import Loading from "../_components/Loading";
 
 export const dynamic = "force-dynamic";
 
@@ -34,9 +35,7 @@ const HomePageBody = () => {
   }, [tabIndex, user, organization]);
 
   return !isLoaded ? (
-    <div className="flex items-center justify-center">
-      <span className="loading loading-dots loading-lg"></span>
-    </div>
+    <Loading />
   ) : (
     <>
       <h1 className="flex flex-row flex-wrap text-center justify-center items-center gap-1 text-4xl font-bold mx-auto">

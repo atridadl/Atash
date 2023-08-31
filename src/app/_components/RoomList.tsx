@@ -7,6 +7,7 @@ import { IoEnterOutline, IoTrashBinOutline } from "react-icons/io5";
 import { env } from "@/env.mjs";
 import { useUser, useOrganization } from "@clerk/nextjs";
 import { trpc } from "../_trpc/client";
+import Loading from "./Loading";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -145,11 +146,7 @@ const RoomList = () => {
         New Room
       </label>
 
-      {roomsFromDb === undefined && (
-        <div className="flex items-center justify-center">
-          <span className="loading loading-dots loading-lg"></span>
-        </div>
-      )}
+      {roomsFromDb === undefined && <Loading />}
     </div>
   );
 };

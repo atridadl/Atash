@@ -26,6 +26,7 @@ import { downloadCSV, isAdmin, isVIP } from "@/utils/helpers";
 import type { PresenceItem } from "@/utils/types";
 import { useUser } from "@clerk/nextjs";
 import { trpc } from "@/app/_trpc/client";
+import Loading from "@/app/_components/Loading";
 
 export const dynamic = "force-dynamic";
 
@@ -33,13 +34,7 @@ const Room: NextPage = () => {
   const { isSignedIn } = useUser();
   return (
     <div className="flex flex-col items-center justify-center text-center gap-2">
-      {!isSignedIn ? (
-        <div className="flex items-center justify-center">
-          <span className="loading loading-dots loading-lg"></span>
-        </div>
-      ) : (
-        <RoomBody />
-      )}
+      {!isSignedIn ? <Loading /> : <RoomBody />}
     </div>
   );
 };
@@ -224,11 +219,7 @@ const RoomBody = ({}) => {
 
   // Room is loading
   if (roomFromDb === undefined) {
-    return (
-      <div className="flex flex-col items-center justify-center text-center">
-        <span className="loading loading-dots loading-lg"></span>{" "}
-      </div>
-    );
+    return <Loading />;
     // Room has been loaded
   } else if (roomFromDb) {
     return (

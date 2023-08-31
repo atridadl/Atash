@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { env } from "@/env.mjs";
+import Loading from "./Loading";
 
 interface NavbarProps {
   title: string;
@@ -75,13 +76,7 @@ const Navbar = ({ title }: NavbarProps) => {
         </Link>
       </div>
 
-      {!isLoaded ? (
-        <div className="flex items-center justify-center">
-          <span className="loading loading-dots loading-lg"></span>
-        </div>
-      ) : (
-        navigationMenu()
-      )}
+      {!isLoaded ? <Loading /> : navigationMenu()}
       <UserButton afterSignOutUrl="/" userProfileMode="modal" />
     </nav>
   );
