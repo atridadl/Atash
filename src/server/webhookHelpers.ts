@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { db } from "./db";
 import { rooms } from "./schema";
-import { env } from "~/env.mjs";
+import { env } from "@/env.mjs";
 
 export const onUserDeletedHandler = async (userId: string) => {
   try {

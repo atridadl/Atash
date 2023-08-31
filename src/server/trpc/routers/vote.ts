@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { publishToChannel } from "~/server/ably";
+import { publishToChannel } from "@/server/ably";
 
-import { createTRPCRouter, protectedProcedure } from "~/server/trpc/trpc";
-import { fetchCache, invalidateCache, setCache } from "~/server/redis";
-import { EventTypes } from "~/utils/types";
+import { createTRPCRouter, protectedProcedure } from "@/server/trpc/trpc";
+import { fetchCache, invalidateCache, setCache } from "@/server/redis";
+import { EventTypes } from "@/utils/types";
 import { eq } from "drizzle-orm";
-import { votes } from "~/server/schema";
+import { votes } from "@/server/schema";
 import { createId } from "@paralleldrive/cuid2";
 
 export const voteRouter = createTRPCRouter({

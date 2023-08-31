@@ -1,4 +1,4 @@
-import { env } from "~/env.mjs";
+import { env } from "@/env.mjs";
 import type { EventType } from "../utils/types";
 
 export const publishToChannel = async (

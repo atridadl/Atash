@@ -1,7 +1,7 @@
 import { ClerkProvider } from "@clerk/nextjs";
-import Footer from "~/app/_components/Footer";
-import Header from "~/app/_components/Header";
-import "~/styles/globals.css";
+import Footer from "@/app/_components/Footer";
+import Header from "@/app/_components/Header";
+import "@/styles/globals.css";
 import Provider from "./_trpc/Provider";
 
 export const metadata = {

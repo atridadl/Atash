@@ -2,12 +2,12 @@ import { type NextRequest, NextResponse } from "next/server";
 import {
   onUserCreatedHandler,
   onUserDeletedHandler,
-} from "~/server/webhookHelpers";
+} from "@/server/webhookHelpers";
 import {
   type WebhookEventBody,
   WebhookEventBodySchema,
   WebhookEvents,
-} from "~/utils/types";
+} from "@/utils/types";
 
 export const runtime = "edge";
 export const preferredRegion = ["pdx1"];

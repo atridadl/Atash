@@ -1,7 +1,7 @@
 // import { Unkey, verifyKey } from "@unkey/api";
 import { verifyKey } from "@unkey/api";
 import type { NextRequest } from "next/server";
-// import { env } from "~/env.mjs";
+// import { env } from "@/env.mjs";
 
 // const unkey = new Unkey({token: env.UNKEY_ROOT_KEY})
 
