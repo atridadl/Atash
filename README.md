@@ -29,7 +29,7 @@ Atash (آتش) is Persian or Farsi for Fire! Pronounced "Ahh-tash".
 - API Key Management: Unkey
 - Database: Neon (PostgreSQL)
 - Cache: Upstash (Redis)
-- CSS: TailndCSS + DaisyUI
+- CSS: TailwindCSS + DaisyUI
 
 ## Instructions
 
