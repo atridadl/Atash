@@ -4,7 +4,11 @@ import { GiStarFormation } from "react-icons/gi";
 import { isAdmin, isVIP } from "@/utils/helpers";
 import { currentUser } from "@clerk/nextjs";
 
-export default async function Home() {
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
+
+export default async function Dashboard() {
   const user = await currentUser();
 
   return (
