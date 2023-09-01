@@ -1,20 +1,8 @@
-import { type NextPage } from "next";
-
 export const dynamic = "force-static";
 
-const Home: NextPage = () => {
+export default function Home() {
   return (
     <div className="flex flex-col text-center items-center justify-center px-4 py-16 gap-4">
-      <HomePageBody />
-    </div>
-  );
-};
-
-export default Home;
-
-const HomePageBody = () => {
-  return (
-    <>
       <h1 className="text-3xl sm:text-6xl font-bold">
         🔥
         <span className="bg-gradient-to-br from-red-600 to-orange-400 bg-clip-text text-transparent box-decoration-clone">
@@ -64,6 +52,6 @@ const HomePageBody = () => {
           View Repo!
         </a>
       </div>
-    </>
+    </div>
   );
-};
+}
