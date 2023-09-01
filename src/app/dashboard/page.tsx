@@ -23,7 +23,7 @@ export default async function Dashboard() {
         )}
       </h1>
 
-      {user && <RoomList />}
+      {user && <RoomList userId={user?.id} />}
     </div>
   );
 }

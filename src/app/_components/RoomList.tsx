@@ -5,7 +5,7 @@ import { configureAbly, useChannel } from "@ably-labs/react-hooks";
 import { useEffect, useState } from "react";
 import { IoEnterOutline, IoTrashBinOutline } from "react-icons/io5";
 import { env } from "@/env.mjs";
-import { useUser, useOrganization } from "@clerk/nextjs";
+import { useOrganization } from "@clerk/nextjs";
 import { trpc } from "../_trpc/client";
 import Loading from "./Loading";
 
@@ -13,29 +13,26 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 export const fetchCache = "force-no-store";
 
-const RoomList = () => {
-  const { isSignedIn, user } = useUser();
+const RoomList = ({ userId }: { userId: string }) => {
   const { organization } = useOrganization();
 
   configureAbly({
     key: env.NEXT_PUBLIC_ABLY_PUBLIC_KEY,
-    clientId: user ? user.id : "unknown",
+    clientId: userId,
     recover: (_, cb) => {
       cb(true);
     },
   });
 
   useChannel(
-    `${env.NEXT_PUBLIC_APP_ENV}-${organization ? organization.id : user?.id}`,
+    `${env.NEXT_PUBLIC_APP_ENV}-${organization ? organization.id : userId}`,
     () => void refetchRoomsFromDb()
   );
 
   const [roomName, setRoomName] = useState<string>("");
 
   const { data: roomsFromDb, refetch: refetchRoomsFromDb } =
-    trpc.room.getAll.useQuery(undefined, {
-      enabled: isSignedIn,
-    });
+    trpc.room.getAll.useQuery(undefined);
 
   const createRoom = trpc.room.create.useMutation({});
 
@@ -50,9 +47,7 @@ const RoomList = () => {
   const deleteRoom = trpc.room.delete.useMutation({});
 
   const deleteRoomHandler = (roomId: string) => {
-    if (isSignedIn) {
-      deleteRoom.mutate({ id: roomId });
-    }
+    deleteRoom.mutate({ id: roomId });
   };
 
   useEffect(() => {
