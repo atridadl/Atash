@@ -19,7 +19,7 @@ const RoomList = () => {
 
   configureAbly({
     key: env.NEXT_PUBLIC_ABLY_PUBLIC_KEY,
-    clientId: user?.id,
+    clientId: user ? user.id : "unknown",
     recover: (_, cb) => {
       cb(true);
     },

@@ -1,11 +1,11 @@
 "use client";
 
-import { UserButton, useUser, OrganizationSwitcher } from "@clerk/nextjs";
+import { UserButton, useAuth, OrganizationSwitcher } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { env } from "@/env.mjs";
-import Loading from "./Loading";
+import { useEffect, useState } from "react";
 
 interface NavbarProps {
   title: string;
@@ -14,9 +14,15 @@ interface NavbarProps {
 export const dynamic = "force-dynamic";
 
 const Navbar = ({ title }: NavbarProps) => {
-  const { isLoaded, isSignedIn } = useUser();
+  const { isSignedIn } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
+
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    setIsReady(true);
+  }, []);
 
   const navigationMenu = () => {
     if (pathname !== "/dashboard" && isSignedIn) {
@@ -40,7 +46,6 @@ const Navbar = ({ title }: NavbarProps) => {
           createOrganizationMode="modal"
           afterCreateOrganizationUrl="/dashboard"
           afterLeaveOrganizationUrl="/dashboard"
-          afterSwitchOrganizationUrl="/dashboard"
           appearance={{
             elements: {
               organizationSwitcherTrigger: "text-white",
@@ -75,9 +80,12 @@ const Navbar = ({ title }: NavbarProps) => {
           </span>
         </Link>
       </div>
-
-      {!isLoaded ? <Loading /> : navigationMenu()}
-      <UserButton afterSignOutUrl="/" userProfileMode="modal" />
+      {isReady && (
+        <>
+          {navigationMenu()}
+          <UserButton afterSignOutUrl="/" userProfileMode="modal" />
+        </>
+      )}
     </nav>
   );
 };
