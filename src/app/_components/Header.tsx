@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { env } from "@/env.mjs";
-import Loading from "./Loading";
 
 interface NavbarProps {
   title: string;
@@ -14,7 +13,7 @@ interface NavbarProps {
 export const dynamic = "force-dynamic";
 
 const Navbar = ({ title }: NavbarProps) => {
-  const { isLoaded, isSignedIn } = useUser();
+  const { isSignedIn } = useUser();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -40,14 +39,6 @@ const Navbar = ({ title }: NavbarProps) => {
           createOrganizationMode="modal"
           afterCreateOrganizationUrl="/dashboard"
           afterLeaveOrganizationUrl="/dashboard"
-          afterSwitchOrganizationUrl="/dashboard"
-          appearance={{
-            elements: {
-              organizationSwitcherTrigger: "text-white",
-              organizationSwitcherTriggerIcon: "text-white",
-              organizationSwitcherPopoverRootBox: "text-black",
-            },
-          }}
         />
       );
     }
@@ -76,7 +67,7 @@ const Navbar = ({ title }: NavbarProps) => {
         </Link>
       </div>
 
-      {!isLoaded ? <Loading /> : navigationMenu()}
+      {navigationMenu()}
       <UserButton afterSignOutUrl="/" userProfileMode="modal" />
     </nav>
   );

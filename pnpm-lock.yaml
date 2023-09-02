@@ -11,6 +11,9 @@ dependencies:
   '@clerk/nextjs':
     specifier: ^4.23.3
     version: 4.23.3(next@13.4.19)(react-dom@18.2.0)(react@18.2.0)
+  '@clerk/themes':
+    specifier: ^1.7.5
+    version: 1.7.5(react@18.2.0)
   '@neondatabase/serverless':
     specifier: ^0.6.0
     version: 0.6.0
@@ -241,6 +244,15 @@ packages:
       js-cookie: 3.0.1
       react: 18.2.0
       swr: 2.2.0(react@18.2.0)
+    dev: false
+
+  /@clerk/themes@1.7.5(react@18.2.0):
+    resolution: {integrity: sha512-kIdCIBSCp6t1saGAzbelcfZi5P+L3+CuVFwSjpulwGTRxeOOs/S8hB4CAHVbTwfxPw5Ms+AnN4dXJKHjSnxPIg==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      react: '>=16'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /@clerk/types@3.50.0:
