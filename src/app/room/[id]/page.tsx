@@ -2,7 +2,8 @@ import { currentUser } from "@clerk/nextjs";
 import Loading from "@/app/_components/Loading";
 import VoteUI from "@/app/_components/VoteUI";
 
-export const dynamic = "force-dynamic";
+export const runtime = "edge";
+export const preferredRegion = ["pdx1"];
 
 export default async function Room() {
   const user = await currentUser();

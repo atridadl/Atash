@@ -32,7 +32,6 @@
     "csv42": "^4.0.0",
     "dotenv": "^16.3.1",
     "drizzle-orm": "^0.28.5",
-    "json2csv": "6.0.0-alpha.2",
     "next": "^13.4.19",
     "nextjs-cors": "^2.1.2",
     "postcss": "^8.4.29",

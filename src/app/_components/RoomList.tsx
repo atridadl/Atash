@@ -51,7 +51,6 @@ const RoomList = ({ userId }: { userId: string }) => {
   };
 
   useEffect(() => {
-    console.log("EFFECT");
     void refetchRoomsFromDb();
   }, [organization]);
 
