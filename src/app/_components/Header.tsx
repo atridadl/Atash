@@ -21,7 +21,7 @@ const Navbar = ({ title }: NavbarProps) => {
     if (pathname !== "/dashboard" && isSignedIn) {
       return (
         <Link className="btn btn-primary btn-outline mx-2" href="/dashboard">
-          Dashboard
+          Demo Dashboard
         </Link>
       );
     } else if (!isSignedIn) {
@@ -30,7 +30,7 @@ const Navbar = ({ title }: NavbarProps) => {
           className="btn btn-primary"
           onClick={() => void router.push("/sign-in")}
         >
-          Sign In
+          Sign In to Demo
         </button>
       );
     } else {
