@@ -62,3 +62,7 @@ I prefer building projects that have are easy to iterate on rather than relying 
 ## Contributing
 
 Feel free to propose changes via PR. I'm not awfully picky about formatting right now, so I'll accept/reject on a case-by-case basis. Please make sure to have an issue first though.
+
+## Stats
+
+![Alt](https://repobeats.axiom.co/api/embed/e124419e3b2f4136d522277d0af700f200dfeada.svg "Repobeats analytics image")
