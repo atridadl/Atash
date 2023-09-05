@@ -35,7 +35,7 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
   const params = useParams();
   const roomId = params?.id as string;
 
-  const [storyNameText, setStoryNameText] = useState<string>("");
+  const [topicNameText, setTopicNameText] = useState<string>("");
   const [roomScale, setRoomScale] = useState<string>("");
   const [copied, setCopied] = useState<boolean>(false);
 
@@ -92,10 +92,10 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
     };
   }, [channel.presence, roomId]);
 
-  // Init story name
+  // Init topic name
   useEffect(() => {
     if (roomFromDb) {
-      setStoryNameText(roomFromDb.storyName || "");
+      setTopicNameText(roomFromDb.topicName || "");
       setRoomScale(roomFromDb.scale || "ERROR");
     }
   }, [roomFromDb, roomId, user]);
@@ -121,7 +121,7 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
   const saveRoom = (visible: boolean, reset = false, log = false) => {
     if (roomFromDb) {
       setRoomInDb.mutate({
-        name: storyNameText,
+        name: topicNameText,
         roomId: roomFromDb.id,
         scale: roomScale,
         visible: visible,
@@ -141,7 +141,7 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
             userId: item.userId,
             roomId: item.roomId,
             roomName: item.roomName,
-            storyName: item.storyName,
+            topicName: item.topicName,
             scale: item.scale,
             votes: item.votes,
           };
@@ -152,7 +152,7 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
           userId: roomFromDb.userId,
           roomId: roomFromDb.id,
           roomName: roomFromDb.roomName,
-          storyName: storyNameText,
+          topicName: topicNameText,
           scale: roomScale,
           votes: votesFromDb.map((vote) => {
             return {
@@ -234,7 +234,7 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
           <div className="card card-compact bg-base-100 shadow-xl mx-auto m-4">
             <div className="card-body">
               <h2 className="card-title mx-auto">
-                Story: {roomFromDb.storyName}
+                Topic: {roomFromDb.topicName}
               </h2>
 
               <ul className="p-0 mx-auto flex flex-row flex-wrap justify-center items-center text-ceter gap-4">
@@ -346,15 +346,15 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
                     }}
                   />
 
-                  <label className="label mx-auto">{"Story Name:"} </label>
+                  <label className="label mx-auto">{"Topic Name:"} </label>
 
                   <input
                     type="text"
-                    placeholder="Story Name"
+                    placeholder="Topic Name"
                     className="input input-bordered m-auto"
-                    value={storyNameText}
+                    value={topicNameText}
                     onChange={(event) => {
-                      setStoryNameText(event.target.value);
+                      setTopicNameText(event.target.value);
                     }}
                   />
 
@@ -384,7 +384,7 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
                           saveRoom(
                             false,
                             true,
-                            roomFromDb.storyName === storyNameText ||
+                            roomFromDb.topicName === topicNameText ||
                               votesFromDb?.length === 0
                               ? false
                               : true
@@ -397,7 +397,7 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
                           ).length <= 1
                         }
                       >
-                        {roomFromDb.storyName === storyNameText ||
+                        {roomFromDb.topicName === topicNameText ||
                         votesFromDb?.length === 0 ? (
                           <>
                             <IoReloadOutline className="text-xl mr-1" /> Reset

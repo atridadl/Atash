@@ -23,7 +23,7 @@ export const roomRouter = createTRPCRouter({
           id: `room_${createId()}`,
           userId: ctx.auth.userId,
           roomName: input.name,
-          storyName: "First Story!",
+          topicName: "First Topic!",
           scale: "0.5,1,2,3,5,8",
           visible: false,
           orgId: ctx.auth.orgId,
@@ -147,7 +147,7 @@ export const roomRouter = createTRPCRouter({
                 };
               }),
               roomName: oldRoom.roomName,
-              storyName: oldRoom.storyName,
+              topicName: oldRoom.topicName,
             }));
         }
 
@@ -159,7 +159,7 @@ export const roomRouter = createTRPCRouter({
       const newRoom = await ctx.db
         .update(rooms)
         .set({
-          storyName: input.name,
+          topicName: input.name,
           visible: input.visible,
           scale: [...new Set(input.scale.split(","))]
             .filter((item) => item !== "")

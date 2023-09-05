@@ -15,7 +15,7 @@ export const rooms = pgTable("Room", {
   userId: varchar("userId", { length: 255 }).notNull(),
   orgId: varchar("orgId", { length: 255 }),
   roomName: varchar("roomName", { length: 255 }),
-  storyName: varchar("storyName", { length: 255 }),
+  topicName: varchar("topicName", { length: 255 }),
   visible: boolean("visible").default(false).notNull(),
   scale: varchar("scale", { length: 255 }).default("0.5,1,2,3,5").notNull(),
 });
@@ -63,7 +63,7 @@ export const logs = pgTable(
     scale: varchar("scale", { length: 255 }),
     votes: json("votes"),
     roomName: varchar("roomName", { length: 255 }),
-    storyName: varchar("storyName", { length: 255 }),
+    topicName: varchar("topicName", { length: 255 }),
   },
   (table) => {
     return {
