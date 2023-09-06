@@ -24,14 +24,19 @@ import { env } from "@/env.mjs";
 import { isAdmin, isVIP, jsonToCsv } from "@/utils/helpers";
 import type { PresenceItem } from "@/utils/types";
 import { trpc } from "@/app/_trpc/client";
-import Loading from "@/app/_components/Loading";
-import { User } from "@clerk/nextjs/dist/types/server";
+import LoadingIndicator from "@/app/_components/LoadingIndicator";
+import { useUser } from "@clerk/nextjs";
 
-const VoteUI = ({ user }: { user: Partial<User> }) => {
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
+
+const VoteUI = () => {
   const params = useParams();
   const roomId = params?.id as string;
+  const { user } = useUser();
 
-  const [topicNameText, setTopicNameText] = useState<string>("");
+  const [storyNameText, setStoryNameText] = useState<string>("");
   const [roomScale, setRoomScale] = useState<string>("");
   const [copied, setCopied] = useState<boolean>(false);
 
@@ -69,7 +74,7 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
   const [presenceData] = usePresence<PresenceItem>(
     `${env.NEXT_PUBLIC_APP_ENV}-${roomId}`,
     {
-      name: `${user?.firstName} ${user?.lastName}` || "",
+      name: (user?.fullName ?? user?.username) || "",
       image: user?.imageUrl || "",
       client_id: user?.id || "unknown",
       isAdmin: isAdmin(user?.publicMetadata),
@@ -88,10 +93,10 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
     };
   }, [channel.presence, roomId]);
 
-  // Init topic name
+  // Init story name
   useEffect(() => {
     if (roomFromDb) {
-      setTopicNameText(roomFromDb.topicName || "");
+      setStoryNameText(roomFromDb.topicName || "");
       setRoomScale(roomFromDb.scale || "ERROR");
     }
   }, [roomFromDb, roomId, user]);
@@ -99,7 +104,9 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
   // Helper functions
   const getVoteForCurrentUser = () => {
     if (roomFromDb) {
-      return votesFromDb && votesFromDb.find((vote) => vote.userId === user.id);
+      return (
+        votesFromDb && votesFromDb.find((vote) => vote.userId === user?.id)
+      );
     } else {
       return null;
     }
@@ -117,7 +124,7 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
   const saveRoom = (visible: boolean, reset = false, log = false) => {
     if (roomFromDb) {
       setRoomInDb.mutate({
-        name: topicNameText,
+        name: storyNameText,
         roomId: roomFromDb.id,
         scale: roomScale,
         visible: visible,
@@ -137,7 +144,7 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
             userId: item.userId,
             roomId: item.roomId,
             roomName: item.roomName,
-            topicName: item.topicName,
+            storyName: item.topicName,
             scale: item.scale,
             votes: item.votes,
           };
@@ -148,7 +155,7 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
           userId: roomFromDb.userId,
           roomId: roomFromDb.id,
           roomName: roomFromDb.roomName,
-          topicName: topicNameText,
+          storyName: storyNameText,
           scale: roomScale,
           votes: votesFromDb.map((vote) => {
             return {
@@ -204,7 +211,7 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
 
   // Room is loading
   if (roomFromDb === undefined) {
-    return <Loading />;
+    return <LoadingIndicator />;
     // Room has been loaded
   } else if (roomFromDb) {
     return (
@@ -230,7 +237,7 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
           <div className="card card-compact bg-base-100 shadow-xl mx-auto m-4">
             <div className="card-body">
               <h2 className="card-title mx-auto">
-                Topic: {roomFromDb.topicName}
+                Story: {roomFromDb.topicName}
               </h2>
 
               <ul className="p-0 mx-auto flex flex-row flex-wrap justify-center items-center text-ceter gap-4">
@@ -322,7 +329,7 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
         )}
 
         {!!roomFromDb &&
-          (roomFromDb.userId === user.id || isAdmin(user?.publicMetadata)) && (
+          (roomFromDb.userId === user?.id || isAdmin(user?.publicMetadata)) && (
             <>
               <div className="card card-compact bg-base-100 shadow-xl mx-auto m-4">
                 <div className="card-body flex flex-col flex-wrap">
@@ -342,15 +349,15 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
                     }}
                   />
 
-                  <label className="label mx-auto">{"Topic Name:"} </label>
+                  <label className="label mx-auto">{"Story Name:"} </label>
 
                   <input
                     type="text"
-                    placeholder="Topic Name"
+                    placeholder="Story Name"
                     className="input input-bordered m-auto"
-                    value={topicNameText}
+                    value={storyNameText}
                     onChange={(event) => {
-                      setTopicNameText(event.target.value);
+                      setStoryNameText(event.target.value);
                     }}
                   />
 
@@ -380,7 +387,7 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
                           saveRoom(
                             false,
                             true,
-                            roomFromDb.topicName === topicNameText ||
+                            roomFromDb.topicName === storyNameText ||
                               votesFromDb?.length === 0
                               ? false
                               : true
@@ -393,7 +400,7 @@ const VoteUI = ({ user }: { user: Partial<User> }) => {
                           ).length <= 1
                         }
                       >
-                        {roomFromDb.topicName === topicNameText ||
+                        {roomFromDb.topicName === storyNameText ||
                         votesFromDb?.length === 0 ? (
                           <>
                             <IoReloadOutline className="text-xl mr-1" /> Reset
