@@ -9,10 +9,6 @@ import { useOrganization } from "@clerk/nextjs";
 import { trpc } from "../_trpc/client";
 import Loading from "./Loading";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-export const fetchCache = "force-no-store";
-
 const RoomList = ({ userId }: { userId: string }) => {
   const { organization } = useOrganization();
 

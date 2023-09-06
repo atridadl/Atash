@@ -50,6 +50,14 @@ export default authMiddleware({
       }
     }
 
+    if (auth.userId && !auth.isPublicRoute) {
+      const requestHeaders = new Headers(req.headers);
+      requestHeaders.set("Cache-Control", "no-cache");
+      return NextResponse.next({
+        headers: requestHeaders,
+      });
+    }
+
     if (!auth.userId && !auth.isPublicRoute) {
       // This is annoying...
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-explicit-any

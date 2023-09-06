@@ -27,10 +27,6 @@ import { trpc } from "@/app/_trpc/client";
 import Loading from "@/app/_components/Loading";
 import { User } from "@clerk/nextjs/dist/types/server";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-export const fetchCache = "force-no-store";
-
 const VoteUI = ({ user }: { user: Partial<User> }) => {
   const params = useParams();
   const roomId = params?.id as string;
