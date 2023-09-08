@@ -12,7 +12,7 @@ Atash (آتش) is Persian or Farsi for Fire! Pronounced "Ahh-tash".
 - 🔥 API Key Auth
 - 🔥 Caching and Rate Limiting!
 - 🔥 Fast queries with Drizzle!
-- 🔥 App Router!
+- 🔥 App Router + Server Actions!
 - 🔥 Edge Runtime!
 - 🔥 Customizable Themes
 - 🔥 100% free and open-source... forever!

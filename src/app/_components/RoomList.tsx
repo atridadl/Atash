@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { configureAbly, useChannel } from "@ably-labs/react-hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoEnterOutline, IoTrashBinOutline } from "react-icons/io5";
 import { env } from "@/env.mjs";
-import { trpc } from "../_trpc/client";
 import LoadingIndicator from "./LoadingIndicator";
-import { useUser } from "@clerk/nextjs";
+import { useOrganization, useUser } from "@clerk/nextjs";
+import { createRoom, deleteRoom, getRooms } from "@/server/actions/room";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -15,6 +15,7 @@ export const fetchCache = "force-no-store";
 
 const RoomList = () => {
   const { user } = useUser();
+  const { organization } = useOrganization();
 
   configureAbly({
     key: env.NEXT_PUBLIC_ABLY_PUBLIC_KEY,
@@ -25,30 +26,50 @@ const RoomList = () => {
   });
 
   useChannel(
-    `${env.NEXT_PUBLIC_APP_ENV}-${user?.id}`,
-    () => void refetchRoomsFromDb()
+    `${env.NEXT_PUBLIC_APP_ENV}-${organization ? organization.id : user?.id}`,
+    () => void getRoomsHandler()
   );
 
   const [roomName, setRoomName] = useState<string>("");
+  const [roomsFromDb, setRoomsFromDb] = useState<
+    | {
+        id: string;
+        createdAt: Date;
+        roomName: string;
+      }[]
+    | {
+        id: string;
+        created_at: Date | null;
+        userId: string;
+        orgId: string | null;
+        roomName: string | null;
+        topicName: string | null;
+        visible: boolean;
+        scale: string;
+      }[]
+    | undefined
+  >();
 
-  const { data: roomsFromDb, refetch: refetchRoomsFromDb } =
-    trpc.room.getAll.useQuery(undefined);
-
-  const createRoom = trpc.room.create.useMutation({});
-
-  const createRoomHandler = () => {
-    createRoom.mutate({ name: roomName });
+  const createRoomHandler = async () => {
+    await createRoom(roomName);
     setRoomName("");
     (document.querySelector("#roomNameInput") as HTMLInputElement).value = "";
     (document.querySelector("#new-room-modal") as HTMLInputElement).checked =
       false;
   };
 
-  const deleteRoom = trpc.room.delete.useMutation({});
-
-  const deleteRoomHandler = (roomId: string) => {
-    deleteRoom.mutate({ id: roomId });
+  const getRoomsHandler = async () => {
+    const dbRooms = await getRooms();
+    setRoomsFromDb(dbRooms);
   };
+
+  const deleteRoomHandler = async (roomId: string) => {
+    await deleteRoom(roomId);
+  };
+
+  useEffect(() => {
+    void getRoomsHandler();
+  }, [organization]);
 
   return (
     <div className="flex flex-col items-center justify-center gap-8">
@@ -85,7 +106,7 @@ const RoomList = () => {
               <label
                 htmlFor="new-room-modal"
                 className="btn btn-primary"
-                onClick={() => createRoomHandler()}
+                onClick={() => void createRoomHandler()}
               >
                 Submit
               </label>
@@ -121,7 +142,7 @@ const RoomList = () => {
 
                       <button
                         className="m-2"
-                        onClick={() => deleteRoomHandler(room.id)}
+                        onClick={() => void deleteRoomHandler(room.id)}
                       >
                         <IoTrashBinOutline className="text-xl inline-block hover:text-error" />
                       </button>
