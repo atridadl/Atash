@@ -66,7 +66,6 @@ export const setVote = async (value: string, roomId: string) => {
   const success = upsertResult.rowCount > 0;
 
   if (success) {
-    await invalidateCache(`kv_votecount`);
     await invalidateCache(`kv_votes_${roomId}`);
 
     await publishToChannel(`${roomId}`, EventTypes.VOTE_UPDATE, value);

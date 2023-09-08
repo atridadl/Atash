@@ -53,7 +53,7 @@ export const createRoom = async (name: string) => {
 };
 
 export const deleteRoom = async (id: string) => {
-  const { userId } = auth();
+  const { userId, orgId } = auth();
 
   if (!userId) {
     return false;
@@ -67,10 +67,6 @@ export const deleteRoom = async (id: string) => {
   const success = deletedRoom.length > 0;
 
   if (success) {
-    await invalidateCache(`kv_roomcount`);
-    await invalidateCache(`kv_votecount`);
-    await invalidateCache(`kv_roomlist_${userId}`);
-
     await publishToChannel(
       `${userId}`,
       EventTypes.ROOM_LIST_UPDATE,
@@ -83,11 +79,23 @@ export const deleteRoom = async (id: string) => {
       JSON.stringify(deletedRoom)
     );
 
-    await publishToChannel(
-      `stats`,
-      EventTypes.STATS_UPDATE,
-      JSON.stringify(deletedRoom)
-    );
+    if (orgId) {
+      await invalidateCache(`kv_roomlist_${orgId}`);
+
+      await publishToChannel(
+        `${orgId}`,
+        EventTypes.ROOM_LIST_UPDATE,
+        JSON.stringify(deletedRoom)
+      );
+    } else {
+      await invalidateCache(`kv_roomlist_${userId}`);
+
+      await publishToChannel(
+        `${userId}`,
+        EventTypes.ROOM_LIST_UPDATE,
+        JSON.stringify(deletedRoom)
+      );
+    }
   }
 
   return success;

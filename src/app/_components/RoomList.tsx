@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { IoEnterOutline, IoTrashBinOutline } from "react-icons/io5";
 import { env } from "@/env.mjs";
 import LoadingIndicator from "./LoadingIndicator";
-import { useUser } from "@clerk/nextjs";
+import { useOrganization, useUser } from "@clerk/nextjs";
 import { createRoom, deleteRoom, getRooms } from "@/server/actions/room";
 
 export const dynamic = "force-dynamic";
@@ -15,6 +15,7 @@ export const fetchCache = "force-no-store";
 
 const RoomList = () => {
   const { user } = useUser();
+  const { organization } = useOrganization();
 
   configureAbly({
     key: env.NEXT_PUBLIC_ABLY_PUBLIC_KEY,
@@ -25,7 +26,7 @@ const RoomList = () => {
   });
 
   useChannel(
-    `${env.NEXT_PUBLIC_APP_ENV}-${user?.id}`,
+    `${env.NEXT_PUBLIC_APP_ENV}-${organization ? organization.id : user?.id}`,
     () => void getRoomsHandler()
   );
 
@@ -68,7 +69,7 @@ const RoomList = () => {
 
   useEffect(() => {
     void getRoomsHandler();
-  }, []);
+  }, [organization]);
 
   return (
     <div className="flex flex-col items-center justify-center gap-8">
