@@ -9,6 +9,12 @@ import { publishToChannel } from "../ably";
 import { EventTypes } from "@/utils/types";
 import { and, eq, isNull } from "drizzle-orm";
 
+/**
+ * Creates a new room.
+ *
+ * @param {string} name - The name of the room.
+ * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating the success of room creation.
+ */
 export const createRoom = async (name: string) => {
   const { userId, orgId } = auth();
 
@@ -52,6 +58,12 @@ export const createRoom = async (name: string) => {
   return success;
 };
 
+/**
+ * Deletes a room with the specified ID.
+ *
+ * @param {string} id - The ID of the room to delete.
+ * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating the success of room deletion.
+ */
 export const deleteRoom = async (id: string) => {
   const { userId, orgId } = auth();
 
@@ -101,11 +113,17 @@ export const deleteRoom = async (id: string) => {
   return success;
 };
 
+/**
+ * Retrieves a room with the specified ID.
+ *
+ * @param {string} id - The ID of the room to retrieve.
+ * @returns {Promise<object|null>} - A promise that resolves to the retrieved room object or null if not found.
+ */
 export const getRoom = async (id: string) => {
   const { userId } = auth();
 
   if (!userId) {
-    return undefined;
+    return null;
   }
 
   const roomFromDb = await db.query.rooms.findFirst({
@@ -114,15 +132,19 @@ export const getRoom = async (id: string) => {
       logs: true,
     },
   });
-  console.log(roomFromDb);
-  return roomFromDb;
+  return roomFromDb || null;
 };
 
+/**
+ * Retrieves a list of rooms.
+ *
+ * @returns {Promise<object[]|null>} - A promise that resolves to an array of room objects or null if not found.
+ */
 export const getRooms = async () => {
   const { userId, orgId } = auth();
 
   if (!userId) {
-    return undefined;
+    return null;
   }
 
   if (orgId) {
@@ -168,6 +190,17 @@ export const getRooms = async () => {
   }
 };
 
+/**
+ * Sets the properties of a room.
+ *
+ * @param {string} name - The new name of the room.
+ * @param {boolean} visible - Indicates if the room is visible.
+ * @param {string} scale - The scale values for the room.
+ * @param {string} roomId - The ID of the room to update.
+ * @param {boolean} reset - Indicates whether to reset room data.
+ * @param {boolean} log - Indicates whether to log changes.
+ * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating the success of the room update.
+ */
 export const setRoom = async (
   name: string,
   visible: boolean,

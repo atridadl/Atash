@@ -1,9 +1,13 @@
 import { eq } from "drizzle-orm";
-import { db } from "./db";
-import { rooms } from "./schema";
+import { db } from "../server/db";
+import { rooms } from "../server/schema";
 import { env } from "@/env.mjs";
 
-export const onUserDeletedHandler = async (userId: string) => {
+export const onUserDeletedHandler = async (userId: string | undefined) => {
+  if (!userId) {
+    return false;
+  }
+
   try {
     await db.delete(rooms).where(eq(rooms.userId, userId));
 
@@ -13,7 +17,11 @@ export const onUserDeletedHandler = async (userId: string) => {
   }
 };
 
-export const onUserCreatedHandler = async (userId: string) => {
+export const onUserCreatedHandler = async (userId: string | undefined) => {
+  if (!userId) {
+    return false;
+  }
+
   const userUpdateResponse = await fetch(
     `https://api.clerk.com/v1/users/${userId}/metadata`,
     {

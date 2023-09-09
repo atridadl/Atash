@@ -13,6 +13,7 @@ export const env = createEnv({
     APP_ENV: z.string(),
     UNKEY_ROOT_KEY: z.string(),
     CLERK_SECRET_KEY: z.string(),
+    CLERK_WEBHOOK_SIGNING_SECRET: z.string(),
   },
   client: {
     NEXT_PUBLIC_ABLY_PUBLIC_KEY: z.string(),

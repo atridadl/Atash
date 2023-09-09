@@ -48,7 +48,8 @@ const RoomList = () => {
         scale: string;
       }[]
     | undefined
-  >();
+    | null
+  >(undefined);
 
   const createRoomHandler = async () => {
     await createRoom(roomName);

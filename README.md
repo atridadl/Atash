@@ -8,8 +8,7 @@ Atash (آتش) is Persian or Farsi for Fire! Pronounced "Ahh-tash".
 
 ## Features
 
-- 🔥 User Auth and Orgs!
-- 🔥 API Key Auth
+- 🔥 User Auth, API Auth, and Orgs!
 - 🔥 Caching and Rate Limiting!
 - 🔥 Fast queries with Drizzle!
 - 🔥 App Router + Server Actions!
@@ -37,6 +36,7 @@ Atash (آتش) is Persian or Farsi for Fire! Pronounced "Ahh-tash".
 - Create projects on all of those services
 - Run the `pnpm init:env` command to generate a .env file to fill out
 - Ensure that the webhook url https://DOMAIN.TLD/api/webhooks is added with the user.created and user.deleted events
+- You will need up a webhook to point to https://<domain.tld>/api/webhooks, and ensure you use the "Signing Secret" from the webhook as your CLERK_WEBHOOK_SIGNING_SECRET environment variable...
 - For the Headers: please generate an Unkey key and pass it in the headers as a Bearer token for the webhook
 - Set the proper regions for your edge public/private/webhook functions:
 

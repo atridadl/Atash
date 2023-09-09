@@ -9,11 +9,17 @@ import { publishToChannel } from "../ably";
 import { EventTypes } from "@/utils/types";
 import { eq } from "drizzle-orm";
 
+/**
+ * Retrieves votes for a specific room.
+ *
+ * @param {string} roomId - The ID of the room for which votes are retrieved.
+ * @returns {Promise<object[]|null>} - A promise that resolves to an array of vote objects or null if not found.
+ */
 export const getVotes = async (roomId: string) => {
   const { userId } = auth();
 
   if (!userId) {
-    return undefined;
+    return null;
   }
 
   const cachedResult = await fetchCache<
@@ -39,6 +45,13 @@ export const getVotes = async (roomId: string) => {
   }
 };
 
+/**
+ * Sets a vote value for a room.
+ *
+ * @param {string} value - The value of the vote.
+ * @param {string} roomId - The ID of the room for which the vote is being set.
+ * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating the success of the vote setting.
+ */
 export const setVote = async (value: string, roomId: string) => {
   const { userId } = auth();
 

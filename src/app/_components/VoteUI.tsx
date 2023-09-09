@@ -63,6 +63,7 @@ const VoteUI = () => {
         }[];
       }
     | undefined
+    | null
   >();
 
   const [votesFromDb, setVotesFromDb] = useState<
@@ -74,7 +75,8 @@ const VoteUI = () => {
         value: string;
       }[]
     | undefined
-  >();
+    | null
+  >(undefined);
 
   const getRoomHandler = async () => {
     const dbRoom = await getRoom(roomId);

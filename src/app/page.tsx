@@ -22,13 +22,12 @@ export default function Home() {
         <div className="card-body">
           <h2 className="card-title">Features:</h2>
           <ul>
-            <li>🔥 User Auth and Orgs!</li>
-            <li>🔥 API Key Auth</li>
+            <li>🔥 User Auth, API Auth, and Orgs!</li>
             <li>🔥 Caching and Rate Limiting!</li>
             <li>🔥 Fast queries with Drizzle!</li>
-            <li>🔥 App Router!</li>
-            <li>🔥 Edge Runtime</li>
-            <li>🔥 Customizable Themes</li>
+            <li>🔥 App Router + Server Actions!</li>
+            <li>🔥 Edge Runtime!</li>
+            <li>🔥 Customizable Themes!</li>
             <li>🔥 100% free and open-source... forever!</li>
           </ul>
         </div>
