@@ -10,8 +10,6 @@ interface NavbarProps {
   title: string;
 }
 
-export const dynamic = "force-dynamic";
-
 const Navbar = ({ title }: NavbarProps) => {
   const { isSignedIn } = useUser();
   const router = useRouter();

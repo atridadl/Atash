@@ -5,13 +5,9 @@ import { configureAbly, useChannel } from "@ably-labs/react-hooks";
 import { useEffect, useState } from "react";
 import { IoEnterOutline, IoTrashBinOutline } from "react-icons/io5";
 import { env } from "@/env.mjs";
-import LoadingIndicator from "./LoadingIndicator";
+import LoadingIndicator from "../_components/LoadingIndicator";
 import { useOrganization, useUser } from "@clerk/nextjs";
 import { createRoom, deleteRoom, getRooms } from "@/server/actions/room";
-
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-export const fetchCache = "force-no-store";
 
 const RoomList = () => {
   const { user } = useUser();

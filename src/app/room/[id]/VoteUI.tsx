@@ -17,7 +17,6 @@ import {
 } from "react-icons/io5";
 import { GiStarFormation } from "react-icons/gi";
 import { configureAbly, useChannel, usePresence } from "@ably-labs/react-hooks";
-import Link from "next/link";
 import { FaShieldAlt } from "react-icons/fa";
 import { RiVipCrownFill } from "react-icons/ri";
 import { env } from "@/env.mjs";
@@ -27,10 +26,7 @@ import LoadingIndicator from "@/app/_components/LoadingIndicator";
 import { useUser } from "@clerk/nextjs";
 import { getRoom, setRoom } from "@/server/actions/room";
 import { getVotes, setVote } from "@/server/actions/vote";
-
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-export const fetchCache = "force-no-store";
+import NoRoomUI from "./NoRoomUI";
 
 const VoteUI = () => {
   const params = useParams();
@@ -480,21 +476,7 @@ const VoteUI = () => {
     );
     // Room does not exist
   } else {
-    return (
-      <span className="text-center">
-        <h1 className="text-5xl font-bold m-2">4️⃣0️⃣4️⃣</h1>
-        <h1 className="text-5xl font-bold m-2">
-          Oops! This room does not appear to exist, or may have been deleted! 😢
-        </h1>
-        <Link
-          about="Back to home."
-          href="/"
-          className="btn btn-secondary normal-case text-xl m-2"
-        >
-          Back to Home
-        </Link>
-      </span>
-    );
+    return <NoRoomUI />;
   }
 };
 

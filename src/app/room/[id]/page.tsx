@@ -1,4 +1,4 @@
-import VoteUI from "@/app/_components/VoteUI";
+import VoteUI from "@/app/room/[id]/VoteUI";
 
 export default function Room() {
   return (
