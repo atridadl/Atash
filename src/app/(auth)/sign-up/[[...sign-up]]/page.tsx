@@ -2,8 +2,6 @@
 
 import { SignUp } from "@clerk/nextjs";
 
-export const dynamic = "force-static";
-
 const SignUpPage = () => (
   <div style={styles}>
     <SignUp path="/sign-up" routing="path" signInUrl="/sign-in" />

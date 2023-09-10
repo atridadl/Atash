@@ -1,4 +1,4 @@
-import RoomList from "@/app/_components/RoomList";
+import RoomList from "@/app/dashboard/RoomList";
 import { FaShieldAlt } from "react-icons/fa";
 import { GiStarFormation } from "react-icons/gi";
 import { isAdmin, isVIP } from "@/utils/helpers";
