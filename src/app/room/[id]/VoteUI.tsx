@@ -135,6 +135,7 @@ const VoteUI = () => {
       setRoomScale(roomFromDb.scale || "ERROR");
     } else {
       void getRoomHandler();
+      void getVotesHandler();
     }
   }, [roomFromDb, roomId, user]);
 
