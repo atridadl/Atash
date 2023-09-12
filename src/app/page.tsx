@@ -9,7 +9,7 @@ export default function Home() {
         (آتش)🔥
       </h1>
 
-      <h2 className="my-4 text-xl sm:text-3xl font-bold">
+      <h2 className="text-xl sm:text-3xl font-bold">
         The 🔥
         <span className="bg-gradient-to-br from-red-600 to-orange-400 bg-clip-text text-transparent box-decoration-clone">
           hottest

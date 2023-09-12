@@ -235,15 +235,13 @@ const VoteUI = () => {
       if (!!matchedVote) {
         return <div>{matchedVote.value}</div>;
       } else {
-        return <IoHourglassOutline className="text-xl mx-auto text-error" />;
+        return <IoHourglassOutline className="text-xl text-error" />;
       }
     } else if (!!matchedVote) {
-      return (
-        <IoCheckmarkCircleOutline className="text-xl mx-auto text-success" />
-      );
+      return <IoCheckmarkCircleOutline className="text-xl text-success" />;
     } else {
       return (
-        <IoHourglassOutline className="text-xl animate-spin mx-auto text-warning" />
+        <IoHourglassOutline className="text-xl animate-spin text-warning" />
       );
     }
   };
@@ -254,9 +252,9 @@ const VoteUI = () => {
     // Room has been loaded
   } else if (roomFromDb) {
     return (
-      <span className="text-center">
+      <div className="flex flex-col gap-4 text-center justify-center items-center">
         <div className="text-2xl">{roomFromDb.roomName}</div>
-        <div className="flex flex-row flex-wrap text-center justify-center items-center gap-1 text-md mx-auto">
+        <div className="flex flex-row flex-wrap text-center justify-center items-center gap-1 text-md">
           <div>ID:</div>
           <div>{roomFromDb.id}</div>
 
@@ -273,13 +271,11 @@ const VoteUI = () => {
         </div>
 
         {roomFromDb && (
-          <div className="card card-compact bg-base-100 shadow-xl mx-auto m-4">
+          <div className="card card-compact bg-base-100 shadow-xl">
             <div className="card-body">
-              <h2 className="card-title mx-auto">
-                Topic: {roomFromDb.topicName}
-              </h2>
+              <h2 className="card-title">Topic: {roomFromDb.topicName}</h2>
 
-              <ul className="p-0 mx-auto flex flex-row flex-wrap justify-center items-center text-ceter gap-4">
+              <ul className="p-0 flex flex-row flex-wrap justify-center items-center text-ceter gap-4">
                 {presenceData &&
                   presenceData
                     .filter(
@@ -296,7 +292,7 @@ const VoteUI = () => {
                           key={presenceItem.clientId}
                           className="flex flex-row items-center justify-center gap-2"
                         >
-                          <div className="w-10 rounded-full avatar mx-auto">
+                          <div className="w-10 rounded-full avatar">
                             <Image
                               src={presenceItem.data.image}
                               alt={`${presenceItem.data.name}'s Profile Picture`}
@@ -305,7 +301,7 @@ const VoteUI = () => {
                             />
                           </div>
 
-                          <p className="flex flex-row flex-wrap text-center justify-center items-center gap-1 text-md mx-auto">
+                          <p className="flex flex-row flex-wrap text-center justify-center items-center gap-1 text-md">
                             {presenceItem.data.name}{" "}
                             {presenceItem.data.isAdmin && (
                               <span
@@ -346,7 +342,7 @@ const VoteUI = () => {
                     })}
               </ul>
 
-              <div className="join md:btn-group-horizontal mx-auto">
+              <div className="join md:btn-group-horizontal">
                 {roomFromDb.scale?.split(",").map((scaleItem, index) => {
                   return (
                     <button
@@ -370,30 +366,30 @@ const VoteUI = () => {
         {!!roomFromDb &&
           (roomFromDb.userId === user?.id || isAdmin(user?.publicMetadata)) && (
             <>
-              <div className="card card-compact bg-base-100 shadow-xl mx-auto m-4">
+              <div className="card card-compact bg-base-100 shadow-xl">
                 <div className="card-body flex flex-col flex-wrap">
-                  <h2 className="card-title mx-auto">Room Settings</h2>
+                  <h2 className="card-title">Room Settings</h2>
 
-                  <label className="label mx-auto">
+                  <label className="label">
                     {"Vote Scale (Comma Separated):"}{" "}
                   </label>
 
                   <input
                     type="text"
                     placeholder="Scale (Comma Separated)"
-                    className="input input-bordered m-auto"
+                    className="input input-bordered"
                     value={roomScale}
                     onChange={(event) => {
                       setRoomScale(event.target.value);
                     }}
                   />
 
-                  <label className="label mx-auto">{"Topic Name:"} </label>
+                  <label className="label">{"Topic Name:"} </label>
 
                   <input
                     type="text"
                     placeholder="Topic Name"
-                    className="input input-bordered m-auto"
+                    className="input input-bordered"
                     value={topicNameText}
                     onChange={(event) => {
                       setTopicNameText(event.target.value);
@@ -473,7 +469,7 @@ const VoteUI = () => {
               </div>
             </>
           )}
-      </span>
+      </div>
     );
     // Room does not exist
   } else {

@@ -9,7 +9,7 @@ export default async function Dashboard() {
 
   return (
     <div className="flex flex-col text-center items-center justify-center px-4 py-16 gap-4">
-      <h1 className="flex flex-row flex-wrap text-center justify-center items-center gap-1 text-4xl font-bold mx-auto">
+      <h1 className="flex flex-row flex-wrap text-center justify-center items-center gap-1 text-4xl font-bold">
         Hi, {user?.firstName ?? user?.username}!{" "}
         {isAdmin(user?.publicMetadata) && (
           <FaShieldAlt className="inline-block text-primary" />
