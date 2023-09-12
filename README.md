@@ -23,11 +23,11 @@ Atash (آتش) is Persian or Farsi for Fire! Pronounced "Ahh-tash".
 - Rendering method: SSR SPA
 - Hosting: Vercel
 - Real-time pub/sub: Ably
-- ORM: Drizzle
+- ORM: Drizzle ORM
 - Auth: Clerk
 - API Key Management: Unkey
 - Database: Neon (PostgreSQL)
-- Cache: Upstash (Redis)
+- Database Cache: Upstash (Redis)
 - CSS: TailwindCSS + DaisyUI
 
 ## Instructions
