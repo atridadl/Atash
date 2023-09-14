@@ -28,18 +28,41 @@ export default authMiddleware({
       });
     }
 
-    if (req.nextUrl.pathname.includes("/api/private")) {
+    if (req.nextUrl.pathname.includes("/api/internal")) {
       const { success } = await rateLimit.limit(req.ip || "");
 
-      const isValid = await validateRequest(req);
-      if (isValid && success) {
-        return NextResponse.next();
-      } else if (!success) {
+      if (!success) {
         return new NextResponse("TOO MANY REQUESTS", {
           status: 429,
           statusText: "Too many requests!",
         });
-      } else if (!isValid) {
+      }
+
+      if (auth.userId) {
+        return NextResponse.next();
+      } else {
+        return new NextResponse("UNAUTHORIZED", {
+          status: 403,
+          statusText: "Unauthorized!",
+        });
+      }
+    }
+
+    if (req.nextUrl.pathname.includes("/api/private")) {
+      const { success } = await rateLimit.limit(req.ip || "");
+
+      if (!success) {
+        return new NextResponse("TOO MANY REQUESTS", {
+          status: 429,
+          statusText: "Too many requests!",
+        });
+      }
+
+      const isValid = await validateRequest(req);
+
+      if (isValid) {
+        return NextResponse.next();
+      } else {
         return new NextResponse("UNAUTHORIZED", {
           status: 403,
           statusText: "Unauthorized!",

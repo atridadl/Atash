@@ -5,7 +5,7 @@ import { db } from "../db";
 import { votes } from "../schema";
 import { auth } from "@clerk/nextjs";
 import { fetchCache, invalidateCache, setCache } from "../redis";
-import { publishToChannel } from "./pub";
+import { publishToChannel } from "./ably";
 import { EventTypes } from "@/utils/types";
 import { eq } from "drizzle-orm";
 

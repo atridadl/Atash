@@ -12,7 +12,7 @@ export const publishToChannel = async (
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Basic ${btoa(env.ABLY_PRIVATE_KEY)}`,
+        Authorization: `Basic ${btoa(env.ABLY_API_KEY)}`,
       },
       body: JSON.stringify({
         name: event,
