@@ -1,25 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { configureAbly, useChannel } from "@ably-labs/react-hooks";
 import { useEffect, useState } from "react";
 import { IoEnterOutline, IoTrashBinOutline } from "react-icons/io5";
 import { env } from "@/env.mjs";
-import LoadingIndicator from "../_components/LoadingIndicator";
+import LoadingIndicator from "../../_components/LoadingIndicator";
 import { useOrganization, useUser } from "@clerk/nextjs";
 import { createRoom, deleteRoom, getRooms } from "@/server/actions/room";
+import { useChannel } from "ably/react";
 
 const RoomList = () => {
   const { user } = useUser();
   const { organization } = useOrganization();
-
-  configureAbly({
-    key: env.NEXT_PUBLIC_ABLY_PUBLIC_KEY,
-    clientId: user?.id,
-    recover: (_, cb) => {
-      cb(true);
-    },
-  });
 
   useChannel(
     `${env.NEXT_PUBLIC_APP_ENV}-${organization ? organization.id : user?.id}`,

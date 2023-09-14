@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@ably-labs/react-hooks':
-    specifier: ^2.1.1
-    version: 2.1.1(react-dom@18.2.0)(react@18.2.0)
   '@clerk/nextjs':
     specifier: ^4.23.5
     version: 4.23.5(next@13.4.19)(react-dom@18.2.0)(react@18.2.0)
@@ -32,6 +29,9 @@ dependencies:
   '@upstash/redis':
     specifier: ^1.22.0
     version: 1.22.0
+  ably:
+    specifier: ^1.2.44
+    version: 1.2.44(bufferutil@4.0.7)(react-dom@18.2.0)(react@18.2.0)(utf-8-validate@5.0.2)
   autoprefixer:
     specifier: ^10.4.15
     version: 10.4.15(postcss@8.4.29)
@@ -88,6 +88,9 @@ devDependencies:
   '@typescript-eslint/parser':
     specifier: ^6.7.0
     version: 6.7.0(eslint@8.49.0)(typescript@5.2.2)
+  bufferutil:
+    specifier: ^4.0.7
+    version: 4.0.7
   daisyui:
     specifier: ^3.7.4
     version: 3.7.4
@@ -109,6 +112,9 @@ devDependencies:
   typescript:
     specifier: ^5.2.2
     version: 5.2.2
+  utf-8-validate:
+    specifier: 5.0.2
+    version: 5.0.2
 
 packages:
 
@@ -116,20 +122,6 @@ packages:
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==}
     engines: {node: '>=0.10.0'}
     dev: true
-
-  /@ably-labs/react-hooks@2.1.1(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-Bunqu9GDFInZLpFMfWhUboU1g4W5UXzDfeAqI9ueNIF3p9KIMS7LfgjKBfXsC0DtAWkBgCjL22PvNToiHP92Ig==}
-    peerDependencies:
-      react: '>=18.1.0'
-      react-dom: '>=18.1.0'
-    dependencies:
-      ably: 1.2.44(react-dom@18.2.0)(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-    dev: false
 
   /@ably/msgpack-js@0.4.0:
     resolution: {integrity: sha512-IPt/BoiQwCWubqoNik1aw/6M/DleMdrxJOUpSja6xmMRbT2p1TA8oqKWgfZabqzrq8emRNeSl/+4XABPNnW5pQ==}
@@ -1065,7 +1057,7 @@ packages:
       - encoding
     dev: false
 
-  /ably@1.2.44(react-dom@18.2.0)(react@18.2.0):
+  /ably@1.2.44(bufferutil@4.0.7)(react-dom@18.2.0)(react@18.2.0)(utf-8-validate@5.0.2):
     resolution: {integrity: sha512-HNRQLmQc08uyGh83ufohmocqcWNTOXf4YzsRkP3jrILvB/diqS0LE5/8QhXZDYBt+Hj5fB+3kfXe/ZnROmHvjw==}
     engines: {node: '>=5.10.x'}
     peerDependencies:
@@ -1081,7 +1073,7 @@ packages:
       got: 11.8.6
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      ws: 5.2.3
+      ws: 5.2.3(bufferutil@4.0.7)(utf-8-validate@5.0.2)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -1366,6 +1358,13 @@ packages:
       base64-js: 1.5.1
       ieee754: 1.2.1
     dev: false
+
+  /bufferutil@4.0.7:
+    resolution: {integrity: sha512-kukuqc39WOHtdxtw4UScxF/WVnMFVSQVKhtx3AjZJzhd0RGZZldcrfSEbVsWWe6KNH253574cq5F+wpv0G9pJw==}
+    engines: {node: '>=6.14.2'}
+    requiresBuild: true
+    dependencies:
+      node-gyp-build: 4.6.1
 
   /busboy@1.6.0:
     resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
@@ -3231,6 +3230,14 @@ packages:
       whatwg-url: 5.0.0
     dev: false
 
+  /node-gyp-build@3.7.0:
+    resolution: {integrity: sha512-L/Eg02Epx6Si2NXmedx+Okg+4UHqmaf3TNcxd50SF9NQGcJaON3AtU++kax69XV7YWz4tUspqZSAsVofhFKG2w==}
+    hasBin: true
+
+  /node-gyp-build@4.6.1:
+    resolution: {integrity: sha512-24vnklJmyRS8ViBNI8KbtK/r/DmXQMRiOMXTNz2nrTnAYUwjmEEbnnpB/+kt+yWRv73bPsSPRFddrcIbAxSiMQ==}
+    hasBin: true
+
   /node-releases@2.0.13:
     resolution: {integrity: sha512-uYr7J37ae/ORWdZeQ1xxMJe3NtdmqMC/JZK+geofDrkLUApKRHPd18/TxtBOJ4A0/+uUIliorNrfYV6s1b02eQ==}
     dev: false
@@ -4365,6 +4372,12 @@ packages:
       react: 18.2.0
     dev: false
 
+  /utf-8-validate@5.0.2:
+    resolution: {integrity: sha512-SwV++i2gTD5qh2XqaPzBnNX88N6HdyhQrNNRykvcS0QKvItV9u3vPEJr+X5Hhfb1JC0r0e1alL0iB09rY8+nmw==}
+    requiresBuild: true
+    dependencies:
+      node-gyp-build: 3.7.0
+
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -4469,7 +4482,7 @@ packages:
   /wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
-  /ws@5.2.3:
+  /ws@5.2.3(bufferutil@4.0.7)(utf-8-validate@5.0.2):
     resolution: {integrity: sha512-jZArVERrMsKUatIdnLzqvcfydI85dvd/Fp1u/VOpfdDWQ4c9qWXe+VIeAbQ5FrDwciAkr+lzofXLz3Kuf26AOA==}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -4481,6 +4494,8 @@ packages:
         optional: true
     dependencies:
       async-limiter: 1.0.1
+      bufferutil: 4.0.7
+      utf-8-validate: 5.0.2
     dev: false
 
   /xtend@4.0.2:

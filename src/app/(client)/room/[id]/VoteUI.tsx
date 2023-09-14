@@ -16,7 +16,6 @@ import {
   IoSaveOutline,
 } from "react-icons/io5";
 import { GiStarFormation } from "react-icons/gi";
-import { configureAbly, useChannel, usePresence } from "@ably-labs/react-hooks";
 import { FaShieldAlt } from "react-icons/fa";
 import { RiVipCrownFill } from "react-icons/ri";
 import { env } from "@/env.mjs";
@@ -24,6 +23,7 @@ import { isAdmin, isVIP, jsonToCsv } from "@/utils/helpers";
 import type { PresenceItem } from "@/utils/types";
 import LoadingIndicator from "@/app/_components/LoadingIndicator";
 import { useUser } from "@clerk/nextjs";
+import { useChannel, usePresence } from "ably/react";
 import { getRoom, setRoom } from "@/server/actions/room";
 import { getVotes, setVote } from "@/server/actions/vote";
 import NoRoomUI from "./NoRoomUI";
@@ -84,19 +84,11 @@ const VoteUI = () => {
     setVotesFromDb(dbVotes);
   };
 
-  configureAbly({
-    key: env.NEXT_PUBLIC_ABLY_PUBLIC_KEY,
-    clientId: user ? user.id : "unknown",
-    recover: (_, cb) => {
-      cb(true);
-    },
-  });
-
-  const [channel] = useChannel(
+  const { channel } = useChannel(
     {
       channelName: `${env.NEXT_PUBLIC_APP_ENV}-${roomId}`,
     },
-    ({ name }) => {
+    ({ name }: { name: string }) => {
       if (name === EventTypes.ROOM_UPDATE) {
         void getVotesHandler();
         void getRoomHandler();
@@ -106,7 +98,7 @@ const VoteUI = () => {
     }
   );
 
-  const [presenceData] = usePresence<PresenceItem>(
+  const { presenceData } = usePresence<PresenceItem>(
     `${env.NEXT_PUBLIC_APP_ENV}-${roomId}`,
     {
       name: (user?.fullName ?? user?.username) || "",

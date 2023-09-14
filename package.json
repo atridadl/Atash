@@ -14,7 +14,6 @@
     "init:env": "cp .env.example .env"
   },
   "dependencies": {
-    "@ably-labs/react-hooks": "^2.1.1",
     "@clerk/nextjs": "^4.23.5",
     "@clerk/themes": "^1.7.5",
     "@neondatabase/serverless": "^0.6.0",
@@ -23,6 +22,7 @@
     "@unkey/api": "^0.6.21",
     "@upstash/ratelimit": "^0.4.4",
     "@upstash/redis": "^1.22.0",
+    "ably": "^1.2.44",
     "autoprefixer": "^10.4.15",
     "csv42": "^5.0.0",
     "dotenv": "^16.3.1",
@@ -43,12 +43,14 @@
     "@types/react": "^18.2.21",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
+    "bufferutil": "^4.0.7",
     "daisyui": "^3.7.4",
     "drizzle-kit": "^0.19.13",
     "eslint": "^8.49.0",
     "eslint-config-next": "^13.4.19",
     "pg": "^8.11.3",
     "tailwindcss": "^3.3.3",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "utf-8-validate": "5.0.2"
   }
 }
