@@ -84,7 +84,7 @@ const VoteUI = () => {
     setVotesFromDb(dbVotes);
   };
 
-  const { channel } = useChannel(
+  useChannel(
     {
       channelName: `${env.NEXT_PUBLIC_APP_ENV}-${roomId}`,
     },
@@ -108,17 +108,6 @@ const VoteUI = () => {
       isVIP: isVIP(user?.publicMetadata),
     }
   );
-
-  // Subscribe on mount and unsubscribe on unmount
-  useEffect(() => {
-    window.addEventListener("beforeunload", () => channel.presence.leave());
-    return () => {
-      window.removeEventListener("beforeunload", () =>
-        channel.presence.leave()
-      );
-      channel.presence.leave();
-    };
-  }, [channel.presence, roomId]);
 
   // Init Topic name
   useEffect(() => {
