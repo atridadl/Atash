@@ -3,7 +3,6 @@ import type { NextRequest } from "next/server";
 
 export const validateRequest = async (req: NextRequest) => {
   const authorization = req.headers.get("authorization");
-  // Get the auth bearer token if it exists
   if (authorization) {
     const key = authorization.split("Bearer ").at(1);
     if (key) {
