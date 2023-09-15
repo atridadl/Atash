@@ -15,7 +15,12 @@ const rateLimit = new Ratelimit({
 });
 
 export default authMiddleware({
-  publicRoutes: ["/", "/api/external/public/(.*)", "/api/webhooks"],
+  publicRoutes: [
+    "/",
+    "/api/external/public/(.*)",
+    "/api/webhooks",
+    "/api/webhooks/(.*)",
+  ],
   afterAuth: async (auth, req) => {
     if (!auth.userId && auth.isPublicRoute) {
       const { success } = await rateLimit.limit(req.ip || "");
