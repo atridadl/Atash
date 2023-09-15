@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 export default function Home() {
   return (
     <div className="flex flex-col text-center items-center justify-center px-4 py-16 gap-4">
