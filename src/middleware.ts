@@ -71,6 +71,9 @@ export default authMiddleware({
     }
 
     if (!auth.userId && !auth.isPublicRoute) {
+      if (req.nextUrl.pathname.includes("/api")) {
+        return NextResponse.next();
+      }
       // This is annoying...
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-explicit-any
       return redirectToSignIn({ returnBackUrl: req.url });
