@@ -2,7 +2,7 @@ import type { Config } from "drizzle-kit";
 import "dotenv/config";
 
 export default {
-  schema: "./src/server/schema.ts",
+  schema: "./app/_lib/schema.ts",
   out: "./drizzle/generated",
   driver: "pg",
   breakpoints: true,
