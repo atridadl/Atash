@@ -75,7 +75,11 @@ const VoteUI = () => {
   >(undefined);
 
   const getRoomHandler = async () => {
-    const dbRoom = await getRoom(roomId);
+    const dbRoomResponse = await fetch(`/api/internal/room/${roomId}`, {
+      cache: "no-cache",
+      method: "GET",
+    });
+    const dbRoom = await dbRoomResponse.json();
     setRoomFromDb(dbRoom);
   };
 

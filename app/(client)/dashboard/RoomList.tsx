@@ -48,7 +48,11 @@ const RoomList = () => {
   };
 
   const getRoomsHandler = async () => {
-    const dbRooms = await getRooms();
+    const dbRoomsResponse = await fetch("/api/internal/room", {
+      cache: "no-cache",
+      method: "GET",
+    });
+    const dbRooms = await dbRoomsResponse.json();
     setRoomsFromDb(dbRooms);
   };
 
