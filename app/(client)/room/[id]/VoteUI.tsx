@@ -20,11 +20,11 @@ import { FaShieldAlt } from "react-icons/fa";
 import { RiVipCrownFill } from "react-icons/ri";
 import { env } from "env.mjs";
 import { isAdmin, isVIP, jsonToCsv } from "app/_utils/helpers";
-import type { PresenceItem } from "@/_utils/types";
+import type { PresenceItem, RoomResponse } from "@/_utils/types";
 import LoadingIndicator from "@/_components/LoadingIndicator";
 import { useUser } from "@clerk/nextjs";
 import { useChannel, usePresence } from "ably/react";
-import { getRoom, setRoom } from "@/_actions/room";
+import { setRoom } from "@/_actions/room";
 import { getVotes, setVote } from "@/_actions/vote";
 import NoRoomUI from "./NoRoomUI";
 
@@ -37,30 +37,7 @@ const VoteUI = () => {
   const [roomScale, setRoomScale] = useState<string>("");
   const [copied, setCopied] = useState<boolean>(false);
 
-  const [roomFromDb, setRoomFromDb] = useState<
-    | {
-        id: string;
-        created_at: Date | null;
-        userId: string;
-        orgId: string | null;
-        roomName: string | null;
-        topicName: string | null;
-        visible: boolean;
-        scale: string | null;
-        logs: {
-          id: string;
-          created_at: Date | null;
-          userId: string;
-          roomId: string;
-          roomName: string | null;
-          topicName: string | null;
-          scale: string | null;
-          votes: unknown;
-        }[];
-      }
-    | undefined
-    | null
-  >();
+  const [roomFromDb, setRoomFromDb] = useState<RoomResponse>();
 
   const [votesFromDb, setVotesFromDb] = useState<
     | {
@@ -79,7 +56,7 @@ const VoteUI = () => {
       cache: "no-cache",
       method: "GET",
     });
-    const dbRoom = await dbRoomResponse.json();
+    const dbRoom = (await dbRoomResponse.json()) as RoomResponse;
     setRoomFromDb(dbRoom);
   };
 

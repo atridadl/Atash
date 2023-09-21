@@ -6,8 +6,9 @@ import { IoEnterOutline, IoTrashBinOutline } from "react-icons/io5";
 import { env } from "env.mjs";
 import LoadingIndicator from "@/_components/LoadingIndicator";
 import { useOrganization, useUser } from "@clerk/nextjs";
-import { createRoom, deleteRoom, getRooms } from "@/_actions/room";
+import { createRoom, deleteRoom } from "@/_actions/room";
 import { useChannel } from "ably/react";
+import { RoomsResponse } from "@/_utils/types";
 
 const RoomList = () => {
   const { user } = useUser();
@@ -19,25 +20,7 @@ const RoomList = () => {
   );
 
   const [roomName, setRoomName] = useState<string>("");
-  const [roomsFromDb, setRoomsFromDb] = useState<
-    | {
-        id: string;
-        createdAt: Date;
-        roomName: string;
-      }[]
-    | {
-        id: string;
-        created_at: Date | null;
-        userId: string;
-        orgId: string | null;
-        roomName: string | null;
-        topicName: string | null;
-        visible: boolean;
-        scale: string;
-      }[]
-    | undefined
-    | null
-  >(undefined);
+  const [roomsFromDb, setRoomsFromDb] = useState<RoomsResponse>(undefined);
 
   const createRoomHandler = async () => {
     await createRoom(roomName);
@@ -52,7 +35,7 @@ const RoomList = () => {
       cache: "no-cache",
       method: "GET",
     });
-    const dbRooms = await dbRoomsResponse.json();
+    const dbRooms = (await dbRoomsResponse.json()) as RoomsResponse;
     setRoomsFromDb(dbRooms);
   };
 

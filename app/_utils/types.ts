@@ -15,3 +15,46 @@ export interface PresenceItem {
   isAdmin: boolean;
   isVIP: boolean;
 }
+
+export type RoomsResponse =
+  | {
+      id: string;
+      createdAt: Date;
+      roomName: string;
+    }[]
+  | {
+      roomName: string | null;
+      id: string;
+      created_at: Date | null;
+      userId: string;
+      orgId: string | null;
+      topicName: string | null;
+      visible: boolean;
+      scale: string;
+    }[]
+  | null
+  | undefined;
+
+export type RoomResponse =
+  | {
+      id: string;
+      created_at: Date | null;
+      userId: string;
+      orgId: string | null;
+      roomName: string | null;
+      topicName: string | null;
+      visible: boolean;
+      scale: string | null;
+      logs: {
+        id: string;
+        created_at: Date | null;
+        userId: string;
+        roomId: string;
+        roomName: string | null;
+        topicName: string | null;
+        scale: string | null;
+        votes: unknown;
+      }[];
+    }
+  | undefined
+  | null;
