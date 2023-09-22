@@ -7,7 +7,7 @@ import { env } from "env.mjs";
 import LoadingIndicator from "@/_components/LoadingIndicator";
 import { useOrganization, useUser } from "@clerk/nextjs";
 import { useChannel } from "ably/react";
-import { RoomsResponse } from "@/_utils/types";
+import type { RoomsResponse } from "@/_utils/types";
 
 const RoomList = () => {
   const { user } = useUser();

@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-import { auth } from "@clerk/nextjs";
+import { auth, getAuth } from "@clerk/nextjs/server";
 import { db } from "@/_lib/db";
 import { logs, rooms, votes } from "@/_lib/schema";
 import { eq } from "drizzle-orm";
@@ -16,7 +16,7 @@ export async function GET(
   request: Request,
   { params }: { params: { roomId: string } }
 ) {
-  const { userId } = auth();
+  const { userId } = getAuth(request as NextRequest);
 
   if (!userId) {
     return new NextResponse("UNAUTHORIZED", {
@@ -122,7 +122,7 @@ export async function PUT(
   request: Request,
   { params }: { params: { roomId: string } }
 ) {
-  const { userId } = auth();
+  const { userId } = getAuth(request as NextRequest);
 
   const reqBody = (await request.json()) as {
     name: string;

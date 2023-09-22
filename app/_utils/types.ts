@@ -58,3 +58,14 @@ export type RoomResponse =
     }
   | undefined
   | null;
+
+export type VoteResponse =
+  | {
+      id: string;
+      value: string;
+      created_at: Date | null;
+      userId: string;
+      roomId: string;
+    }[]
+  | null
+  | undefined;

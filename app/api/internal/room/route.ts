@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
-import { auth } from "@clerk/nextjs";
+import { getAuth } from "@clerk/nextjs/server";
 import { fetchCache, invalidateCache, setCache } from "@/_lib/redis";
 import { db } from "@/_lib/db";
 import { rooms } from "@/_lib/schema";
@@ -12,8 +12,8 @@ import { EventTypes } from "@/_utils/types";
 export const runtime = "edge";
 export const preferredRegion = ["pdx1"];
 
-export async function GET() {
-  const { userId, orgId } = auth();
+export async function GET(request: Request) {
+  const { userId, orgId } = getAuth(request as NextRequest);
 
   if (!userId) {
     return new NextResponse("UNAUTHORIZED", {
@@ -78,7 +78,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const { userId, orgId } = auth();
+  const { userId, orgId } = getAuth(request as NextRequest);
 
   const reqBody = (await request.json()) as { name: string };
 
