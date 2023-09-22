@@ -6,7 +6,7 @@ import { IoEnterOutline, IoTrashBinOutline } from "react-icons/io5";
 import { env } from "env.mjs";
 import LoadingIndicator from "@/_components/LoadingIndicator";
 import { useOrganization, useUser } from "@clerk/nextjs";
-import { createRoom, deleteRoom } from "@/_actions/room";
+import { deleteRoom } from "@/_actions/room";
 import { useChannel } from "ably/react";
 import { RoomsResponse } from "@/_utils/types";
 
@@ -23,7 +23,13 @@ const RoomList = () => {
   const [roomsFromDb, setRoomsFromDb] = useState<RoomsResponse>(undefined);
 
   const createRoomHandler = async () => {
-    await createRoom(roomName);
+    // await createRoom(roomName);
+    await fetch("/api/internal/room", {
+      cache: "no-cache",
+      method: "POST",
+      body: JSON.stringify({ name: roomName }),
+    });
+
     setRoomName("");
     (document.querySelector("#roomNameInput") as HTMLInputElement).value = "";
     (document.querySelector("#new-room-modal") as HTMLInputElement).checked =

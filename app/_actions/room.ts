@@ -5,7 +5,7 @@ import { db } from "@/_lib/db";
 import { logs, rooms, votes } from "@/_lib/schema";
 import { auth } from "@clerk/nextjs";
 import { fetchCache, invalidateCache, setCache } from "@/_lib/redis";
-import { publishToChannel } from "@/_actions/ably";
+import { publishToChannel } from "@/_lib/ably";
 import { EventTypes } from "app/_utils/types";
 import { and, eq, isNull } from "drizzle-orm";
 

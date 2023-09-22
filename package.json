@@ -14,7 +14,7 @@
     "init:env": "cp .env.example .env"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.24.0",
+    "@clerk/nextjs": "^4.24.1",
     "@clerk/themes": "^1.7.6",
     "@neondatabase/serverless": "^0.6.0",
     "@paralleldrive/cuid2": "^2.2.2",
@@ -44,7 +44,7 @@
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "@typescript-eslint/parser": "^6.7.2",
     "bufferutil": "^4.0.7",
-    "daisyui": "^3.7.6",
+    "daisyui": "^3.7.7",
     "drizzle-kit": "^0.19.13",
     "eslint": "^8.49.0",
     "eslint-config-next": "^13.5.2",
