@@ -77,7 +77,7 @@ export async function GET() {
 export async function POST(request: Request) {
   const { userId, orgId } = auth();
 
-  const { name } = await request.json();
+  const { name } = (await request.json()) as { name: string };
 
   if (!userId) {
     return new NextResponse("UNAUTHORIZED", {
