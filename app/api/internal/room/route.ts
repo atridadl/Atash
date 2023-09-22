@@ -9,6 +9,9 @@ import { createId } from "@paralleldrive/cuid2";
 import { publishToChannel } from "@/_lib/ably";
 import { EventTypes } from "@/_utils/types";
 
+export const runtime = "edge";
+export const preferredRegion = ["pdx1"];
+
 export async function GET() {
   const { userId, orgId } = auth();
 
@@ -77,7 +80,7 @@ export async function GET() {
 export async function POST(request: Request) {
   const { userId, orgId } = auth();
 
-  const { name } = (await request.json()) as { name: string };
+  const reqBody = (await request.json()) as { name: string };
 
   if (!userId) {
     return new NextResponse("UNAUTHORIZED", {
@@ -91,7 +94,7 @@ export async function POST(request: Request) {
     .values({
       id: `room_${createId()}`,
       userId,
-      roomName: name,
+      roomName: reqBody.name,
       topicName: "First Topic!",
       scale: "0.5,1,2,3,5,8",
       visible: false,

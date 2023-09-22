@@ -24,7 +24,6 @@ import type { PresenceItem, RoomResponse } from "@/_utils/types";
 import LoadingIndicator from "@/_components/LoadingIndicator";
 import { useUser } from "@clerk/nextjs";
 import { useChannel, usePresence } from "ably/react";
-import { setRoom } from "@/_actions/room";
 import { getVotes, setVote } from "@/_actions/vote";
 import NoRoomUI from "./NoRoomUI";
 
@@ -124,14 +123,17 @@ const VoteUI = () => {
     log = false
   ) => {
     if (roomFromDb) {
-      await setRoom(
-        topicNameText,
-        visible,
-        roomScale,
-        roomFromDb.id,
-        reset,
-        log
-      );
+      await fetch(`/api/internal/room/${roomId}`, {
+        cache: "no-cache",
+        method: "PUT",
+        body: JSON.stringify({
+          name: topicNameText,
+          visible,
+          scale: roomScale,
+          reset,
+          log,
+        }),
+      });
     }
   };
 
