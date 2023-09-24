@@ -15,11 +15,6 @@ const config = {
       "img.clerk.com",
     ],
   },
-  experimental: {
-    serverActions: true,
-    serverMinification: true,
-    swcMinify: true,
-  },
 };
 
 export default config;
