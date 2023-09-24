@@ -38,15 +38,15 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@types/eslint": "^8.44.2",
-    "@types/node": "^20.6.3",
+    "@types/eslint": "^8.44.3",
+    "@types/node": "^20.6.4",
     "@types/react": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "@typescript-eslint/parser": "^6.7.2",
     "bufferutil": "^4.0.7",
     "daisyui": "^3.7.7",
     "drizzle-kit": "^0.19.13",
-    "eslint": "^8.49.0",
+    "eslint": "^8.50.0",
     "eslint-config-next": "^13.5.2",
     "pg": "^8.11.3",
     "tailwindcss": "^3.3.3",
