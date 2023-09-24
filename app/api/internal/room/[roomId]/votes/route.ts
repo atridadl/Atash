@@ -12,15 +12,6 @@ export async function GET(
   request: Request,
   { params }: { params: { roomId: string } }
 ) {
-  const userId = request.headers.get("X-User-Id") as string;
-
-  if (!userId) {
-    return new NextResponse("UNAUTHORIZED", {
-      status: 403,
-      statusText: "Unauthorized!",
-    });
-  }
-
   if (!params.roomId) {
     return new NextResponse("RoomId Missing!", {
       status: 400,

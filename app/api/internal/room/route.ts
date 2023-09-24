@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 import { fetchCache, invalidateCache, setCache } from "@/_lib/redis";
 import { db } from "@/_lib/db";
@@ -7,13 +7,13 @@ import { and, eq, isNull } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
 import { publishToChannel } from "@/_lib/ably";
 import { EventTypes } from "@/_utils/types";
+import { getAuth } from "@clerk/nextjs/server";
 
 export const runtime = "edge";
 export const preferredRegion = ["pdx1"];
 
 export async function GET(request: Request) {
-  const userId = request.headers.get("X-User-Id") as string;
-  const orgId = request.headers.get("X-Org-Id") as string;
+  const { userId, orgId } = getAuth(request as NextRequest);
 
   if (orgId) {
     const cachedResult = await fetchCache<
@@ -57,7 +57,7 @@ export async function GET(request: Request) {
       });
     } else {
       const roomList = await db.query.rooms.findMany({
-        where: and(eq(rooms.userId, userId), isNull(rooms.orgId)),
+        where: and(eq(rooms.userId, userId || ""), isNull(rooms.orgId)),
       });
 
       await setCache(`kv_roomlist_${userId}`, roomList);
@@ -71,8 +71,7 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const userId = request.headers.get("X-User-Id") as string;
-  const orgId = request.headers.get("X-Org-Id") as string;
+  const { userId, orgId } = getAuth(request as NextRequest);
 
   const reqBody = (await request.json()) as { name: string };
 
@@ -80,7 +79,7 @@ export async function POST(request: Request) {
     .insert(rooms)
     .values({
       id: `room_${createId()}`,
-      userId,
+      userId: userId || "",
       roomName: reqBody.name,
       topicName: "First Topic!",
       scale: "0.5,1,2,3,5,8",
