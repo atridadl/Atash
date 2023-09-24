@@ -4,6 +4,9 @@ import { GiStarFormation } from "react-icons/gi";
 import { isAdmin, isVIP } from "@/_utils/helpers";
 import { currentUser } from "@clerk/nextjs";
 
+export const runtime = "edge";
+export const preferredRegion = ["pdx1"];
+
 export default async function Dashboard() {
   const user = await currentUser();
 

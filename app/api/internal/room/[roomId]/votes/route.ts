@@ -1,6 +1,5 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-import { getAuth } from "@clerk/nextjs/server";
 import { fetchCache, setCache } from "@/_lib/redis";
 import { db } from "@/_lib/db";
 import { votes } from "@/_lib/schema";
@@ -13,7 +12,7 @@ export async function GET(
   request: Request,
   { params }: { params: { roomId: string } }
 ) {
-  const { userId } = getAuth(request as NextRequest);
+  const userId = request.headers.get("X-User-Id") as string;
 
   if (!userId) {
     return new NextResponse("UNAUTHORIZED", {

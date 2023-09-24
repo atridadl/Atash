@@ -1,6 +1,5 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-import { getAuth } from "@clerk/nextjs/server";
 import { fetchCache, invalidateCache, setCache } from "@/_lib/redis";
 import { db } from "@/_lib/db";
 import { rooms } from "@/_lib/schema";
@@ -13,14 +12,8 @@ export const runtime = "edge";
 export const preferredRegion = ["pdx1"];
 
 export async function GET(request: Request) {
-  const { userId, orgId } = getAuth(request as NextRequest);
-
-  if (!userId) {
-    return new NextResponse("UNAUTHORIZED", {
-      status: 403,
-      statusText: "Unauthorized!",
-    });
-  }
+  const userId = request.headers.get("X-User-Id") as string;
+  const orgId = request.headers.get("X-Org-Id") as string;
 
   if (orgId) {
     const cachedResult = await fetchCache<
@@ -78,16 +71,10 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const { userId, orgId } = getAuth(request as NextRequest);
+  const userId = request.headers.get("X-User-Id") as string;
+  const orgId = request.headers.get("X-Org-Id") as string;
 
   const reqBody = (await request.json()) as { name: string };
-
-  if (!userId) {
-    return new NextResponse("UNAUTHORIZED", {
-      status: 403,
-      statusText: "Unauthorized!",
-    });
-  }
 
   const room = await db
     .insert(rooms)
