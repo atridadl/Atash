@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 import { invalidateCache } from "@/_lib/redis";
 import { db } from "@/_lib/db";
@@ -6,6 +6,7 @@ import { votes } from "@/_lib/schema";
 import { createId } from "@paralleldrive/cuid2";
 import { publishToChannel } from "@/_lib/ably";
 import { EventTypes } from "@/_utils/types";
+import { getAuth } from "@clerk/nextjs/server";
 
 export const runtime = "edge";
 export const preferredRegion = ["pdx1"];
@@ -14,14 +15,7 @@ export async function PUT(
   request: Request,
   { params }: { params: { roomId: string } }
 ) {
-  const userId = request.headers.get("X-User-Id") as string;
-
-  if (!userId) {
-    return new NextResponse("UNAUTHORIZED", {
-      status: 403,
-      statusText: "Unauthorized!",
-    });
-  }
+  const { userId } = getAuth(request as NextRequest);
 
   if (!params.roomId) {
     return new NextResponse("RoomId Missing!", {
@@ -37,14 +31,14 @@ export async function PUT(
     .values({
       id: `vote_${createId()}`,
       value: reqBody.value,
-      userId: userId,
+      userId: userId || "",
       roomId: params.roomId,
     })
     .onConflictDoUpdate({
       target: [votes.userId, votes.roomId],
       set: {
         value: reqBody.value,
-        userId: userId,
+        userId: userId || "",
         roomId: params.roomId,
       },
     });

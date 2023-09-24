@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 import { db } from "@/_lib/db";
 import { logs, rooms, votes } from "@/_lib/schema";
@@ -7,6 +7,7 @@ import { publishToChannel } from "@/_lib/ably";
 import { EventTypes } from "@/_utils/types";
 import { invalidateCache } from "@/_lib/redis";
 import { createId } from "@paralleldrive/cuid2";
+import { getAuth } from "@clerk/nextjs/server";
 
 export const runtime = "edge";
 export const preferredRegion = ["pdx1"];
@@ -15,15 +16,6 @@ export async function GET(
   request: Request,
   { params }: { params: { roomId: string } }
 ) {
-  const userId = request.headers.get("X-User-Id") as string;
-
-  if (!userId) {
-    return new NextResponse("UNAUTHORIZED", {
-      status: 403,
-      statusText: "Unauthorized!",
-    });
-  }
-
   if (!params.roomId) {
     return new NextResponse("RoomId Missing!", {
       status: 400,
@@ -48,15 +40,7 @@ export async function DELETE(
   request: Request,
   { params }: { params: { roomId: string } }
 ) {
-  const userId = request.headers.get("X-User-Id") as string;
-  const orgId = request.headers.get("X-Org-Id") as string;
-
-  if (!userId) {
-    return new NextResponse("UNAUTHORIZED", {
-      status: 403,
-      statusText: "Unauthorized!",
-    });
-  }
+  const { userId, orgId } = getAuth(request as NextRequest);
 
   if (!params.roomId) {
     return new NextResponse("RoomId Missing!", {

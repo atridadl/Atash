@@ -44,10 +44,7 @@ export default authMiddleware({
       }
 
       if (auth.userId) {
-        const response = NextResponse.next();
-        response.headers.append("X-User-Id", auth.userId || "");
-        response.headers.append("X-Org-Id", auth.orgId || "");
-        return response;
+        return NextResponse.next();
       } else {
         return new NextResponse("UNAUTHORIZED", {
           status: 403,
