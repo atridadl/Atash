@@ -106,7 +106,7 @@ export async function PUT(
   request: Request,
   { params }: { params: { roomId: string } }
 ) {
-  const userId = request.headers.get("X-User-Id") as string;
+  const { userId } = getAuth(request as NextRequest);
 
   const reqBody = (await request.json()) as {
     name: string;
@@ -115,13 +115,6 @@ export async function PUT(
     reset: boolean;
     log: boolean;
   };
-
-  if (!userId) {
-    return new NextResponse("UNAUTHORIZED", {
-      status: 403,
-      statusText: "Unauthorized!",
-    });
-  }
 
   if (!params.roomId) {
     return new NextResponse("RoomId Missing!", {
@@ -143,7 +136,7 @@ export async function PUT(
       oldRoom &&
         (await db.insert(logs).values({
           id: `log_${createId()}`,
-          userId: userId,
+          userId: userId || "",
           roomId: params.roomId,
           scale: oldRoom.scale,
           votes: oldRoom.votes.map((vote) => {
