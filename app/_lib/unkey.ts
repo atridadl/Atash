@@ -1,7 +1,6 @@
 import { verifyKey } from "@unkey/api";
-import type { NextRequest } from "next/server";
 
-export const validateRequest = async (req: NextRequest) => {
+export const validateRequest = async (req: Request) => {
   const authorization = req.headers.get("authorization");
   if (authorization) {
     const key = authorization.split("Bearer ").at(1);

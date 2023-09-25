@@ -1,12 +1,13 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-import { invalidateCache } from "@/_lib/redis";
-import { db } from "@/_lib/db";
-import { votes } from "@/_lib/schema";
-import { createId } from "@paralleldrive/cuid2";
 import { publishToChannel } from "@/_lib/ably";
+import { db } from "@/_lib/db";
+import { invalidateCache } from "@/_lib/redis";
+import { votes } from "@/_lib/schema";
 import { EventTypes } from "@/_utils/types";
+import { type RequestLike } from "@clerk/nextjs/dist/types/server/types";
 import { getAuth } from "@clerk/nextjs/server";
+import { createId } from "@paralleldrive/cuid2";
 
 export const runtime = "edge";
 export const preferredRegion = ["pdx1"];
@@ -15,7 +16,7 @@ export async function PUT(
   request: Request,
   { params }: { params: { roomId: string } }
 ) {
-  const { userId } = getAuth(request as NextRequest);
+  const { userId } = getAuth(request as RequestLike);
 
   if (!params.roomId) {
     return new NextResponse("RoomId Missing!", {

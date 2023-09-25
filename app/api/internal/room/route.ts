@@ -1,19 +1,20 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-import { fetchCache, invalidateCache, setCache } from "@/_lib/redis";
-import { db } from "@/_lib/db";
-import { rooms } from "@/_lib/schema";
-import { and, eq, isNull } from "drizzle-orm";
-import { createId } from "@paralleldrive/cuid2";
 import { publishToChannel } from "@/_lib/ably";
+import { db } from "@/_lib/db";
+import { fetchCache, invalidateCache, setCache } from "@/_lib/redis";
+import { rooms } from "@/_lib/schema";
 import { EventTypes } from "@/_utils/types";
+import { type RequestLike } from "@clerk/nextjs/dist/types/server/types";
 import { getAuth } from "@clerk/nextjs/server";
+import { createId } from "@paralleldrive/cuid2";
+import { and, eq, isNull } from "drizzle-orm";
 
 export const runtime = "edge";
 export const preferredRegion = ["pdx1"];
 
 export async function GET(request: Request) {
-  const { userId, orgId } = getAuth(request as NextRequest);
+  const { userId, orgId } = getAuth(request as RequestLike);
 
   if (orgId) {
     const cachedResult = await fetchCache<
@@ -71,7 +72,7 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const { userId, orgId } = getAuth(request as NextRequest);
+  const { userId, orgId } = getAuth(request as RequestLike);
 
   const reqBody = (await request.json()) as { name: string };
 

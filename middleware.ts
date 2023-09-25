@@ -1,8 +1,8 @@
 import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
-import { validateRequest } from "./app/_lib/unkey";
-import { NextResponse } from "next/server";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
+import { NextResponse } from "next/server";
+import { validateRequest } from "./app/_lib/unkey";
 import { env } from "./env.mjs";
 
 const rateLimit = new Ratelimit({
