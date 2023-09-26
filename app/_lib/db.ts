@@ -1,9 +1,7 @@
-import { neon, neonConfig } from "@neondatabase/serverless";
+import { neon } from "@neondatabase/serverless";
+import * as schema from "app/_lib/schema";
 import { drizzle } from "drizzle-orm/neon-http";
 import { env } from "env.mjs";
-import * as schema from "app/_lib/schema";
-
-neonConfig.fetchConnectionCache = true;
 
 const sql = neon(env.DATABASE_URL);
 export const db = drizzle(sql, { schema });
