@@ -14,14 +14,14 @@ import { useParams } from "next/navigation";
 import { FaShieldAlt } from "react-icons/fa";
 import { GiStarFormation } from "react-icons/gi";
 import {
-  CheckmarkCircleOutline,
-  CopyOutline,
-  DownloadOutline,
-  EyeOffOutline,
-  EyeOutline,
-  HourglassOutline,
-  ReloadOutline,
-  SaveOutline,
+  IoCheckmarkCircleOutline,
+  IoCopyOutline,
+  IoDownloadOutline,
+  IoEyeOffOutline,
+  IoEyeOutline,
+  IoHourglassOutline,
+  IoReloadOutline,
+  IoSaveOutline,
 } from "react-icons/io5";
 import { RiVipCrownFill } from "react-icons/ri";
 import NoRoomUI from "./NoRoomUI";
