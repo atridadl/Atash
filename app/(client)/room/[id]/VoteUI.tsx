@@ -39,7 +39,7 @@ const VoteUI = () => {
 
   const [votesFromDb, setVotesFromDb] = useState<VoteResponse>(undefined);
 
-  const getRoomHandler = async () => {
+  const getRoomHandler = () => {
     fetch(`/api/internal/room/${roomId}`, {
       cache: "no-cache",
       method: "GET",
