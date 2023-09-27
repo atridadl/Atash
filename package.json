@@ -1,6 +1,6 @@
 {
   "name": "atash",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "description": "The 🔥hottest🔥 full-stack Next.js template!",
   "private": true,
   "scripts": {
@@ -19,7 +19,7 @@
     "@neondatabase/serverless": "^0.6.0",
     "@paralleldrive/cuid2": "^2.2.2",
     "@t3-oss/env-nextjs": "^0.6.1",
-    "@unkey/api": "^0.8.0",
+    "@unkey/api": "^0.9.2",
     "@upstash/ratelimit": "^0.4.4",
     "@upstash/redis": "^1.22.0",
     "ably": "^1.2.45",
@@ -39,12 +39,12 @@
   },
   "devDependencies": {
     "@types/eslint": "^8.44.3",
-    "@types/node": "^20.6.5",
-    "@types/react": "^18.2.22",
+    "@types/node": "^20.7.0",
+    "@types/react": "^18.2.23",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",
     "bufferutil": "^4.0.7",
-    "daisyui": "^3.7.7",
+    "daisyui": "^3.8.0",
     "drizzle-kit": "^0.19.13",
     "eslint": "^8.50.0",
     "eslint-config-next": "^13.5.3",
