@@ -31,10 +31,17 @@ export async function GET(
     },
   });
 
-  return NextResponse.json(roomFromDb, {
-    status: 200,
-    statusText: "SUCCESS",
-  });
+  if (roomFromDb) {
+    return NextResponse.json(roomFromDb, {
+      status: 200,
+      statusText: "SUCCESS",
+    });
+  } else {
+    return new NextResponse("ROOM NOT FOUND", {
+      status: 404,
+      statusText: "ROOM NOT FOUND",
+    });
+  }
 }
 
 export async function DELETE(
