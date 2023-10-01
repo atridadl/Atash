@@ -53,7 +53,7 @@ The tailwind.config.js file will contain a list of themes that are added by defa
 
 ## Why so many services?
 
-While self hosting or using something like AWS can achieve the same results, I am partial to making use of services that are very good at their niche. For instance: Clerk does one thing and does it VERY well... Authentication. The same can be said for Ably, Vercel, Unkey, Upstash, or Turso. All of these services have generous free tiers and very cheap scaling. Yes: its a lot of accounts, but its worth it. The best part here is with the exception of Ably and Clerk, everything here can be self-hosted. You can run Next on a node server, you can roll a Postgres or Redis DB, and you can generate your own API Keys. You can move to an EC2 if needed, which makes this stack quite flexible.
+While self hosting or using something like AWS can achieve the same results, I am partial to making use of services that are very good at their niche. For instance: Clerk does one thing and does it VERY well... Authentication. The same can be said for Ably, Vercel, Unkey, Upstash, or Turso. All of these services have generous free tiers and very cheap scaling. Yes: its a lot of accounts, but its worth it. The best part here is with the exception of Ably and Clerk, everything here can be self-hosted. You can run Next on a node server, you can roll a SQLite/libSQL or Redis DB, and you can generate your own API Keys. You can move to an EC2 if needed, which makes this stack quite flexible.
 
 ## Why no testing?
 

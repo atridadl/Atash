@@ -69,3 +69,11 @@ export type VoteResponse =
     }[]
   | null
   | undefined;
+
+export type AblyTokenResponse = {
+  token: string;
+  issued: number;
+  expires: number;
+  capability: string;
+  clientId: string;
+};

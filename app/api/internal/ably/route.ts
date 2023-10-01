@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
-
-import * as Ably from "ably/promises";
 import { env } from "env.mjs";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
+import type { AblyTokenResponse } from "@/_utils/types";
+
+export const runtime = "edge";
 
 async function handler() {
   const user = await currentUser();
@@ -23,12 +24,26 @@ async function handler() {
     );
   }
 
-  const client = new Ably.Rest(env.ABLY_API_KEY);
-  const tokenRequestData = await client.auth.createTokenRequest({
-    clientId: user?.id,
-  });
+  const keyName = env.ABLY_API_KEY.split(":")[0];
 
-  return NextResponse.json(tokenRequestData, {
+  const tokenResponse = await fetch(
+    `https://rest.ably.io/keys/${keyName}/requestToken`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Basic ${btoa(env.ABLY_API_KEY)}`,
+      },
+      body: JSON.stringify({
+        keyName,
+        clientId: user?.id,
+        timestamp: Date.now(),
+      }),
+    }
+  );
+  const tokenResponseData = (await tokenResponse.json()) as AblyTokenResponse;
+
+  return NextResponse.json(tokenResponseData, {
     status: 200,
     statusText: "SUCCESS",
   });
