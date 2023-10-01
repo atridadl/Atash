@@ -10,17 +10,15 @@ import { useChannel } from "ably/react";
 import type { RoomsResponse } from "@/_utils/types";
 
 const RoomList = () => {
+  // State
+  // =================================
   const { user } = useUser();
   const { organization } = useOrganization();
-
-  useChannel(
-    `${env.NEXT_PUBLIC_APP_ENV}-${organization ? organization.id : user?.id}`,
-    () => void getRoomsHandler()
-  );
-
   const [roomName, setRoomName] = useState<string>("");
   const [roomsFromDb, setRoomsFromDb] = useState<RoomsResponse>(undefined);
 
+  // Handlers
+  // =================================
   const createRoomHandler = async () => {
     await fetch("/api/internal/room", {
       cache: "no-cache",
@@ -50,10 +48,19 @@ const RoomList = () => {
     });
   };
 
+  // Hooks
+  // =================================
+  useChannel(
+    `${env.NEXT_PUBLIC_APP_ENV}-${organization ? organization.id : user?.id}`,
+    () => void getRoomsHandler()
+  );
+
   useEffect(() => {
     void getRoomsHandler();
   }, [organization]);
 
+  // UI
+  // =================================
   return (
     <div className="flex flex-col items-center justify-center gap-8">
       {/* Modal for Adding Rooms */}

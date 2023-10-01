@@ -6,7 +6,6 @@ import { votes } from "@/_lib/schema";
 import { eq } from "drizzle-orm";
 
 export const runtime = "edge";
-export const preferredRegion = ["pdx1"];
 
 export async function GET(
   request: Request,

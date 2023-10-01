@@ -1,7 +1,6 @@
 import VoteUI from "@/(client)/room/[id]/VoteUI";
 
 export const runtime = "edge";
-export const preferredRegion = ["pdx1"];
 
 export default function Room() {
   return (
