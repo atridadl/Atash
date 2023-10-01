@@ -1,23 +1,21 @@
 import {
-  timestamp,
-  pgTable,
-  varchar,
-  boolean,
-  json,
-  index,
+  sqliteTable,
+  integer,
+  text,
   unique,
-} from "drizzle-orm/pg-core";
+  index,
+} from "drizzle-orm/sqlite-core";
 import { relations } from "drizzle-orm";
 
-export const rooms = pgTable("Room", {
-  id: varchar("id", { length: 255 }).notNull().primaryKey(),
-  created_at: timestamp("created_at").defaultNow(),
-  userId: varchar("userId", { length: 255 }).notNull(),
-  orgId: varchar("orgId", { length: 255 }),
-  roomName: varchar("roomName", { length: 255 }),
-  topicName: varchar("topicName", { length: 255 }),
-  visible: boolean("visible").default(false).notNull(),
-  scale: varchar("scale", { length: 255 }).default("0.5,1,2,3,5").notNull(),
+export const rooms = sqliteTable("Room", {
+  id: text("id", { length: 255 }).notNull().primaryKey(),
+  created_at: text("created_at"),
+  userId: text("userId", { length: 255 }).notNull(),
+  orgId: text("orgId", { length: 255 }),
+  roomName: text("roomName", { length: 255 }),
+  topicName: text("topicName", { length: 255 }),
+  visible: integer("visible").default(0).notNull(),
+  scale: text("scale", { length: 255 }).default("0.5,1,2,3,5").notNull(),
 });
 
 export const roomsRelations = relations(rooms, ({ many }) => ({
@@ -25,20 +23,19 @@ export const roomsRelations = relations(rooms, ({ many }) => ({
   logs: many(logs),
 }));
 
-export const votes = pgTable(
+export const votes = sqliteTable(
   "Vote",
   {
-    id: varchar("id", { length: 255 }).notNull().primaryKey(),
-    created_at: timestamp("created_at").defaultNow(),
-    userId: varchar("userId", { length: 255 }).notNull(),
-    roomId: varchar("roomId", { length: 255 })
+    id: text("id", { length: 255 }).notNull().primaryKey(),
+    created_at: text("created_at"),
+    userId: text("userId", { length: 255 }).notNull(),
+    roomId: text("roomId", { length: 255 })
       .notNull()
       .references(() => rooms.id, { onDelete: "cascade" }),
-    value: varchar("value", { length: 255 }).notNull(),
+    value: text("value", { length: 255 }).notNull(),
   },
   (table) => {
     return {
-      userIdx: index("user_idx").on(table.userId),
       unq: unique().on(table.userId, table.roomId),
     };
   }
@@ -51,19 +48,19 @@ export const votesRelations = relations(votes, ({ one }) => ({
   }),
 }));
 
-export const logs = pgTable(
+export const logs = sqliteTable(
   "Log",
   {
-    id: varchar("id", { length: 255 }).notNull().primaryKey(),
-    created_at: timestamp("created_at").defaultNow(),
-    userId: varchar("userId", { length: 255 }).notNull(),
-    roomId: varchar("roomId", { length: 255 })
+    id: text("id", { length: 255 }).notNull().primaryKey(),
+    created_at: text("created_at"),
+    userId: text("userId", { length: 255 }).notNull(),
+    roomId: text("roomId", { length: 255 })
       .notNull()
       .references(() => rooms.id, { onDelete: "cascade" }),
-    scale: varchar("scale", { length: 255 }),
-    votes: json("votes"),
-    roomName: varchar("roomName", { length: 255 }),
-    topicName: varchar("topicName", { length: 255 }),
+    scale: text("scale", { length: 255 }),
+    votes: text("votes"),
+    roomName: text("roomName", { length: 255 }),
+    topicName: text("topicName", { length: 255 }),
   },
   (table) => {
     return {

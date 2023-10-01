@@ -11,7 +11,6 @@ import { createId } from "@paralleldrive/cuid2";
 import { and, eq, isNull } from "drizzle-orm";
 
 export const runtime = "edge";
-export const preferredRegion = ["pdx1"];
 
 export async function GET(request: Request) {
   const { userId, orgId } = getAuth(request as RequestLike);
@@ -84,7 +83,7 @@ export async function POST(request: Request) {
       roomName: reqBody.name,
       topicName: "First Topic!",
       scale: "0.5,1,2,3,5,8",
-      visible: false,
+      visible: 0,
       orgId: orgId,
     })
     .returning();

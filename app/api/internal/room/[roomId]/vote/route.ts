@@ -10,7 +10,6 @@ import { getAuth } from "@clerk/nextjs/server";
 import { createId } from "@paralleldrive/cuid2";
 
 export const runtime = "edge";
-export const preferredRegion = ["pdx1"];
 
 export async function PUT(
   request: Request,
@@ -44,7 +43,7 @@ export async function PUT(
       },
     });
 
-  const success = upsertResult.rowCount > 0;
+  const success = upsertResult.rowsAffected > 0;
 
   if (success) {
     await invalidateCache(`kv_votes_${params.roomId}`);

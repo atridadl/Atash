@@ -10,7 +10,6 @@ import { Webhook } from "svix";
 import { env } from "env.mjs";
 
 export const runtime = "edge";
-export const preferredRegion = ["pdx1"];
 
 async function handler(req: NextRequest) {
   // Get the headers
