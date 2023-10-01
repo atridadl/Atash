@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { env } from "env.mjs";
 import { currentUser } from "@clerk/nextjs/server";
+import type { AblyTokenResponse } from "@/_utils/types";
 
 export const runtime = "edge";
 
@@ -40,7 +41,7 @@ async function handler() {
       }),
     }
   );
-  const tokenResponseData = await tokenResponse.json();
+  const tokenResponseData = (await tokenResponse.json()) as AblyTokenResponse;
 
   return NextResponse.json(tokenResponseData, {
     status: 200,
