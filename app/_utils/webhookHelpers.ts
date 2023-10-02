@@ -43,3 +43,17 @@ export const onUserCreatedHandler = async (userId: string | undefined) => {
 
   return userUpdateResponse.ok;
 };
+
+export const onOrgDeleltedHandler = async (orgId: string | undefined) => {
+  if (!orgId) {
+    return false;
+  }
+
+  try {
+    await db.delete(rooms).where(eq(rooms.orgId, orgId));
+
+    return true;
+  } catch (error) {
+    return false;
+  }
+};

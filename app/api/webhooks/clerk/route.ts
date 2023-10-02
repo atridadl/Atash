@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import {
   onUserCreatedHandler,
   onUserDeletedHandler,
+  onOrgDeleltedHandler,
 } from "app/_utils/webhookHelpers";
 
 import { headers } from "next/headers";
@@ -73,6 +74,14 @@ async function handler(req: NextRequest) {
       return NextResponse.json(
         { result: "USER DELETED" },
         { status: 200, statusText: "USER DELETED" }
+      );
+
+    case "organization.deleted":
+      success = await onOrgDeleltedHandler(id);
+
+      return NextResponse.json(
+        { result: "ORG DELETED" },
+        { status: 200, statusText: "ORG DELETED" }
       );
 
     default:
