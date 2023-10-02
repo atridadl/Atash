@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 import { db } from "../_lib/db";
 import { rooms } from "../_lib/schema";
 import { env } from "env.mjs";
@@ -9,7 +9,9 @@ export const onUserDeletedHandler = async (userId: string | undefined) => {
   }
 
   try {
-    await db.delete(rooms).where(eq(rooms.userId, userId));
+    await db
+      .delete(rooms)
+      .where(and(eq(rooms.userId, userId || ""), isNull(rooms.orgId)));
 
     return true;
   } catch (error) {
@@ -42,4 +44,18 @@ export const onUserCreatedHandler = async (userId: string | undefined) => {
   );
 
   return userUpdateResponse.ok;
+};
+
+export const onOrgDeleltedHandler = async (orgId: string | undefined) => {
+  if (!orgId) {
+    return false;
+  }
+
+  try {
+    await db.delete(rooms).where(eq(rooms.orgId, orgId));
+
+    return true;
+  } catch (error) {
+    return false;
+  }
 };
