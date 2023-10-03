@@ -30,6 +30,7 @@ export async function PUT(
     .insert(votes)
     .values({
       id: `vote_${createId()}`,
+      created_at: Date.now().toString(),
       value: reqBody.value,
       userId: userId || "",
       roomId: params.roomId,
@@ -37,6 +38,7 @@ export async function PUT(
     .onConflictDoUpdate({
       target: [votes.userId, votes.roomId],
       set: {
+        created_at: Date.now().toString(),
         value: reqBody.value,
         userId: userId || "",
         roomId: params.roomId,
