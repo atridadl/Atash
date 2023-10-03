@@ -34,6 +34,7 @@ Atash (آتش) is Persian or Farsi for Fire! Pronounced "Ahh-tash".
 
 - First set up accounts on Vercel, Turso, Clerk, Unkey, Upstash, and Ably
 - Create projects on all of those services
+- For Vercel, use global edge. For Upstash, use global with every region. For Turso, use at least one region in North America, Europe, and Asia.
 - Run the `pnpm init:env` command to generate a .env file to fill out
 - Ensure that the webhook url https://DOMAIN.TLD/api/webhooks is added with the user.created and user.deleted events
 - You will need up a webhook to point to https://<domain.tld>/api/webhooks, and ensure you use the "Signing Secret" from the webhook as your CLERK_WEBHOOK_SIGNING_SECRET environment variable...
@@ -43,7 +44,6 @@ Atash (آتش) is Persian or Farsi for Fire! Pronounced "Ahh-tash".
 ```Javascript
 export const config = {
   runtime: "edge",
-  regions: ["pdx1"], // This can handle more than one region, or be removed for usage on all region!
 };
 ```
 
