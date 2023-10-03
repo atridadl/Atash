@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 
 import { publishToChannel } from "@/_lib/ably";
 import { db } from "@/_lib/db";
-import { invalidateCache } from "@/_lib/redis";
 import { votes } from "@/_lib/schema";
 import { EventTypes } from "@/_utils/types";
 import { type RequestLike } from "@clerk/nextjs/dist/types/server/types";
@@ -48,18 +47,10 @@ export async function PUT(
   const success = upsertResult.rowsAffected > 0;
 
   if (success) {
-    await invalidateCache(`kv_votes_${params.roomId}`);
-
     await publishToChannel(
       `${params.roomId}`,
       EventTypes.VOTE_UPDATE,
       reqBody.value
-    );
-
-    await publishToChannel(
-      `stats`,
-      EventTypes.STATS_UPDATE,
-      JSON.stringify(success)
     );
 
     return NextResponse.json(upsertResult, {
