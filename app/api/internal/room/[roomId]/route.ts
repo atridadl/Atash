@@ -161,8 +161,6 @@ export async function PUT(
     }
 
     await db.delete(votes).where(eq(votes.roomId, params.roomId));
-
-    await invalidateCache(`kv_votes_${params.roomId}`);
   }
 
   const newRoom = await db

@@ -4,7 +4,6 @@ export const EventTypes = {
   ROOM_LIST_UPDATE: "room.list.update",
   ROOM_UPDATE: "room.update",
   VOTE_UPDATE: "vote.update",
-  STATS_UPDATE: "stats.update",
 } as const;
 export type EventType = BetterEnum<typeof EventTypes>;
 
