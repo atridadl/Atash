@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 
 import { publishToChannel } from "@/_lib/ably";
 import { db } from "@/_lib/db";
-import { invalidateCache } from "@/_lib/redis";
 import { votes } from "@/_lib/schema";
 import { EventTypes } from "@/_utils/types";
 import { type RequestLike } from "@clerk/nextjs/dist/types/server/types";
