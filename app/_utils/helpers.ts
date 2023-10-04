@@ -21,3 +21,27 @@ export function isAdmin(meta: UserPublicMetadata | undefined) {
 export function isVIP(meta: UserPublicMetadata | undefined) {
   return (meta?.isVIP as boolean | undefined) || false;
 }
+
+export const writeToLogs = (
+  level: "warn" | "info" | "error" | "success",
+  message: string
+) => {
+  switch (level) {
+    case "info":
+      console.log(`[ℹ️ INFO]: ${message}`);
+      break;
+    case "warn":
+      console.log(`[⚠️ WARN]: ${message}`);
+      break;
+    case "error":
+      console.log(`[❌ ERROR]: ${message}`);
+      break;
+    case "success":
+      console.log(`[✅ SUCCESS]: ${message}`);
+      break;
+
+    default:
+      console.log(`[ℹ️ INFO]: ${message}`);
+      break;
+  }
+};
