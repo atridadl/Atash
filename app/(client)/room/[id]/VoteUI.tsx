@@ -246,7 +246,9 @@ const VoteUI = () => {
         {roomFromDb && (
           <div className="card card-compact bg-base-100 shadow-xl">
             <div className="card-body">
-              <h2 className="card-title">Topic: {roomFromDb.topicName}</h2>
+              <h2 className="card-title mx-auto">
+                Topic: {roomFromDb.topicName}
+              </h2>
 
               <ul className="p-0 flex flex-row flex-wrap justify-center items-center text-ceter gap-4">
                 {presenceData &&
@@ -315,7 +317,7 @@ const VoteUI = () => {
                     })}
               </ul>
 
-              <div className="join md:btn-group-horizontal">
+              <div className="join md:btn-group-horizontal mx-auto">
                 {roomFromDb.scale?.split(",").map((scaleItem, index) => {
                   return (
                     <button
