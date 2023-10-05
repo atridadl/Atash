@@ -1,8 +1,8 @@
 import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
+import { validateRequest } from "./app/_lib/unkey";
+import { NextResponse } from "next/server";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
-import { NextResponse } from "next/server";
-import { validateRequest } from "./app/_lib/unkey";
 import { env } from "./env.mjs";
 
 const rateLimit = new Ratelimit({
@@ -15,74 +15,33 @@ const rateLimit = new Ratelimit({
 });
 
 export default authMiddleware({
+  ignoredRoutes: ["/"],
   publicRoutes: [
-    "/",
     "/api/external/public/(.*)",
     "/api/webhooks",
     "/api/webhooks/(.*)",
   ],
-  afterAuth: async (auth, req) => {
-    if (!auth.userId && auth.isPublicRoute) {
-      const { success } = await rateLimit.limit(req.ip || "");
-      if (success) {
-        return NextResponse.next();
+  apiRoutes: ["/api/external/private/(.*)", "/api/internal/(.*)"],
+  beforeAuth: async (req) => {
+    const { success } = await rateLimit.limit(req.ip || "");
+    if (success) {
+      if (req.nextUrl.pathname.includes("/api/external/private")) {
+        const isValid = await validateRequest(req);
+
+        if (!isValid) {
+          return new NextResponse("UNAUTHORIZED", {
+            status: 403,
+            statusText: "Unauthorized!",
+          });
+        }
       }
-      return new NextResponse("TOO MANY REQUESTS", {
-        status: 429,
-        statusText: "Too many requests!",
-      });
+      return NextResponse.next();
     }
 
-    if (req.nextUrl.pathname.includes("/api/internal")) {
-      const { success } = await rateLimit.limit(req.ip || "");
-
-      if (!success) {
-        return new NextResponse("TOO MANY REQUESTS", {
-          status: 429,
-          statusText: "Too many requests!",
-        });
-      }
-
-      if (auth.userId) {
-        return NextResponse.next();
-      } else {
-        return new NextResponse("UNAUTHORIZED", {
-          status: 403,
-          statusText: "Unauthorized!",
-        });
-      }
-    }
-
-    if (req.nextUrl.pathname.includes("/api/external/private")) {
-      const { success } = await rateLimit.limit(req.ip || "");
-
-      if (!success) {
-        return new NextResponse("TOO MANY REQUESTS", {
-          status: 429,
-          statusText: "Too many requests!",
-        });
-      }
-
-      const isValid = await validateRequest(req);
-
-      if (isValid) {
-        return NextResponse.next();
-      } else {
-        return new NextResponse("UNAUTHORIZED", {
-          status: 403,
-          statusText: "Unauthorized!",
-        });
-      }
-    }
-
-    if (!auth.userId && !auth.isPublicRoute) {
-      if (req.nextUrl.pathname.includes("/api")) {
-        return NextResponse.next();
-      }
-      // This is annoying...
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-explicit-any
-      return redirectToSignIn({ returnBackUrl: req.url });
-    }
+    return new NextResponse("TOO MANY REQUESTS", {
+      status: 429,
+      statusText: "Too many requests!",
+    });
   },
 });
 
