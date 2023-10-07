@@ -1,13 +1,11 @@
 {
   "name": "atash",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "description": "The 🔥hottest🔥 full-stack Next.js template!",
   "private": true,
   "scripts": {
-    "build": "turbo turboBuild",
-    "turboBuild": "next build",
-    "serv": "next dev",
-    "dev": "turbo serv",
+    "build": "next build",
+    "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
     "db:push": "pnpm drizzle-kit push:sqlite",
