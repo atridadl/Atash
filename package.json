@@ -11,7 +11,8 @@
     "start": "next start",
     "db:push": "pnpm drizzle-kit push:sqlite",
     "db:studio": "pnpm drizzle-kit studio",
-    "init:env": "cp .env.example .env"
+    "init:env": "cp .env.example .env",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.25.1",
@@ -38,6 +39,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.38.1",
     "@types/eslint": "^8.44.3",
     "@types/node": "^20.8.2",
     "@types/react": "^18.2.25",

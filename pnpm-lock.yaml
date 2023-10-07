@@ -73,6 +73,9 @@ dependencies:
     version: 3.22.4
 
 devDependencies:
+  '@playwright/test':
+    specifier: ^1.38.1
+    version: 1.38.1
   '@types/eslint':
     specifier: ^8.44.3
     version: 8.44.3
@@ -766,6 +769,14 @@ packages:
       tslib: 2.4.1
       webcrypto-core: 1.7.7
     dev: false
+
+  /@playwright/test@1.38.1:
+    resolution: {integrity: sha512-NqRp8XMwj3AK+zKLbZShl0r/9wKgzqI/527bkptKXomtuo+dOjU9NdMASQ8DNC9z9zLOMbG53T4eihYr3XR+BQ==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dependencies:
+      playwright: 1.38.1
+    dev: true
 
   /@rushstack/eslint-patch@1.5.1:
     resolution: {integrity: sha512-6i/8UoL0P5y4leBIGzvkZdS85RDMG9y1ihZzmTZQ5LdHUYmZ7pKFoj8X0236s3lusPs1Fa5HTQUpwI+UfTcmeA==}
@@ -2537,6 +2548,14 @@ packages:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
     dev: true
 
+  /fsevents@2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
   /fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -3551,6 +3570,22 @@ packages:
   /pirates@4.0.6:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
+    dev: true
+
+  /playwright-core@1.38.1:
+    resolution: {integrity: sha512-tQqNFUKa3OfMf4b2jQ7aGLB8o9bS3bOY0yMEtldtC2+spf8QXG9zvXLTXUeRsoNuxEYMgLYR+NXfAa1rjKRcrg==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dev: true
+
+  /playwright@1.38.1:
+    resolution: {integrity: sha512-oRMSJmZrOu1FP5iu3UrCx8JEFRIMxLDM0c/3o4bpzU5Tz97BypefWf7TuTNPWeCe279TPal5RtPPZ+9lW/Qkow==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dependencies:
+      playwright-core: 1.38.1
+    optionalDependencies:
+      fsevents: 2.3.2
     dev: true
 
   /postcss-import@15.1.0(postcss@8.4.31):
