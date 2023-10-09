@@ -15,6 +15,9 @@ const config = {
       "img.clerk.com",
     ],
   },
+  experimental: {
+    serverActions: true,
+  },
 };
 
 export default config;

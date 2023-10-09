@@ -2,7 +2,7 @@
 
 import { EventTypes } from "@/_utils/types";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, experimental_useOptimistic } from "react";
 
 import LoadingIndicator from "@/_components/LoadingIndicator";
 import type { PresenceItem, RoomResponse, VoteResponse } from "@/_utils/types";
@@ -37,6 +37,8 @@ const VoteUI = () => {
   const [copied, setCopied] = useState<boolean>(false);
   const [roomFromDb, setRoomFromDb] = useState<RoomResponse>();
   const [votesFromDb, setVotesFromDb] = useState<VoteResponse>(undefined);
+  const [optimisticVotes, setOptimisticVotes] =
+    experimental_useOptimistic(votesFromDb);
 
   // Handlers
   // =================================
@@ -65,6 +67,19 @@ const VoteUI = () => {
 
   const setVoteHandler = async (value: string) => {
     if (roomFromDb) {
+      const newVotes = optimisticVotes?.map((vote) => {
+        if (vote.userId === user?.id) {
+          return {
+            ...vote,
+            value,
+          };
+        } else {
+          return vote;
+        }
+      });
+
+      setOptimisticVotes(newVotes);
+
       await fetch(`/api/internal/room/${roomId}/vote`, {
         cache: "no-cache",
         method: "PUT",
@@ -100,7 +115,8 @@ const VoteUI = () => {
   const getVoteForCurrentUser = () => {
     if (roomFromDb) {
       return (
-        votesFromDb && votesFromDb.find((vote) => vote.userId === user?.id)
+        optimisticVotes &&
+        optimisticVotes.find((vote) => vote.userId === user?.id)
       );
     } else {
       return null;
@@ -108,7 +124,7 @@ const VoteUI = () => {
   };
 
   const downloadLogs = () => {
-    if (roomFromDb && votesFromDb) {
+    if (roomFromDb && optimisticVotes) {
       const jsonObject = roomFromDb?.logs
         .map((item) => {
           return {
@@ -130,7 +146,7 @@ const VoteUI = () => {
           roomName: roomFromDb.roomName,
           topicName: topicNameText,
           scale: roomScale,
-          votes: votesFromDb.map((vote) => {
+          votes: optimisticVotes.map((vote) => {
             return {
               value: vote.value,
             };
@@ -306,10 +322,10 @@ const VoteUI = () => {
                           </p>
 
                           {roomFromDb &&
-                            votesFromDb &&
+                            optimisticVotes &&
                             voteString(
                               roomFromDb.visible,
-                              votesFromDb,
+                              optimisticVotes,
                               presenceItem.data
                             )}
                         </li>
@@ -400,7 +416,7 @@ const VoteUI = () => {
                             false,
                             true,
                             roomFromDb.topicName === topicNameText ||
-                              votesFromDb?.length === 0
+                              optimisticVotes?.length === 0
                               ? false
                               : true
                           )
@@ -413,7 +429,7 @@ const VoteUI = () => {
                         }
                       >
                         {roomFromDb.topicName === topicNameText ||
-                        votesFromDb?.length === 0 ? (
+                        optimisticVotes?.length === 0 ? (
                           <>
                             <IoReloadOutline className="text-xl mr-1" /> Reset
                           </>
@@ -425,9 +441,9 @@ const VoteUI = () => {
                       </button>
                     </div>
 
-                    {votesFromDb &&
+                    {optimisticVotes &&
                       (roomFromDb.logs.length > 0 ||
-                        votesFromDb.length > 0) && (
+                        optimisticVotes.length > 0) && (
                         <div>
                           <button
                             onClick={() => downloadLogs()}
