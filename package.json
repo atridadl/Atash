@@ -1,6 +1,6 @@
 {
   "name": "atash",
-  "version": "1.11.2",
+  "version": "1.12.0",
   "description": "The 🔥hottest🔥 full-stack Next.js template!",
   "private": true,
   "scripts": {
@@ -40,10 +40,10 @@
   "devDependencies": {
     "@playwright/test": "^1.38.1",
     "@types/eslint": "^8.44.3",
-    "@types/node": "^20.8.3",
-    "@types/react": "^18.2.25",
-    "@typescript-eslint/eslint-plugin": "^6.7.4",
-    "@typescript-eslint/parser": "^6.7.4",
+    "@types/node": "^20.8.4",
+    "@types/react": "18.2.25",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
     "better-sqlite3": "^8.7.0",
     "bufferutil": "^4.0.7",
     "daisyui": "^3.9.2",
