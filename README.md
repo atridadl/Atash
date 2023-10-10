@@ -55,9 +55,27 @@ The tailwind.config.js file will contain a list of themes that are added by defa
 
 While self hosting or using something like AWS can achieve the same results, I am partial to making use of services that are very good at their niche. For instance: Clerk does one thing and does it VERY well... Authentication. The same can be said for Ably, Vercel, Unkey, Upstash, or Turso. All of these services have generous free tiers and very cheap scaling. Yes: its a lot of accounts, but its worth it. The best part here is with the exception of Ably and Clerk, everything here can be self-hosted. You can run Next on a node server, you can roll a SQLite/libSQL or Redis DB, and you can generate your own API Keys. You can move to an EC2 if needed, which makes this stack quite flexible.
 
-## Why no testing?
+## Tests
 
-I prefer building projects that have are easy to iterate on rather than relying on tests. That being said, tests can be added as shown in the [Next.js Documentation](https://nextjs.org/docs/pages/building-your-application/optimizing/testing).
+Atash uses Playwright for End-to-end testing. The test suite is always expanding, but currently covers the following:
+
+- Homepage
+- Login
+
+In order to run the tests, you will need to add the following variables to your .env file:
+
+```
+E2E_TEST_USER_EMAIL
+E2E_TEST_USER_PASSWORD
+```
+
+Please create a test user on https://atash.atri.dad if you are contributing, or your own deployed instance if you are using this template for your own project. The credentials will be used to log in to the test user and run the tests.
+
+Lastly, the test can be run using the following command:
+
+```
+pnpm test:e2e
+```
 
 ## Contributing
 
@@ -66,3 +84,7 @@ Feel free to propose changes via PR. I'm not awfully picky about formatting righ
 ## Stats
 
 ![Alt](https://repobeats.axiom.co/api/embed/e124419e3b2f4136d522277d0af700f200dfeada.svg "Repobeats analytics image")
+
+```
+
+```
