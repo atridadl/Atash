@@ -1,6 +1,6 @@
 {
   "name": "atash",
-  "version": "1.12.0",
+  "version": "1.12.1",
   "description": "The 🔥hottest🔥 full-stack Next.js template!",
   "private": true,
   "scripts": {
@@ -22,7 +22,7 @@
     "@tanstack/react-query": "^4.36.1",
     "@unkey/api": "^0.10.0",
     "@upstash/ratelimit": "^0.4.4",
-    "@upstash/redis": "^1.22.1",
+    "@upstash/redis": "^1.23.3",
     "ably": "^1.2.45",
     "autoprefixer": "^10.4.16",
     "csv42": "^5.0.0",
@@ -41,12 +41,12 @@
   "devDependencies": {
     "@playwright/test": "^1.38.1",
     "@tanstack/eslint-plugin-query": "^4.36.1",
-    "@types/eslint": "^8.44.3",
+    "@types/eslint": "^8.44.4",
     "@types/node": "^20.8.4",
-    "@types/react": "18.2.25",
+    "@types/react": "18.2.28",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
-    "better-sqlite3": "^8.7.0",
+    "better-sqlite3": "^9.0.0",
     "bufferutil": "^4.0.7",
     "daisyui": "^3.9.2",
     "drizzle-kit": "^0.19.13",
