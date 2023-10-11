@@ -2,7 +2,8 @@
 
 import { EventTypes } from "@/_utils/types";
 import Image from "next/image";
-import { useEffect, useState, experimental_useOptimistic } from "react";
+import { useEffect, useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 import LoadingIndicator from "@/_components/LoadingIndicator";
 import type { PresenceItem, RoomResponse, VoteResponse } from "@/_utils/types";
@@ -35,51 +36,128 @@ const VoteUI = () => {
   const [topicNameText, setTopicNameText] = useState<string>("");
   const [roomScale, setRoomScale] = useState<string>("");
   const [copied, setCopied] = useState<boolean>(false);
-  const [roomFromDb, setRoomFromDb] = useState<RoomResponse>();
-  const [votesFromDb, setVotesFromDb] = useState<VoteResponse>(undefined);
-  const [optimisticVotes, setOptimisticVotes] =
-    experimental_useOptimistic(votesFromDb);
+
+  const queryClient = useQueryClient();
+
+  const { data: roomFromDb } = useQuery({
+    queryKey: ["room"],
+    queryFn: getRoomHandler,
+  });
+
+  const { data: votesFromDb } = useQuery({
+    queryKey: ["votes"],
+    queryFn: getVotesHandler,
+  });
+
+  const { mutate: setVote } = useMutation({
+    mutationFn: setVoteHandler,
+    // When mutate is called:
+    onMutate: async (newVote) => {
+      // Cancel any outgoing refetches
+      // (so they don't overwrite our optimistic update)
+      await queryClient.cancelQueries({ queryKey: ["votes"] });
+
+      // Snapshot the previous value
+      const previousVotes = queryClient.getQueryData(["votes"]);
+
+      // Optimistically update to the new value
+      queryClient.setQueryData<VoteResponse>(["votes"], (old) =>
+        old?.map((vote) => {
+          if (vote.userId === user?.id) {
+            return {
+              ...vote,
+              value: newVote,
+            };
+          } else {
+            return vote;
+          }
+        })
+      );
+
+      // Return a context object with the snapshotted value
+      return { previousVotes };
+    },
+    // If the mutation fails,
+    // use the context returned from onMutate to roll back
+    onError: (err, newTodo, context) => {
+      queryClient.setQueryData(["votes"], context?.previousVotes);
+    },
+    // Always refetch after error or success:
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: ["votes"] });
+    },
+  });
+
+  const { mutate: setRoom } = useMutation({
+    mutationFn: setRoomHandler,
+    // When mutate is called:
+    onMutate: async (data: {
+      visible: boolean;
+      reset: boolean;
+      log: boolean;
+    }) => {
+      // Cancel any outgoing refetches
+      // (so they don't overwrite our optimistic update)
+      await queryClient.cancelQueries({ queryKey: ["room"] });
+
+      // Snapshot the previous value
+      const previousRoom = queryClient.getQueryData(["room"]);
+
+      // Optimistically update to the new value
+      queryClient.setQueryData<RoomResponse>(["room"], (old) => {
+        return old?.created_at || old?.orgId || old?.id || old?.userId
+          ? {
+              roomName: old?.roomName,
+              created_at: old?.created_at,
+              orgId: old?.orgId,
+              id: old?.id,
+              userId: old?.userId,
+              logs: old?.logs,
+              topicName: topicNameText,
+              visible: data.visible,
+              scale: roomScale,
+              reset: data.reset,
+              log: data.log,
+            }
+          : old;
+      });
+
+      // Return a context object with the snapshotted value
+      return { previousRoom };
+    },
+    // If the mutation fails,
+    // use the context returned from onMutate to roll back
+    onError: (err, newTodo, context) => {
+      queryClient.setQueryData(["room"], context?.previousRoom);
+    },
+    // Always refetch after error or success:
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: ["room"] });
+    },
+  });
 
   // Handlers
   // =================================
-  const getRoomHandler = () => {
-    fetch(`/api/internal/room/${roomId}`, {
+  async function getRoomHandler() {
+    const response = await fetch(`/api/internal/room/${roomId}`, {
       cache: "no-cache",
       method: "GET",
-    })
-      .then(async (response) => {
-        const dbRoom = (await response.json()) as RoomResponse;
-        setRoomFromDb(dbRoom);
-      })
-      .catch(() => {
-        setRoomFromDb(null);
-      });
-  };
+    });
 
-  const getVotesHandler = async () => {
+    return (await response.json()) as RoomResponse;
+  }
+
+  async function getVotesHandler() {
     const dbVotesResponse = await fetch(`/api/internal/room/${roomId}/votes`, {
       cache: "no-cache",
       method: "GET",
     });
     const dbVotes = (await dbVotesResponse.json()) as VoteResponse;
-    setVotesFromDb(dbVotes);
-  };
+    return dbVotes;
+  }
 
-  const setVoteHandler = async (value: string) => {
+  async function setVoteHandler(value: string) {
     if (roomFromDb) {
-      const newVotes = optimisticVotes?.map((vote) => {
-        if (vote.userId === user?.id) {
-          return {
-            ...vote,
-            value,
-          };
-        } else {
-          return vote;
-        }
-      });
-
-      setOptimisticVotes(newVotes);
-
       await fetch(`/api/internal/room/${roomId}/vote`, {
         cache: "no-cache",
         method: "PUT",
@@ -88,35 +166,34 @@ const VoteUI = () => {
         }),
       });
     }
-  };
+  }
 
-  const setRoomHandler = async (
-    visible: boolean,
-    reset = false,
-    log = false
-  ) => {
+  async function setRoomHandler(data: {
+    visible: boolean;
+    reset: boolean | undefined;
+    log: boolean | undefined;
+  }) {
     if (roomFromDb) {
       await fetch(`/api/internal/room/${roomId}`, {
         cache: "no-cache",
         method: "PUT",
         body: JSON.stringify({
           name: topicNameText,
-          visible,
+          visible: data.visible,
           scale: roomScale,
-          reset,
-          log,
+          reset: data.reset ? data.reset : false,
+          log: data.log ? data.log : false,
         }),
       });
     }
-  };
+  }
 
   // Helpers
   // =================================
   const getVoteForCurrentUser = () => {
     if (roomFromDb) {
       return (
-        optimisticVotes &&
-        optimisticVotes.find((vote) => vote.userId === user?.id)
+        votesFromDb && votesFromDb.find((vote) => vote.userId === user?.id)
       );
     } else {
       return null;
@@ -124,7 +201,7 @@ const VoteUI = () => {
   };
 
   const downloadLogs = () => {
-    if (roomFromDb && optimisticVotes) {
+    if (roomFromDb && votesFromDb) {
       const jsonObject = roomFromDb?.logs
         .map((item) => {
           return {
@@ -146,7 +223,7 @@ const VoteUI = () => {
           roomName: roomFromDb.roomName,
           topicName: topicNameText,
           scale: roomScale,
-          votes: optimisticVotes.map((vote) => {
+          votes: votesFromDb.map((vote) => {
             return {
               value: vote.value,
             };
@@ -204,10 +281,10 @@ const VoteUI = () => {
     },
     ({ name }: { name: string }) => {
       if (name === EventTypes.ROOM_UPDATE) {
-        void getVotesHandler();
-        void getRoomHandler();
+        void queryClient.invalidateQueries({ queryKey: ["votes"] });
+        void queryClient.invalidateQueries({ queryKey: ["room"] });
       } else if (name === EventTypes.VOTE_UPDATE) {
-        void getVotesHandler();
+        void queryClient.invalidateQueries({ queryKey: ["votes"] });
       }
     }
   );
@@ -322,10 +399,10 @@ const VoteUI = () => {
                           </p>
 
                           {roomFromDb &&
-                            optimisticVotes &&
+                            votesFromDb &&
                             voteString(
                               roomFromDb.visible,
-                              optimisticVotes,
+                              votesFromDb,
                               presenceItem.data
                             )}
                         </li>
@@ -343,7 +420,7 @@ const VoteUI = () => {
                           ? "btn btn-active btn-primary"
                           : "btn"
                       }`}
-                      onClick={() => void setVoteHandler(scaleItem)}
+                      onClick={() => void setVote(scaleItem)}
                     >
                       {scaleItem}
                     </button>
@@ -391,7 +468,11 @@ const VoteUI = () => {
                     <div>
                       <button
                         onClick={() =>
-                          void setRoomHandler(!roomFromDb.visible, false)
+                          void setRoom({
+                            visible: !roomFromDb.visible,
+                            reset: false,
+                            log: false,
+                          })
                         }
                         className="btn btn-primary inline-flex"
                       >
@@ -412,14 +493,15 @@ const VoteUI = () => {
                     <div>
                       <button
                         onClick={() =>
-                          void setRoomHandler(
-                            false,
-                            true,
-                            roomFromDb.topicName === topicNameText ||
-                              optimisticVotes?.length === 0
-                              ? false
-                              : true
-                          )
+                          void setRoom({
+                            visible: false,
+                            reset: true,
+                            log:
+                              roomFromDb.topicName === topicNameText ||
+                              votesFromDb?.length === 0
+                                ? false
+                                : true,
+                          })
                         }
                         className="btn btn-primary inline-flex"
                         disabled={
@@ -429,7 +511,7 @@ const VoteUI = () => {
                         }
                       >
                         {roomFromDb.topicName === topicNameText ||
-                        optimisticVotes?.length === 0 ? (
+                        votesFromDb?.length === 0 ? (
                           <>
                             <IoReloadOutline className="text-xl mr-1" /> Reset
                           </>
@@ -441,9 +523,9 @@ const VoteUI = () => {
                       </button>
                     </div>
 
-                    {optimisticVotes &&
+                    {votesFromDb &&
                       (roomFromDb.logs.length > 0 ||
-                        optimisticVotes.length > 0) && (
+                        votesFromDb.length > 0) && (
                         <div>
                           <button
                             onClick={() => downloadLogs()}

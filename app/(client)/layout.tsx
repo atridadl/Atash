@@ -2,6 +2,9 @@
 
 import { AblyProvider } from "ably/react";
 import * as Ably from "ably";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export default function RootLayout({
   children,
@@ -12,5 +15,9 @@ export default function RootLayout({
     authUrl: "/api/internal/ably",
   });
 
-  return <AblyProvider client={client}>{children}</AblyProvider>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AblyProvider client={client}>{children}</AblyProvider>{" "}
+    </QueryClientProvider>
+  );
 }
