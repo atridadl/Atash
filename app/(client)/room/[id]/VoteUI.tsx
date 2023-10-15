@@ -42,7 +42,6 @@ const VoteUI = () => {
   const {
     data: roomFromDb,
     isLoading: roomFromDbLoading,
-    isFetching: roomFromDbFetching,
   } = useQuery({
     queryKey: ["room"],
     queryFn: getRoomHandler,
@@ -318,7 +317,7 @@ const VoteUI = () => {
   // UI
   // =================================
   // Room is loading
-  if (roomFromDbLoading || roomFromDbFetching) {
+  if (roomFromDbLoading) {
     return <LoadingIndicator />;
     // Room has been loaded
   } else {
