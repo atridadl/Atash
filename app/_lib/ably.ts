@@ -21,3 +21,29 @@ export const publishToChannel = async (
     }
   );
 };
+
+export const publishToMultipleChannels = async (
+  channels: string[],
+  events: EventType[],
+  message: string
+) => {
+  const response = await fetch(`https://rest.ably.io/messages`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Basic ${btoa(env.ABLY_API_KEY)}`,
+    },
+    body: JSON.stringify({
+      channels: channels.map((channel) => `${env.APP_ENV}-${channel}`),
+      messages: events.map((event) => {
+        return {
+          name: event,
+          data: message,
+        };
+      }),
+    }),
+  });
+
+  const json = await response.json();
+  console.log(json);
+};
