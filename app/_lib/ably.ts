@@ -27,7 +27,7 @@ export const publishToMultipleChannels = async (
   events: EventType[],
   message: string
 ) => {
-  const response = await fetch(`https://rest.ably.io/messages`, {
+  await fetch(`https://rest.ably.io/messages`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -43,7 +43,4 @@ export const publishToMultipleChannels = async (
       }),
     }),
   });
-
-  const json = await response.json();
-  console.log(json);
 };
