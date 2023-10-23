@@ -39,10 +39,7 @@ const VoteUI = () => {
 
   const queryClient = useQueryClient();
 
-  const {
-    data: roomFromDb,
-    isLoading: roomFromDbLoading,
-  } = useQuery({
+  const { data: roomFromDb, isLoading: roomFromDbLoading } = useQuery({
     queryKey: ["room"],
     queryFn: getRoomHandler,
     retry: false,
@@ -117,9 +114,9 @@ const VoteUI = () => {
               id: old?.id,
               userId: old?.userId,
               logs: old?.logs,
-              topicName: topicNameText,
+              topicName: data.reset ? topicNameText : old.topicName,
               visible: data.visible,
-              scale: roomScale,
+              scale: data.reset ? roomScale : old.scale,
               reset: data.reset,
               log: data.log,
             }
@@ -131,7 +128,7 @@ const VoteUI = () => {
     },
     // If the mutation fails,
     // use the context returned from onMutate to roll back
-    onError: (err, newTodo, context) => {
+    onError: (err, newRoom, context) => {
       queryClient.setQueryData(["room"], context?.previousRoom);
     },
     // Always refetch after error or success:

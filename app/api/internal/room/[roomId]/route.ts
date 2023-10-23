@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-import { publishToChannel } from "@/_lib/ably";
+import { publishToChannel, publishToMultipleChannels } from "@/_lib/ably";
 import { db } from "@/_lib/db";
 import { invalidateCache } from "@/_lib/redis";
 import { logs, rooms, votes } from "@/_lib/schema";
@@ -64,32 +64,20 @@ export async function DELETE(
   const success = deletedRoom.length > 0;
 
   if (success) {
-    await publishToChannel(
-      `${userId}`,
-      EventTypes.ROOM_LIST_UPDATE,
-      JSON.stringify(deletedRoom)
-    );
-
-    await publishToChannel(
-      `${params.roomId}`,
-      EventTypes.ROOM_UPDATE,
-      JSON.stringify(deletedRoom)
-    );
-
     if (orgId) {
       await invalidateCache(`kv_roomlist_${orgId}`);
 
-      await publishToChannel(
-        `${orgId}`,
-        EventTypes.ROOM_LIST_UPDATE,
+      await publishToMultipleChannels(
+        [`${orgId}`, `${params.roomId}`],
+        [EventTypes.ROOM_LIST_UPDATE, EventTypes.ROOM_UPDATE],
         JSON.stringify(deletedRoom)
       );
     } else {
       await invalidateCache(`kv_roomlist_${userId}`);
 
-      await publishToChannel(
-        `${userId}`,
-        EventTypes.ROOM_LIST_UPDATE,
+      await publishToMultipleChannels(
+        [`${userId}`, `${params.roomId}`],
+        [EventTypes.ROOM_LIST_UPDATE, EventTypes.ROOM_UPDATE],
         JSON.stringify(deletedRoom)
       );
     }
@@ -113,7 +101,7 @@ export async function PUT(
   request: Request,
   { params }: { params: { roomId: string } }
 ) {
-  const { userId } = getAuth(request as RequestLike);
+  const { userId } = getAuth(request as NextRequest);
 
   const reqBody = (await request.json()) as {
     name: string;
@@ -130,50 +118,58 @@ export async function PUT(
     });
   }
 
+  if (reqBody.log) {
+    const oldRoom = await db.query.rooms.findFirst({
+      where: eq(rooms.id, params.roomId),
+      with: {
+        votes: true,
+        logs: true,
+      },
+    });
+
+    oldRoom &&
+      (await db.insert(logs).values({
+        id: `log_${createId()}`,
+        created_at: Date.now().toString(),
+        userId: userId || "",
+        roomId: params.roomId,
+        scale: oldRoom.scale,
+        votes: JSON.stringify(
+          oldRoom.votes.map((vote) => {
+            return {
+              name: vote.userId,
+              value: vote.value,
+            };
+          })
+        ),
+        roomName: oldRoom.roomName,
+        topicName: oldRoom.topicName,
+      }));
+  }
+
   if (reqBody.reset) {
-    if (reqBody.log) {
-      const oldRoom = await db.query.rooms.findFirst({
-        where: eq(rooms.id, params.roomId),
-        with: {
-          votes: true,
-          logs: true,
-        },
-      });
-
-      oldRoom &&
-        (await db.insert(logs).values({
-          id: `log_${createId()}`,
-          created_at: Date.now().toString(),
-          userId: userId || "",
-          roomId: params.roomId,
-          scale: oldRoom.scale,
-          votes: JSON.stringify(
-            oldRoom.votes.map((vote) => {
-              return {
-                name: vote.userId,
-                value: vote.value,
-              };
-            })
-          ),
-          roomName: oldRoom.roomName,
-          topicName: oldRoom.topicName,
-        }));
-    }
-
     await db.delete(votes).where(eq(votes.roomId, params.roomId));
   }
 
-  const newRoom = await db
-    .update(rooms)
-    .set({
-      topicName: reqBody.name,
-      visible: reqBody.visible,
-      scale: [...new Set(reqBody.scale.split(","))]
-        .filter((item) => item !== "")
-        .toString(),
-    })
-    .where(eq(rooms.id, params.roomId))
-    .returning();
+  const newRoom = reqBody.reset
+    ? await db
+        .update(rooms)
+        .set({
+          topicName: reqBody.name,
+          visible: reqBody.visible,
+          scale: [...new Set(reqBody.scale.split(","))]
+            .filter((item) => item !== "")
+            .toString(),
+        })
+        .where(eq(rooms.id, params.roomId))
+        .returning()
+    : await db
+        .update(rooms)
+        .set({
+          visible: reqBody.visible,
+        })
+        .where(eq(rooms.id, params.roomId))
+        .returning();
 
   const success = newRoom.length > 0;
 
