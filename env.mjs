@@ -15,6 +15,7 @@ export const env = createEnv({
     UNKEY_ROOT_KEY: z.string(),
     CLERK_SECRET_KEY: z.string(),
     CLERK_WEBHOOK_SIGNING_SECRET: z.string(),
+    ROOT_URL: z.string().url().optional(),
   },
   client: {
     NEXT_PUBLIC_APP_ENV: z.string(),
