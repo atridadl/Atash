@@ -1,8 +1,6 @@
 import { SignIn } from "@clerk/nextjs";
 import { env } from "env.mjs";
 
-export const runtime = "edge";
-
 const SignInPage = () => (
   <SignIn
     path="/sign-in"

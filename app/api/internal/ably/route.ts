@@ -3,8 +3,6 @@ import { env } from "env.mjs";
 import { currentUser } from "@clerk/nextjs/server";
 import type { AblyTokenResponse } from "@/_utils/types";
 
-export const runtime = "edge";
-
 async function handler() {
   const user = await currentUser();
 

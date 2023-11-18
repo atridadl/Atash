@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
 
-export const runtime = "edge";
-
 function handler() {
   return NextResponse.json(
     { message: "Public Pong!" },

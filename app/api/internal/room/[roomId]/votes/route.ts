@@ -4,8 +4,6 @@ import { db } from "@/_lib/db";
 import { votes } from "@/_lib/schema";
 import { eq } from "drizzle-orm";
 
-export const runtime = "edge";
-
 export async function GET(
   request: Request,
   { params }: { params: { roomId: string } }

@@ -8,8 +8,6 @@ import { type RequestLike } from "@clerk/nextjs/dist/types/server/types";
 import { getAuth } from "@clerk/nextjs/server";
 import { createId } from "@paralleldrive/cuid2";
 
-export const runtime = "edge";
-
 export async function PUT(
   request: Request,
   { params }: { params: { roomId: string } }

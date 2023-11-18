@@ -10,8 +10,6 @@ import { getAuth } from "@clerk/nextjs/server";
 import { createId } from "@paralleldrive/cuid2";
 import { eq } from "drizzle-orm";
 
-export const runtime = "edge";
-
 export async function GET(
   request: Request,
   { params }: { params: { roomId: string } }

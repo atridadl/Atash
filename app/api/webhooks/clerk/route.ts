@@ -10,8 +10,6 @@ import type { WebhookEvent } from "@clerk/nextjs/server";
 import { Webhook } from "svix";
 import { env } from "env.mjs";
 
-export const runtime = "edge";
-
 async function handler(req: NextRequest) {
   // Get the headers
   const headerPayload = headers();
