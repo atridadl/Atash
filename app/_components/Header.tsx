@@ -1,7 +1,6 @@
 "use client";
 
 import { UserButton, useUser, OrganizationSwitcher } from "@clerk/nextjs";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { env } from "env.mjs";
@@ -55,13 +54,12 @@ const Navbar = ({ title }: NavbarProps) => {
           href="/"
           className="btn btn-ghost normal-case text-xl"
         >
-          <Image
+          <img
             className="md:mr-2"
             src="/logo.webp"
             alt="Nav Logo"
             width={32}
             height={32}
-            priority
           />
           <span className="hidden md:inline-flex">
             {title}

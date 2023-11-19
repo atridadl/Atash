@@ -1,7 +1,6 @@
 "use client";
 
 import { EventTypes } from "@/_utils/types";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -362,7 +361,7 @@ const VoteUI = () => {
                           className="flex flex-row items-center justify-center gap-2"
                         >
                           <div className="w-10 rounded-full avatar">
-                            <Image
+                            <img
                               src={presenceItem.data.image}
                               alt={`${presenceItem.data.name}'s Profile Picture`}
                               height={32}
