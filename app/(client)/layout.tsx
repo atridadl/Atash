@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export const revalidate = 0;
 export const fetchCache = "force-no-store";
+export const dynamic = "force-dynamic";
 
 const queryClient = new QueryClient();
 
