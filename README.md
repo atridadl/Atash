@@ -9,7 +9,7 @@ Atash (آتش) is Persian or Farsi for Fire! Pronounced "Ahh-tash".
 ## Features
 
 - 🔥 User Auth, API Auth, and Orgs!
-- 🔥 Caching and Rate Limiting!
+- 🔥 Caching with Redis!
 - 🔥 Fast queries with Drizzle!
 - 🔥 Next.js App Router!
 - 🔥 Customizable Themes
@@ -26,12 +26,13 @@ Atash (آتش) is Persian or Farsi for Fire! Pronounced "Ahh-tash".
 - Auth: Clerk
 - API Key Management: Unkey
 - Database: Turso (Edge libSQL)
-- Database Cache: Upstash (Redis)
+- Database Cache: Redis
 - CSS: TailwindCSS + DaisyUI
 
 ## Instructions
 
-- First set up accounts on Fly.io, Turso, Clerk, Unkey, Upstash, and Ably
+- First set up accounts on Fly.io, Turso, Clerk, Unkey, and Ably
+- Create a redis cluster in the Fly.io dashboard and make note of its connection URL
 - Create projects on all of those services
 - Run the `pnpm init:env` command to generate a .env file to fill out
 - Ensure that the webhook url https://DOMAIN.TLD/api/webhooks is added with the user.created and user.deleted events

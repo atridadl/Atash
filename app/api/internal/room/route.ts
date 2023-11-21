@@ -9,18 +9,22 @@ import { type RequestLike } from "@clerk/nextjs/dist/types/server/types";
 import { getAuth } from "@clerk/nextjs/server";
 import { createId } from "@paralleldrive/cuid2";
 import { and, eq, isNull } from "drizzle-orm";
+import { env } from "env.mjs";
 
 export async function GET(request: Request) {
   const { userId, orgId } = getAuth(request as RequestLike);
 
   if (orgId) {
-    const cachedResult = await fetchCache<
-      {
-        id: string;
-        createdAt: Date;
-        roomName: string;
-      }[]
-    >(`kv_roomlist_${orgId}`);
+    const cachedResult =
+      env.APP_ENV === "production"
+        ? await fetchCache<
+            {
+              id: string;
+              createdAt: Date;
+              roomName: string;
+            }[]
+          >(`kv_roomlist_${orgId}`)
+        : null;
 
     if (cachedResult) {
       return NextResponse.json(cachedResult, {
@@ -32,7 +36,8 @@ export async function GET(request: Request) {
         where: eq(rooms.orgId, orgId),
       });
 
-      await setCache(`kv_roomlist_${orgId}`, roomList);
+      if (env.APP_ENV === "production")
+        await setCache(`kv_roomlist_${orgId}`, roomList);
 
       return NextResponse.json(roomList, {
         status: 200,
@@ -40,13 +45,16 @@ export async function GET(request: Request) {
       });
     }
   } else {
-    const cachedResult = await fetchCache<
-      {
-        id: string;
-        createdAt: Date;
-        roomName: string;
-      }[]
-    >(`kv_roomlist_${userId}`);
+    const cachedResult =
+      env.APP_ENV === "production"
+        ? await fetchCache<
+            {
+              id: string;
+              createdAt: Date;
+              roomName: string;
+            }[]
+          >(`kv_roomlist_${userId}`)
+        : null;
 
     if (cachedResult) {
       return NextResponse.json(cachedResult, {
@@ -58,7 +66,8 @@ export async function GET(request: Request) {
         where: and(eq(rooms.userId, userId || ""), isNull(rooms.orgId)),
       });
 
-      await setCache(`kv_roomlist_${userId}`, roomList);
+      if (env.APP_ENV === "production")
+        await setCache(`kv_roomlist_${userId}`, roomList);
 
       return NextResponse.json(roomList, {
         status: 200,
@@ -91,7 +100,8 @@ export async function POST(request: Request) {
 
   if (room) {
     if (orgId) {
-      await invalidateCache(`kv_roomlist_${orgId}`);
+      if (env.APP_ENV === "production")
+        await invalidateCache(`kv_roomlist_${orgId}`);
 
       await publishToChannel(
         `${orgId}`,
@@ -99,7 +109,8 @@ export async function POST(request: Request) {
         JSON.stringify(room)
       );
     } else {
-      await invalidateCache(`kv_roomlist_${userId}`);
+      if (env.APP_ENV === "production")
+        await invalidateCache(`kv_roomlist_${userId}`);
 
       await publishToChannel(
         `${userId}`,

@@ -1,18 +1,6 @@
 import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
 import { validateRequest } from "./app/_lib/unkey";
 import { NextResponse } from "next/server";
-import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
-import { env } from "./env.mjs";
-
-const rateLimit = new Ratelimit({
-  redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(
-    Number(env.UPSTASH_RATELIMIT_REQUESTS),
-    `${Number(env.UPSTASH_RATELIMIT_SECONDS)}s`
-  ),
-  analytics: true,
-});
 
 export default authMiddleware({
   ignoredRoutes: ["/"],
@@ -23,26 +11,10 @@ export default authMiddleware({
   ],
   afterAuth: async (auth, req) => {
     if (!auth.userId && auth.isPublicRoute) {
-      const { success } = await rateLimit.limit(req.ip || "");
-      if (success) {
-        return NextResponse.next();
-      }
-      return new NextResponse("TOO MANY REQUESTS", {
-        status: 429,
-        statusText: "Too many requests!",
-      });
+      return NextResponse.next();
     }
 
     if (req.nextUrl.pathname.includes("/api/internal")) {
-      const { success } = await rateLimit.limit(req.ip || "");
-
-      if (!success) {
-        return new NextResponse("TOO MANY REQUESTS", {
-          status: 429,
-          statusText: "Too many requests!",
-        });
-      }
-
       if (auth.userId) {
         return NextResponse.next();
       } else {
@@ -54,15 +26,6 @@ export default authMiddleware({
     }
 
     if (req.nextUrl.pathname.includes("/api/external/private")) {
-      const { success } = await rateLimit.limit(req.ip || "");
-
-      if (!success) {
-        return new NextResponse("TOO MANY REQUESTS", {
-          status: 429,
-          statusText: "Too many requests!",
-        });
-      }
-
       const isValid = await validateRequest(req);
 
       if (isValid) {

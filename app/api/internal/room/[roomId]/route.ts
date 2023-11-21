@@ -9,6 +9,7 @@ import { type RequestLike } from "@clerk/nextjs/dist/types/server/types";
 import { getAuth } from "@clerk/nextjs/server";
 import { createId } from "@paralleldrive/cuid2";
 import { eq } from "drizzle-orm";
+import { env } from "env.mjs";
 
 export async function GET(
   request: Request,
@@ -63,7 +64,8 @@ export async function DELETE(
 
   if (success) {
     if (orgId) {
-      await invalidateCache(`kv_roomlist_${orgId}`);
+      if (env.APP_ENV === "production")
+        await invalidateCache(`kv_roomlist_${orgId}`);
 
       await publishToMultipleChannels(
         [`${orgId}`, `${params.roomId}`],
@@ -71,7 +73,8 @@ export async function DELETE(
         JSON.stringify(deletedRoom)
       );
     } else {
-      await invalidateCache(`kv_roomlist_${userId}`);
+      if (env.APP_ENV === "production")
+        await invalidateCache(`kv_roomlist_${userId}`);
 
       await publishToMultipleChannels(
         [`${userId}`, `${params.roomId}`],

@@ -35,9 +35,7 @@ COPY --link . .
 RUN --mount=type=secret,id=NEXT_PUBLIC_APP_ENV \
     --mount=type=secret,id=APP_ENV \
     --mount=type=secret,id=ROOT_URL \
-    --mount=type=secret,id=UPSTASH_RATELIMIT_SECONDS \
-    --mount=type=secret,id=UPSTASH_RATELIMIT_REQUESTS \
-    --mount=type=secret,id=UPSTASH_REDIS_EXPIRY_SECONDS \
+    --mount=type=secret,id=REDIS_EXPIRY_SECONDS \
     --mount=type=secret,id=UNKEY_ROOT_KEY \
     --mount=type=secret,id=CLERK_SECRET_KEY \
     --mount=type=secret,id=NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY \
@@ -47,14 +45,11 @@ RUN --mount=type=secret,id=NEXT_PUBLIC_APP_ENV \
     --mount=type=secret,id=ABLY_API_KEY \
     --mount=type=secret,id=DATABASE_AUTH_TOKEN \
     --mount=type=secret,id=DATABASE_URL \
-    --mount=type=secret,id=UPSTASH_REDIS_REST_URL \
-    --mount=type=secret,id=UPSTASH_REDIS_REST_TOKEN \
+    --mount=type=secret,id=REDIS_URL \
     NEXT_PUBLIC_APP_ENV="$(cat /run/secrets/NEXT_PUBLIC_APP_ENV)" \
     APP_ENV="$(cat /run/secrets/APP_ENV)" \
     ROOT_URL="$(cat /run/secrets/ROOT_URL)" \
-    UPSTASH_RATELIMIT_SECONDS="$(cat /run/secrets/UPSTASH_RATELIMIT_SECONDS)" \
-    UPSTASH_RATELIMIT_REQUESTS="$(cat /run/secrets/UPSTASH_RATELIMIT_REQUESTS)" \
-    UPSTASH_REDIS_EXPIRY_SECONDS="$(cat /run/secrets/UPSTASH_REDIS_EXPIRY_SECONDS)" \
+    REDIS_EXPIRY_SECONDS="$(cat /run/secrets/REDIS_EXPIRY_SECONDS)" \
     UNKEY_ROOT_KEY="$(cat /run/secrets/UNKEY_ROOT_KEY)" \
     CLERK_SECRET_KEY="$(cat /run/secrets/CLERK_SECRET_KEY)" \
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="$(cat /run/secrets/NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY)" \
@@ -64,8 +59,7 @@ RUN --mount=type=secret,id=NEXT_PUBLIC_APP_ENV \
     ABLY_API_KEY="$(cat /run/secrets/ABLY_API_KEY)" \
     DATABASE_AUTH_TOKEN="$(cat /run/secrets/DATABASE_AUTH_TOKEN)" \
     DATABASE_URL="$(cat /run/secrets/DATABASE_URL)" \
-    UPSTASH_REDIS_REST_URL="$(cat /run/secrets/UPSTASH_REDIS_REST_URL)" \
-    UPSTASH_REDIS_REST_TOKEN="$(cat /run/secrets/UPSTASH_REDIS_REST_TOKEN)" \
+    REDIS_URL="$(cat /run/secrets/REDIS_URL)" \
     pnpm run build
 
 # Remove development dependencies

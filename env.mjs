@@ -5,11 +5,8 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
     DATABASE_AUTH_TOKEN: z.string(),
-    UPSTASH_REDIS_REST_URL: z.string().url(),
-    UPSTASH_REDIS_REST_TOKEN: z.string(),
-    UPSTASH_REDIS_EXPIRY_SECONDS: z.string(),
-    UPSTASH_RATELIMIT_REQUESTS: z.string(),
-    UPSTASH_RATELIMIT_SECONDS: z.string(),
+    REDIS_URL: z.string().url().optional(),
+    REDIS_EXPIRY_SECONDS: z.string().optional(),
     ABLY_API_KEY: z.string(),
     APP_ENV: z.string(),
     UNKEY_ROOT_KEY: z.string(),
