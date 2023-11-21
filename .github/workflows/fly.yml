@@ -15,9 +15,6 @@ jobs:
           --build-secret NEXT_PUBLIC_APP_ENV=${{ secrets.NEXT_PUBLIC_APP_ENV }} \
           --build-secret APP_ENV=${{ secrets.APP_ENV }} \
           --build-secret ROOT_URL=${{ secrets.ROOT_URL }} \
-          --build-secret UPSTASH_RATELIMIT_SECONDS=${{ secrets.UPSTASH_RATELIMIT_SECONDS }} \
-          --build-secret UPSTASH_RATELIMIT_REQUESTS=${{ secrets.UPSTASH_RATELIMIT_REQUESTS }} \
-          --build-secret UPSTASH_REDIS_EXPIRY_SECONDS=${{ secrets.UPSTASH_REDIS_EXPIRY_SECONDS }} \
           --build-secret UNKEY_ROOT_KEY=${{ secrets.UNKEY_ROOT_KEY }} \
           --build-secret CLERK_SECRET_KEY=${{ secrets.CLERK_SECRET_KEY }} \
           --build-secret NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }} \
@@ -27,8 +24,8 @@ jobs:
           --build-secret ABLY_API_KEY=${{ secrets.ABLY_API_KEY }} \
           --build-secret DATABASE_AUTH_TOKEN=${{ secrets.DATABASE_AUTH_TOKEN }} \
           --build-secret DATABASE_URL=${{ secrets.DATABASE_URL }} \
-          --build-secret UPSTASH_REDIS_REST_URL=${{ secrets.UPSTASH_REDIS_REST_URL }} \
-          --build-secret UPSTASH_REDIS_REST_TOKEN=${{ secrets.UPSTASH_REDIS_REST_TOKEN }} \
+          --build-secret REDIS_URL=${{ secrets.REDIS_URL }} \
+          --build-secret REDIS_EXPIRY_SECONDS=${{ secrets.REDIS_EXPIRY_SECONDS }} \
 
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
