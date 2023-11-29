@@ -17,7 +17,7 @@ export default function Index() {
         <span className="bg-gradient-to-br from-red-600 to-orange-400 bg-clip-text text-transparent box-decoration-clone">
           hottest
         </span>
-        🔥 full-stack Next.js template!
+        🔥 full-stack Remix template!
       </h2>
       <div className="card card-compact bg-secondary text-black font-bold text-left">
         <div className="card-body">
