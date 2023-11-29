@@ -4,9 +4,9 @@
 ARG NODE_VERSION=18.14.2
 FROM node:${NODE_VERSION}-slim as base
 
-LABEL fly_launch_runtime="Next.js"
+LABEL fly_launch_runtime="Remix"
 
-# Next.js app lives here
+# Remix app lives here
 WORKDIR /app
 
 # Set production environment
@@ -25,42 +25,14 @@ RUN apt-get update -qq && \
     apt-get install -y build-essential pkg-config python-is-python3
 
 # Install node modules
-COPY --link .npmrc package.json pnpm-lock.yaml ./
+COPY --link package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile --prod=false
 
 # Copy application code
 COPY --link . .
 
 # Build application
-RUN --mount=type=secret,id=NEXT_PUBLIC_APP_ENV \
-    --mount=type=secret,id=APP_ENV \
-    --mount=type=secret,id=ROOT_URL \
-    --mount=type=secret,id=REDIS_EXPIRY_SECONDS \
-    --mount=type=secret,id=UNKEY_ROOT_KEY \
-    --mount=type=secret,id=CLERK_SECRET_KEY \
-    --mount=type=secret,id=NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY \
-    --mount=type=secret,id=CLERK_WEBHOOK_SIGNING_SECRET \
-    --mount=type=secret,id=NEXT_PUBLIC_CLERK_SIGN_IN_URL \
-    --mount=type=secret,id=NEXT_PUBLIC_CLERK_SIGN_UP_URL \
-    --mount=type=secret,id=ABLY_API_KEY \
-    --mount=type=secret,id=DATABASE_AUTH_TOKEN \
-    --mount=type=secret,id=DATABASE_URL \
-    --mount=type=secret,id=REDIS_URL \
-    NEXT_PUBLIC_APP_ENV="$(cat /run/secrets/NEXT_PUBLIC_APP_ENV)" \
-    APP_ENV="$(cat /run/secrets/APP_ENV)" \
-    ROOT_URL="$(cat /run/secrets/ROOT_URL)" \
-    REDIS_EXPIRY_SECONDS="$(cat /run/secrets/REDIS_EXPIRY_SECONDS)" \
-    UNKEY_ROOT_KEY="$(cat /run/secrets/UNKEY_ROOT_KEY)" \
-    CLERK_SECRET_KEY="$(cat /run/secrets/CLERK_SECRET_KEY)" \
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="$(cat /run/secrets/NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY)" \
-    CLERK_WEBHOOK_SIGNING_SECRET="$(cat /run/secrets/CLERK_WEBHOOK_SIGNING_SECRET)" \
-    NEXT_PUBLIC_CLERK_SIGN_IN_URL="$(cat /run/secrets/NEXT_PUBLIC_CLERK_SIGN_IN_URL)" \
-    NEXT_PUBLIC_CLERK_SIGN_UP_URL="$(cat /run/secrets/NEXT_PUBLIC_CLERK_SIGN_UP_URL)" \
-    ABLY_API_KEY="$(cat /run/secrets/ABLY_API_KEY)" \
-    DATABASE_AUTH_TOKEN="$(cat /run/secrets/DATABASE_AUTH_TOKEN)" \
-    DATABASE_URL="$(cat /run/secrets/DATABASE_URL)" \
-    REDIS_URL="$(cat /run/secrets/REDIS_URL)" \
-    pnpm run build
+RUN pnpm run build
 
 # Remove development dependencies
 RUN pnpm prune --prod

@@ -8,41 +8,25 @@ Atash (آتش) is Persian or Farsi for Fire! Pronounced "Ahh-tash".
 
 ## Features
 
-- 🔥 User Auth, API Auth, and Orgs!
-- 🔥 Caching with Redis!
+- 🔥 User Auth!
 - 🔥 Fast queries with Drizzle!
-- 🔥 Next.js App Router!
+- 🔥 SSR with Remix!
 - 🔥 Customizable Themes
+- 🔥 Runs anywhere Node.js runs!
 - 🔥 100% free and open-source... forever!
 
 ## Stack
 
-- Front-end framework: Nextjs
+- Front-end framework: Remix
 - Front-end library: React
-- Rendering method: SSR SPA
-- Hosting: Fly.io
-- Real-time pub/sub: Ably
+- Rendering method: SSR
+- Hosting: Fly
 - ORM: Drizzle ORM
-- Auth: Clerk
-- API Key Management: Unkey
-- Database: Turso (Edge libSQL)
-- Database Cache: Redis
-- CSS: TailwindCSS + DaisyUI
+- Database: Turso (libSQL)
 
-## Instructions
+## Environment Vars
 
-- First set up accounts on Fly.io, Turso, Clerk, Unkey, and Ably
-- Create a redis cluster in the Fly.io dashboard and make note of its connection URL
-- Create projects on all of those services
-- Run the `pnpm init:env` command to generate a .env file to fill out
-- Ensure that the webhook url https://DOMAIN.TLD/api/webhooks is added with the user.created and user.deleted events
-- You will need up a webhook to point to https://<domain.tld>/api/webhooks, and ensure you use the "Signing Secret" from the webhook as your CLERK_WEBHOOK_SIGNING_SECRET environment variable...
-- For the Headers: please generate an Unkey key and pass it in the headers as a Bearer token for the webhook
+Add variables to the following places:
 
-## Styling
-
-The tailwind.config.js file will contain a list of themes that are added by default. To change the theme, change the value of "data-theme" on the html tag in src/app/layout.tsx. For more information on DaisyUI themes, please see their [documentation](https://daisyui.com/docs/themes/).
-
-## Contributing
-
-Feel free to propose changes via PR. I'm not awfully picky about formatting right now, so I'll accept/reject on a case-by-case basis. Please make sure to have an issue first though.
+- Github Secrets: FLY_API_TOKEN
+- Fly Secrets: Everything in .env

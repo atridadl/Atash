@@ -6,4 +6,4 @@ No previous versions will be supported. This project is not meant to be self-hos
 
 ## Reporting a Vulnerability
 
-Reporting security issues should be done via email ideally. I can be reached at EMAIL. Please include the repository you are reporting issues for, as well as any information regarding repro or related files (if you happen to know where the issue lies). I will work with you to identify the issues and patch them.
+Reporting security issues should be done via email ideally. I can be reached at me@atridad.dev. Please include the repository you are reporting issues for, as well as any information regarding repro or related files (if you happen to know where the issue lies). I will work with you to identify the issues and patch them.

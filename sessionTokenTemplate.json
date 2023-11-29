@@ -1,0 +1,6 @@
+{
+  "name": "{{user.full_name}}",
+  "email": "{{user.primary_email_address}}",
+  "image": "{{user.image_url}}",
+  "metadata": "{{user.public_metadata}}"
+}
