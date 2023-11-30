@@ -23,10 +23,9 @@ export default function Index() {
         <div className="card-body">
           <h2 className="card-title">Features:</h2>
           <ul>
-            <li>🔥 User Auth, API Auth, and Orgs!</li>
-            <li>🔥 Caching and Rate Limiting!</li>
+            <li>🔥 User Auth!</li>
             <li>🔥 Fast queries with Drizzle!</li>
-            <li>🔥 App Router!</li>
+            <li>🔥 SSR with Remix!</li>
             <li>🔥 Customizable Themes!</li>
             <li>🔥 100% free and open-source... forever!</li>
           </ul>
