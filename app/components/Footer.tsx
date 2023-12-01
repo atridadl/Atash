@@ -5,9 +5,7 @@ const Footer = () => {
   return (
     <footer className="footer footer-center h-12 p-2 bg-base-100 text-base-content">
       <div className="block">
-        Made with{" "}
-        <HeartIcon className="inline-block text-primary text-lg animate-pulse" />{" "}
-        by{" "}
+        Made with <HeartIcon className="inline-block text-primary text-lg" /> by{" "}
         <a
           className="link link-primary link-hover"
           href="https://atri.dad"
