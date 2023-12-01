@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm";
 import { eventStream } from "remix-utils/sse/server";
 import { db } from "~/services/db.server";
 import { emitter } from "~/services/emitter.server";
+import { fetchCache, setCache } from "~/services/redis.server";
 import { rooms } from "~/services/schema";
 
 // Get Room List
@@ -19,21 +20,51 @@ export async function loader({ context, params, request }: LoaderFunctionArgs) {
 
   return eventStream(request.signal, function setup(send) {
     async function handler() {
-      const roomList = await db.query.rooms.findMany({
-        where: eq(rooms.userId, userId || ""),
+      fetchCache<
+        {
+          id: string;
+          createdAt: Date;
+          roomName: string;
+        }[]
+      >(`kv_roomlist_${userId}`).then((cachedResult) => {
+        if (cachedResult) {
+          send({ event: userId!, data: JSON.stringify(cachedResult) });
+        } else {
+          db.query.rooms
+            .findMany({
+              where: eq(rooms.userId, userId || ""),
+            })
+            .then((roomList) => {
+              setCache(`kv_roomlist_${userId}`, roomList).then(() => {
+                send({ event: userId!, data: JSON.stringify(roomList) });
+              });
+            });
+        }
       });
-
-      send({ event: userId!, data: JSON.stringify(roomList) });
     }
 
     // Initial fetch
-    db.query.rooms
-      .findMany({
-        where: eq(rooms.userId, userId || ""),
-      })
-      .then((roomList) => {
-        send({ event: userId!, data: JSON.stringify(roomList) });
-      });
+    fetchCache<
+      {
+        id: string;
+        createdAt: Date;
+        roomName: string;
+      }[]
+    >(`kv_roomlist_${userId}`).then((cachedResult) => {
+      if (cachedResult) {
+        send({ event: userId!, data: JSON.stringify(cachedResult) });
+      } else {
+        db.query.rooms
+          .findMany({
+            where: eq(rooms.userId, userId || ""),
+          })
+          .then((roomList) => {
+            setCache(`kv_roomlist_${userId}`, roomList).then(() => {
+              send({ event: userId!, data: JSON.stringify(roomList) });
+            });
+          });
+      }
+    });
 
     emitter.on("roomlist", handler);
 

@@ -4,6 +4,7 @@ import { createId } from "@paralleldrive/cuid2";
 import { db } from "~/services/db.server";
 import { emitter } from "~/services/emitter.server";
 import { rooms } from "~/services/schema";
+import { invalidateCache } from "~/services/redis.server";
 
 export async function action({ request, params, context }: ActionFunctionArgs) {
   const { userId } = await getAuth({ context, params, request });
@@ -33,6 +34,7 @@ export async function action({ request, params, context }: ActionFunctionArgs) {
   const success = room.length > 0;
 
   if (success) {
+    await invalidateCache(`kv_roomlist_${userId}`);
     emitter.emit("roomlist");
 
     return json(room, {

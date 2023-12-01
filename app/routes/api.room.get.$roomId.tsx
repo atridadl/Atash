@@ -39,16 +39,19 @@ export async function loader({ context, params, request }: LoaderFunctionArgs) {
 
   return eventStream(request.signal, function setup(send) {
     async function handler() {
-      const roomFromDb = await db.query.rooms.findFirst({
-        where: eq(rooms.id, roomId || ""),
-        with: {
-          logs: true,
-        },
-      });
-      send({
-        event: `room-${roomId}`,
-        data: JSON.stringify(roomFromDb),
-      });
+      db.query.rooms
+        .findFirst({
+          where: eq(rooms.id, roomId || ""),
+          with: {
+            logs: true,
+          },
+        })
+        .then((roomFromDb) => {
+          return send({
+            event: `room-${roomId}`,
+            data: JSON.stringify(roomFromDb),
+          });
+        });
     }
 
     // Initial fetch
