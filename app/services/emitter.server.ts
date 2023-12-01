@@ -20,7 +20,7 @@ if (process.env.REDIS_URL) {
   subscribeToChannel("nodes", (message: string) => {
     console.log(`RECEIVED ${message} EVENT FROM ANOTHER NODE!`);
     const parsedMessage = message.split('"')[1];
-    emitter.emit("roomlist");
+    emitter.emit(parsedMessage);
   });
 
   emitter.on("nodes", async (message: string) => {
