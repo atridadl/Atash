@@ -47,27 +47,29 @@ export const unsubscribeToChannel = (channel: string) => {
   Promise.resolve([sub?.unsubscribe(channel)]);
 };
 
-export const setCache = async <T>(key: string, value: T) => {
+export const setCache = async <T>(key: string, value: T, prefix?: string) => {
   try {
-    await cache?.set(key, JSON.stringify(value));
+    await cache?.set(prefix ? `${prefix}_${key}` : key, JSON.stringify(value));
     return true;
   } catch {
     return false;
   }
 };
 
-export const fetchCache = async <T>(key: string) => {
+export const fetchCache = async <T>(key: string, prefix?: string) => {
   try {
-    const result = (await cache?.get(key)) as string;
+    const result = (await cache?.get(
+      prefix ? `${prefix}_${key}` : key
+    )) as string;
     return JSON.parse(result) as T;
   } catch {
     return null;
   }
 };
 
-export const invalidateCache = async (key: string) => {
+export const invalidateCache = async (key: string, prefix?: string) => {
   try {
-    await cache?.del(key);
+    await cache?.del(prefix ? `${prefix}_${key}` : key);
     return true;
   } catch {
     return false;

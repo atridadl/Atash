@@ -26,7 +26,7 @@ export async function loader({ context, params, request }: LoaderFunctionArgs) {
           createdAt: Date;
           roomName: string;
         }[]
-      >(`kv_roomlist_${userId}`).then((cachedResult) => {
+      >(`kv_roomlist_${userId}`, "atash").then((cachedResult) => {
         if (cachedResult) {
           send({ event: userId!, data: JSON.stringify(cachedResult) });
         } else {
@@ -35,7 +35,7 @@ export async function loader({ context, params, request }: LoaderFunctionArgs) {
               where: eq(rooms.userId, userId || ""),
             })
             .then((roomList) => {
-              setCache(`kv_roomlist_${userId}`, roomList).then(() => {
+              setCache(`kv_roomlist_${userId}`, roomList, "atash").then(() => {
                 send({ event: userId!, data: JSON.stringify(roomList) });
               });
             });
@@ -50,7 +50,7 @@ export async function loader({ context, params, request }: LoaderFunctionArgs) {
         createdAt: Date;
         roomName: string;
       }[]
-    >(`kv_roomlist_${userId}`).then((cachedResult) => {
+    >(`kv_roomlist_${userId}`, "atash").then((cachedResult) => {
       if (cachedResult) {
         send({ event: userId!, data: JSON.stringify(cachedResult) });
       } else {
@@ -59,7 +59,7 @@ export async function loader({ context, params, request }: LoaderFunctionArgs) {
             where: eq(rooms.userId, userId || ""),
           })
           .then((roomList) => {
-            setCache(`kv_roomlist_${userId}`, roomList).then(() => {
+            setCache(`kv_roomlist_${userId}`, roomList, "atash").then(() => {
               send({ event: userId!, data: JSON.stringify(roomList) });
             });
           });

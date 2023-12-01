@@ -33,7 +33,7 @@ export async function action({ request, params, context }: ActionFunctionArgs) {
   const success = deletedRoom.length > 0;
 
   if (success) {
-    await invalidateCache(`kv_roomlist_${userId}`);
+    await invalidateCache(`kv_roomlist_${userId}`, "atash");
     emitter.emit("nodes", "roomlist");
 
     return json(deletedRoom, {
