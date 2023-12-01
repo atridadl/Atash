@@ -77,7 +77,7 @@ export async function action({ request, params, context }: ActionFunctionArgs) {
   if (success) {
     console.log(success);
     emitter.emit("nodes", "room");
-    // emitter.emit("nodes", "votes");
+    emitter.emit("nodes", "votes");
 
     return json(newRoom, {
       status: 200,
