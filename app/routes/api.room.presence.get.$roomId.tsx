@@ -75,7 +75,7 @@ export async function loader({ context, params, request }: LoaderFunctionArgs) {
         },
       })
       .then(async () => {
-        emitter.emit("presence");
+        emitter.emit("nodes", "presence");
       });
 
     // Initial fetch
@@ -86,7 +86,7 @@ export async function loader({ context, params, request }: LoaderFunctionArgs) {
         .where(and(eq(presence.roomId, roomId), eq(presence.userId, userId)))
         .returning()
         .then(async () => {
-          emitter.emit("presence");
+          emitter.emit("nodes", "presence");
         });
       emitter.off("presence", handler);
     };

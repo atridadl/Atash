@@ -1,4 +1,5 @@
 import { EventEmitter } from "events";
+import { pub, publishToChannel, subscribeToChannel } from "./redis.server";
 
 let emitter: EventEmitter;
 
@@ -13,6 +14,21 @@ if (process.env.NODE_ENV === "production") {
     global.__emitter = new EventEmitter();
   }
   emitter = global.__emitter;
+}
+
+if (process.env.REDIS_URL) {
+  subscribeToChannel("nodes", (message: string) => {
+    console.log(`RECEIVED ${message} EVENT FROM ANOTHER NODE!`);
+    // emitter.emit(message);
+    emitter.emit("roomlist");
+    emitter.emit("votes");
+    emitter.emit("presence");
+    emitter.emit("room");
+  });
+
+  emitter.on("nodes", async (message: string) => {
+    await publishToChannel("nodes", message);
+  });
 }
 
 export { emitter };

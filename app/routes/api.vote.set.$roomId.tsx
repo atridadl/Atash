@@ -40,7 +40,7 @@ export async function action({ request, params, context }: ActionFunctionArgs) {
   const success = upsertResult.rowsAffected > 0;
 
   if (success) {
-    emitter.emit("votes");
+    emitter.emit("nodes", "votes");
 
     return json(upsertResult, {
       status: 200,

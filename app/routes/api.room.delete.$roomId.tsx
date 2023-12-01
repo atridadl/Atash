@@ -34,7 +34,7 @@ export async function action({ request, params, context }: ActionFunctionArgs) {
 
   if (success) {
     await invalidateCache(`kv_roomlist_${userId}`);
-    emitter.emit("roomlist");
+    emitter.emit("nodes", "roomlist");
 
     return json(deletedRoom, {
       status: 200,
