@@ -19,10 +19,8 @@ if (process.env.NODE_ENV === "production") {
 if (process.env.REDIS_URL) {
   subscribeToChannel("nodes", (message: string) => {
     console.log(`RECEIVED ${message} EVENT FROM ANOTHER NODE!`);
-    if (message === "roomlist") emitter.emit("roomlist");
-    else if (message === "votes") emitter.emit("votes");
-    else if (message === "presence") emitter.emit("presence");
-    else if (message === "room") emitter.emit("room");
+    const parsedMessage = message.split('"')[1];
+    emitter.emit("roomlist");
   });
 
   emitter.on("nodes", async (message: string) => {
