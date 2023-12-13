@@ -86,7 +86,7 @@ export const subscribeToChannel = async (
 };
 
 export const unsubscribeToChannel = (channel: string) => {
-  `Unsubscribed successfully from ${channel}!`;
+  console.log(`Unsubscribed successfully from ${channel}!`);
   Promise.resolve([sub?.unsubscribe(channel)]);
 };
 

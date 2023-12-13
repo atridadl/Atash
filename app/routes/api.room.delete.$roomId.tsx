@@ -1,5 +1,5 @@
 import { getAuth } from "@clerk/remix/ssr.server";
-import { ActionFunctionArgs, json } from "@remix-run/node";
+import { type ActionFunctionArgs, json } from "@remix-run/node";
 import { eq } from "drizzle-orm";
 import { db } from "~/services/db.server";
 import { emitter } from "~/services/emitter.server";

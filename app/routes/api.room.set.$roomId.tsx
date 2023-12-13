@@ -1,5 +1,5 @@
 import { getAuth } from "@clerk/remix/ssr.server";
-import { ActionFunctionArgs, json } from "@remix-run/node";
+import { type ActionFunctionArgs, json } from "@remix-run/node";
 import { createId } from "@paralleldrive/cuid2";
 import { db } from "~/services/db.server";
 import { emitter } from "~/services/emitter.server";

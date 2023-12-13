@@ -1,6 +1,6 @@
-import { ActionFunctionArgs, json } from "@remix-run/node";
+import { type ActionFunctionArgs, json } from "@remix-run/node";
 import { Webhook } from "svix";
-import { WebhookEvent } from "@clerk/remix/api.server";
+import { type WebhookEvent } from "@clerk/remix/api.server";
 import {
   onUserCreatedHandler,
   onUserDeletedHandler,

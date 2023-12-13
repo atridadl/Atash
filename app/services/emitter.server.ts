@@ -1,5 +1,5 @@
 import { EventEmitter } from "events";
-import { pub, publishToChannel, subscribeToChannel } from "./redis.server";
+import { publishToChannel, subscribeToChannel } from "./redis.server";
 
 let emitter: EventEmitter;
 

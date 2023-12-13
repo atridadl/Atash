@@ -1,5 +1,5 @@
 import { getAuth } from "@clerk/remix/ssr.server";
-import { LoaderFunction, redirect } from "@remix-run/node";
+import { type LoaderFunction, redirect } from "@remix-run/node";
 import { useParams } from "@remix-run/react";
 import {
   CheckCircleIcon,
@@ -17,7 +17,7 @@ import {
 import { useEffect, useState } from "react";
 import LoadingIndicator from "~/components/LoadingIndicator";
 import { useEventSource } from "remix-utils/sse/react";
-import {
+import type {
   PresenceItem,
   RoomResponse,
   VoteResponse,
@@ -223,12 +223,12 @@ function RoomContent() {
     );
 
     if (visible) {
-      if (!!matchedVote) {
+      if (matchedVote) {
         return <div>{matchedVote.value}</div>;
       } else {
         return <HourglassIcon className="text-xl text-error" />;
       }
-    } else if (!!matchedVote) {
+    } else if (matchedVote) {
       return <CheckCircleIcon className="text-xl text-success" />;
     } else {
       return <HourglassIcon className="text-xl animate-spin text-warning" />;
@@ -296,7 +296,7 @@ function RoomContent() {
                           <div className="w-10 rounded-full avatar">
                             <img
                               src={presenceItem.userImageUrl}
-                              alt={`${presenceItem.userFullName}'s Profile Picture`}
+                              alt={`${presenceItem.userFullName}'s Profile`}
                               height={32}
                               width={32}
                             />
@@ -335,7 +335,7 @@ function RoomContent() {
                           {roomFromDb &&
                             votesFromDb &&
                             voteString(
-                              roomFromDbParsed?.visible!,
+                              roomFromDbParsed?.visible || false,
                               votesFromDbParsed,
                               presenceItem
                             )}

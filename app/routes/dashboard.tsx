@@ -1,5 +1,5 @@
 import { getAuth } from "@clerk/remix/ssr.server";
-import { LoaderFunction, redirect } from "@remix-run/node";
+import { type LoaderFunction, redirect } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 import { LogInIcon, ShieldIcon, StarIcon, TrashIcon } from "lucide-react";
 import { useState } from "react";
@@ -51,7 +51,7 @@ export default function Dashboard() {
 
 function DashboardContent() {
   const { user, isLoaded } = useUser();
-  let roomsFromDb = useEventSource("/api/room/get/all", { event: user?.id! });
+  let roomsFromDb = useEventSource("/api/room/get/all", { event: user?.id });
 
   let roomsFromDbParsed = JSON.parse(roomsFromDb!) as RoomsResponse;
 

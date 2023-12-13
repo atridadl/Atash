@@ -1,5 +1,5 @@
 import { getAuth } from "@clerk/remix/ssr.server";
-import { LoaderFunctionArgs, json } from "@remix-run/node";
+import { type LoaderFunctionArgs, json } from "@remix-run/node";
 import { eq } from "drizzle-orm";
 import { eventStream } from "remix-utils/sse/server";
 import { db } from "~/services/db.server";
