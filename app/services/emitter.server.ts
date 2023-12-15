@@ -18,13 +18,19 @@ if (process.env.NODE_ENV === "production") {
 
 if (process.env.REDIS_URL) {
   subscribeToChannel("nodes", (message: string) => {
-    console.log(`RECEIVED ${message} EVENT FROM ANOTHER NODE!`);
+    console.log(`[MULTI-NODE] RECEIVED ${message} EVENT FROM ANOTHER NODE!`);
     const parsedMessage = message.split('"')[1];
     emitter.emit(parsedMessage);
   });
 
   emitter.on("nodes", async (message: string) => {
+    emitter.emit(message);
     await publishToChannel("nodes", message);
+  });
+} else {
+  emitter.on("nodes", async (message: string) => {
+    console.log(`[SINGLE NODE] RECEIVED ${message} EVENT!`);
+    emitter.emit(message);
   });
 }
 

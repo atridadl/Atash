@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { db } from "./db.server";
-import { rooms } from "./schema";
+import { rooms } from "./schema.server";
 
 export const onUserDeletedHandler = async (userId: string | undefined) => {
   if (!userId) {

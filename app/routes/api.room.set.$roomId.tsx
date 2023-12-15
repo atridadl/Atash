@@ -3,7 +3,7 @@ import { type ActionFunctionArgs, json } from "@remix-run/node";
 import { createId } from "@paralleldrive/cuid2";
 import { db } from "~/services/db.server";
 import { emitter } from "~/services/emitter.server";
-import { logs, rooms, votes } from "~/services/schema";
+import { logs, rooms, votes } from "~/services/schema.server";
 import { eq } from "drizzle-orm";
 
 export async function action({ request, params, context }: ActionFunctionArgs) {

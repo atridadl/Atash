@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { db } from "~/services/db.server";
 import { emitter } from "~/services/emitter.server";
 import { invalidateCache } from "~/services/redis.server";
-import { rooms } from "~/services/schema";
+import { rooms } from "~/services/schema.server";
 
 export async function action({ request, params, context }: ActionFunctionArgs) {
   const { userId } = await getAuth({ context, params, request });

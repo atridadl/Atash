@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { eventStream } from "remix-utils/sse/server";
 import { db } from "~/services/db.server";
 import { emitter } from "~/services/emitter.server";
-import { votes } from "~/services/schema";
+import { votes } from "~/services/schema.server";
 
 // Get Room List
 export async function loader({ context, params, request }: LoaderFunctionArgs) {

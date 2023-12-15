@@ -4,7 +4,7 @@ import { and, eq } from "drizzle-orm";
 import { eventStream } from "remix-utils/sse/server";
 import { db } from "~/services/db.server";
 import { emitter } from "~/services/emitter.server";
-import { presence } from "~/services/schema";
+import { presence } from "~/services/schema.server";
 import { createId } from "@paralleldrive/cuid2";
 
 export async function loader({ context, params, request }: LoaderFunctionArgs) {

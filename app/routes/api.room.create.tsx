@@ -3,7 +3,7 @@ import { type ActionFunctionArgs, json } from "@remix-run/node";
 import { createId } from "@paralleldrive/cuid2";
 import { db } from "~/services/db.server";
 import { emitter } from "~/services/emitter.server";
-import { rooms } from "~/services/schema";
+import { rooms } from "~/services/schema.server";
 import { invalidateCache } from "~/services/redis.server";
 
 export async function action({ request, params, context }: ActionFunctionArgs) {

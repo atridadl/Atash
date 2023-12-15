@@ -25,7 +25,7 @@ import type {
 import { isAdmin, jsonToCsv } from "~/services/helpers.client";
 import { ClerkLoaded, ClerkLoading, useUser } from "@clerk/remix";
 import { db } from "~/services/db.server";
-import { rooms } from "~/services/schema";
+import { rooms } from "~/services/schema.server";
 import { eq } from "drizzle-orm";
 import ErrorPage from "~/components/ErrorPage";
 import { isShit } from "~/services/helpers.server";

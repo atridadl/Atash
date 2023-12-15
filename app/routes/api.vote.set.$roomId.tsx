@@ -3,7 +3,7 @@ import { type ActionFunctionArgs, json } from "@remix-run/node";
 import { createId } from "@paralleldrive/cuid2";
 import { db } from "~/services/db.server";
 import { emitter } from "~/services/emitter.server";
-import { votes } from "~/services/schema";
+import { votes } from "~/services/schema.server";
 
 export async function action({ request, params, context }: ActionFunctionArgs) {
   const { userId } = await getAuth({ context, params, request });
