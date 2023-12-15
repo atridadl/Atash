@@ -1,5 +1,6 @@
 import { EventEmitter } from "events";
 import { publishToChannel, subscribeToChannel } from "./redis.server";
+import "dotenv/config";
 
 let emitter: EventEmitter;
 

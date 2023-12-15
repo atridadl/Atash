@@ -2,7 +2,7 @@ import type { Config } from "drizzle-kit";
 import "dotenv/config";
 
 export default {
-  schema: "./app/services/schema.ts",
+  schema: "./app/services/schema.server.ts",
   out: "./drizzle/generated",
   driver: "turso",
   breakpoints: true,

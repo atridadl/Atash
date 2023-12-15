@@ -1,10 +1,6 @@
 import { rootAuthLoader } from "@clerk/remix/ssr.server";
 import { ClerkApp, ClerkErrorBoundary } from "@clerk/remix";
-import type {
-  LinksFunction,
-  LoaderFunction,
-  MetaFunction,
-} from "@remix-run/node";
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -13,13 +9,10 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import stylesheet from "~/tailwind.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 
-export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: stylesheet },
-];
+import "~/tailwind.css";
 
 export const meta: MetaFunction = () => {
   return [

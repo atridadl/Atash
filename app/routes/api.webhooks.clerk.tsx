@@ -5,6 +5,7 @@ import {
   onUserCreatedHandler,
   onUserDeletedHandler,
 } from "~/services/webhookhelpers.server";
+import "dotenv/config";
 
 export async function action({ request, params, context }: ActionFunctionArgs) {
   // Get the headers

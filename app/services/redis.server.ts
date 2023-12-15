@@ -1,4 +1,5 @@
 import Redis from "ioredis";
+import "dotenv/config";
 
 let cache: Redis | null = null;
 let pub: Redis | null = null;
