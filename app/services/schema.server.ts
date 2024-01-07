@@ -1,20 +1,20 @@
 import {
-  sqliteTable,
-  integer,
+  pgTable,
   text,
   unique,
   index,
-} from "drizzle-orm/sqlite-core";
+  boolean
+} from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
-export const rooms = sqliteTable("Room", {
-  id: text("id", { length: 255 }).notNull().primaryKey(),
+export const rooms = pgTable("Room", {
+  id: text("id").notNull().primaryKey(),
   created_at: text("created_at"),
-  userId: text("userId", { length: 255 }).notNull(),
-  roomName: text("roomName", { length: 255 }),
-  storyName: text("storyName", { length: 255 }),
-  visible: integer("visible").default(0).notNull(),
-  scale: text("scale", { length: 255 }).default("0.5,1,2,3,5").notNull(),
+  userId: text("userId").notNull(),
+  roomName: text("roomName"),
+  storyName: text("storyName"),
+  visible: boolean("visible").default(false).notNull(),
+  scale: text("scale").default("0.5,1,2,3,5").notNull(),
 });
 
 export const roomsRelations = relations(rooms, ({ many }) => ({
@@ -22,16 +22,16 @@ export const roomsRelations = relations(rooms, ({ many }) => ({
   logs: many(logs),
 }));
 
-export const votes = sqliteTable(
+export const votes = pgTable(
   "Vote",
   {
-    id: text("id", { length: 255 }).notNull().primaryKey(),
+    id: text("id").notNull().primaryKey(),
     created_at: text("created_at"),
-    userId: text("userId", { length: 255 }).notNull(),
-    roomId: text("roomId", { length: 255 })
+    userId: text("userId").notNull(),
+    roomId: text("roomId")
       .notNull()
       .references(() => rooms.id, { onDelete: "cascade" }),
-    value: text("value", { length: 255 }).notNull(),
+    value: text("value").notNull(),
   },
   (table) => {
     return {
@@ -48,17 +48,17 @@ export const votesRelations = relations(votes, ({ one }) => ({
   }),
 }));
 
-export const logs = sqliteTable(
+export const logs = pgTable(
   "Log",
   {
-    id: text("id", { length: 255 }).notNull().primaryKey(),
+    id: text("id").notNull().primaryKey(),
     created_at: text("created_at"),
-    userId: text("userId", { length: 255 }).notNull(),
-    roomId: text("roomId", { length: 255 }).notNull(),
-    scale: text("scale", { length: 255 }),
+    userId: text("userId").notNull(),
+    roomId: text("roomId").notNull(),
+    scale: text("scale"),
     votes: text("votes"),
-    roomName: text("roomName", { length: 255 }),
-    storyName: text("storyName", { length: 255 }),
+    roomName: text("roomName"),
+    storyName: text("storyName"),
   },
   (table) => {
     return {
@@ -74,16 +74,16 @@ export const logsRelations = relations(logs, ({ one }) => ({
   }),
 }));
 
-export const presence = sqliteTable(
+export const presence = pgTable(
   "Presence",
   {
-    id: text("id", { length: 255 }).notNull().primaryKey(),
-    userId: text("userId", { length: 255 }).notNull(),
-    userFullName: text("userFullName", { length: 255 }).notNull(),
-    userImageUrl: text("userImageUrl", { length: 255 }).notNull(),
-    isVIP: integer("isVIP").default(0).notNull(),
-    isAdmin: integer("isAdmin").default(0).notNull(),
-    roomId: text("roomId", { length: 255 })
+    id: text("id").notNull().primaryKey(),
+    userId: text("userId").notNull(),
+    userFullName: text("userFullName").notNull(),
+    userImageUrl: text("userImageUrl").notNull(),
+    isVIP: boolean("isVIP").default(false).notNull(),
+    isAdmin: boolean("isAdmin").default(false).notNull(),
+    roomId: text("roomId")
       .notNull()
       .references(() => rooms.id, { onDelete: "cascade" }),
   },

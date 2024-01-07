@@ -22,7 +22,7 @@ Atash (آتش) is Persian or Farsi for Fire! Pronounced "Ahh-tash".
 - Rendering method: SSR
 - Hosting: Fly
 - ORM: Drizzle ORM
-- Database: Turso (libSQL)
+- Database: Postgres
 
 ## Environment Vars
 

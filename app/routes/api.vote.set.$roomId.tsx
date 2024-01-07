@@ -37,7 +37,7 @@ export async function action({ request, params, context }: ActionFunctionArgs) {
       },
     });
 
-  const success = upsertResult.rowsAffected > 0;
+  const success = upsertResult.count > 0;
 
   if (success) {
     emitter.emit("nodes", "votes");
